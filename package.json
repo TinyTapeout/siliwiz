@@ -4,13 +4,15 @@
     "dev": "solid-start dev",
     "build": "solid-start build",
     "build:element": "rollup --config rollup.config.mjs",
-    "start": "solid-start start"
+    "start": "solid-start start",
+    "postinstall": "patch-package"
   },
   "type": "module",
   "devDependencies": {
     "@rollup/plugin-babel": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-replace": "^5.0.0",
+    "patch-package": "^6.4.7",
     "solid-start-node": "^0.1.0",
     "typescript": "^4.8.3",
     "vite": "^3.1.0"
@@ -18,6 +20,8 @@
   "dependencies": {
     "@solidjs/meta": "^0.28.0",
     "@solidjs/router": "^0.5.0",
+    "@types/plotly.js-basic-dist": "^1.54.1",
+    "plotly.js-basic-dist": "^2.15.1",
     "solid-js": "^1.5.7",
     "solid-start": "^0.1.0",
     "undici": "^5.10.0"

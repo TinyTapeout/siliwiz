@@ -2,7 +2,7 @@ import { createSignal, For } from 'solid-js';
 import { layerTypes } from '~/model/layerTypes';
 import { layout } from '~/model/layout';
 
-export const [crossSectionOffset, setCrossSectionOffset] = createSignal(0);
+export const [crossSectionOffset, setCrossSectionOffset] = createSignal(50);
 
 export default function CrossSection() {
   const crossRects = () =>
