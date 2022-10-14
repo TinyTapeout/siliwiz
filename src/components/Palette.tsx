@@ -1,20 +1,38 @@
 import { createSignal, For } from 'solid-js';
 import { layerTypes } from '~/model/layerTypes';
+import { viewerState, setViewerState } from '~/model/viewerState';
 import styles from './Palette.module.css';
 
 export default function Palette() {
-  const [active, setActive] = createSignal(layerTypes[0].name);
   return (
     <div class={styles.palette}>
       <For each={layerTypes}>
         {(layer) => (
           <div
-            classList={{ [styles.item]: true, [styles.active]: active() == layer.name }}
+            classList={{
+              [styles.item]: true,
+              [styles.active]: viewerState.activeLayer == layer.name,
+            }}
             onClick={() => {
-              setActive(layer.name);
+              setViewerState('activeLayer', layer.name);
             }}
           >
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={!viewerState.hiddenLayers.includes(layer.name)}
+              onChange={(e) =>
+                setViewerState('hiddenLayers', (hiddenLayers) => {
+                  const { checked } = e.target as HTMLInputElement;
+                  if (checked) {
+                    return hiddenLayers.filter((l) => l !== layer.name);
+                  } else {
+                    return !hiddenLayers.includes(layer.name)
+                      ? [...hiddenLayers, layer.name]
+                      : hiddenLayers;
+                  }
+                })
+              }
+            />
             <span class={styles.color} style={{ background: layer.color }} />
             <span>{layer.name}</span>
           </div>

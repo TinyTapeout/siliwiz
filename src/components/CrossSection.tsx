@@ -1,13 +1,12 @@
-import { createSignal, For } from 'solid-js';
+import { For } from 'solid-js';
 import { layerTypes } from '~/model/layerTypes';
 import { layout } from '~/model/layout';
-
-export const [crossSectionOffset, setCrossSectionOffset] = createSignal(50);
+import { viewerState, setViewerState } from '~/model/viewerState';
 
 export default function CrossSection() {
   const crossRects = () =>
     layout.rects.filter(
-      (r) => r.y <= crossSectionOffset() * 2 && r.y + r.height >= crossSectionOffset() * 2,
+      (r) => r.y <= viewerState.crossSectionY && r.y + r.height >= viewerState.crossSectionY,
     );
   return (
     <div style={{ display: 'flex' }}>
@@ -15,8 +14,10 @@ export default function CrossSection() {
         <input
           type="range"
           style={{ transform: 'translate(-85px, 90px) rotate(90deg)', width: '200px' }}
-          value={crossSectionOffset()}
-          onInput={(e) => setCrossSectionOffset((e.target as HTMLInputElement).valueAsNumber)}
+          value={viewerState.crossSectionOffset}
+          onInput={(e) =>
+            setViewerState('crossSectionOffset', (e.target as HTMLInputElement).valueAsNumber)
+          }
         />
       </span>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">

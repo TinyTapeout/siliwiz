@@ -1,7 +1,7 @@
-import { For } from 'solid-js';
+import { For, Show } from 'solid-js';
 import { layerTypes } from '~/model/layerTypes';
 import { layout } from '~/model/layout';
-import { crossSectionOffset } from './CrossSection';
+import { viewerState } from '~/model/viewerState';
 
 export default function Canvas() {
   return (
@@ -23,23 +23,27 @@ export default function Canvas() {
       <For each={layout.rects}>
         {(rect) => {
           const layer = layerTypes.find((l) => l.name === rect.layer);
+          const hidden = () => viewerState.hiddenLayers.includes(layer.name);
+
           return (
-            <rect
-              x={rect.x}
-              y={rect.y}
-              height={rect.height}
-              width={rect.width}
-              fill={layer.color}
-              mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
-            />
+            <Show when={!hidden()}>
+              <rect
+                x={rect.x}
+                y={rect.y}
+                height={rect.height}
+                width={rect.width}
+                fill={layer.color}
+                mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
+              />
+            </Show>
           );
         }}
       </For>
       <line
         x1={0}
-        y1={crossSectionOffset() * 2}
+        y1={viewerState.crossSectionY}
         x2={200}
-        y2={crossSectionOffset() * 2}
+        y2={viewerState.crossSectionY}
         stroke="black"
         stroke-width="1"
       />
