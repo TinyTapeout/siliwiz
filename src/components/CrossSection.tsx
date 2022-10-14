@@ -1,11 +1,25 @@
-import { For } from 'solid-js';
+import { createSignal, For } from 'solid-js';
 import { layerTypes } from '~/model/layerTypes';
+import { layout } from '~/model/layout';
+
+export const [crossSectionOffset, setCrossSectionOffset] = createSignal(0);
 
 export default function CrossSection() {
+  const crossRects = () =>
+    layout.rects.filter(
+      (r) => r.y <= crossSectionOffset() * 2 && r.y + r.height >= crossSectionOffset() * 2,
+    );
   return (
-    <div>
-      X Section
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 166 166">
+    <div style={{ display: 'flex' }}>
+      <span style={{ width: '30px' }}>
+        <input
+          type="range"
+          style={{ transform: 'translate(-85px, 90px) rotate(90deg)', width: '200px' }}
+          value={crossSectionOffset()}
+          onInput={(e) => setCrossSectionOffset((e.target as HTMLInputElement).valueAsNumber)}
+        />
+      </span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
         <defs>
           <pattern
             id="hatch-pattern"
@@ -20,17 +34,20 @@ export default function CrossSection() {
             <rect x="0" y="0" width="1000" height="1000" fill="url(#hatch-pattern)" />
           </mask>
         </defs>
-        <For each={layerTypes}>
-          {(layer, index) => (
-            <rect
-              x={25 * index()}
-              y={25 * index()}
-              height={150}
-              width={150}
-              fill={layer.color}
-              mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
-            />
-          )}
+        <For each={crossRects()}>
+          {(rect) => {
+            const layer = layerTypes.find((l) => l.name === rect.layer);
+            return (
+              <rect
+                x={rect.x}
+                y={layer.crossY}
+                height={layer.crossHeight}
+                width={rect.width}
+                fill={layer.color}
+                mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
+              />
+            );
+          }}
         </For>
       </svg>
     </div>

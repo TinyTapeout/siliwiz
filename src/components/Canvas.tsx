@@ -1,10 +1,11 @@
 import { For } from 'solid-js';
 import { layerTypes } from '~/model/layerTypes';
 import { layout } from '~/model/layout';
+import { crossSectionOffset } from './CrossSection';
 
 export default function Canvas() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250" width="250" height="250">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
       <defs>
         <pattern
           id="hatch-pattern"
@@ -20,7 +21,7 @@ export default function Canvas() {
         </mask>
       </defs>
       <For each={layout.rects}>
-        {(rect, index) => {
+        {(rect) => {
           const layer = layerTypes.find((l) => l.name === rect.layer);
           return (
             <rect
@@ -34,6 +35,14 @@ export default function Canvas() {
           );
         }}
       </For>
+      <line
+        x1={0}
+        y1={crossSectionOffset() * 2}
+        x2={200}
+        y2={crossSectionOffset() * 2}
+        stroke="black"
+        stroke-width="1"
+      />
     </svg>
   );
 }

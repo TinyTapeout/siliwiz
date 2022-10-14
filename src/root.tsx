@@ -14,6 +14,7 @@ export default function Root() {
       </Head>
       <Body>
         <ErrorBoundary>
+          <h1>Siliwiz</h1>
           <Palette />
           <Editor />
         </ErrorBoundary>

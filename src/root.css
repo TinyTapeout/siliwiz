@@ -16,10 +16,10 @@ main {
 h1 {
   color: #335d92;
   text-transform: uppercase;
-  font-size: 4rem;
+  font-size: 2rem;
   font-weight: 100;
   line-height: 1.1;
-  margin: 4rem auto;
+  margin: 1rem;
   max-width: 14rem;
 }
 
