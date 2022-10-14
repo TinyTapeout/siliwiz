@@ -1,8 +1,7 @@
 // @refresh reload
-import { Suspense, lazy } from 'solid-js';
+import { lazy, Suspense } from 'solid-js';
 import { Body, ErrorBoundary, Head, Html, Meta, Scripts, Title } from 'solid-start';
-import Editor from './components/Editor';
-import Palette from './components/Palette';
+import LayoutView from './components/LayoutView';
 import './root.css';
 
 export default function Root() {
@@ -18,8 +17,7 @@ export default function Root() {
       <Body>
         <ErrorBoundary>
           <h1>Siliwiz</h1>
-          <Palette />
-          <Editor />
+          <LayoutView />
           <Suspense fallback={<div>Loading graph...</div>}>
             <Graph />
           </Suspense>
