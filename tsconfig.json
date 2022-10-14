@@ -2,6 +2,8 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",

@@ -231,7 +231,7 @@ const data = [
 ];
 
 export default function Graph() {
-  let graphDiv: HTMLDivElement;
+  let graphDiv: HTMLDivElement | undefined;
 
   onMount(() => {
     const layout = {
@@ -245,6 +245,10 @@ export default function Graph() {
     };
 
     createEffect(() => {
+      if (!graphDiv) {
+        return;
+      }
+
       react(
         graphDiv,
         [

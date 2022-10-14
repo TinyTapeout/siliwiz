@@ -38,6 +38,10 @@ export default function CrossSection() {
         <For each={crossRects()}>
           {(rect) => {
             const layer = layerTypes.find((l) => l.name === rect.layer);
+            if (!layer) {
+              return;
+            }
+
             return (
               <rect
                 x={rect.x}

@@ -1,11 +1,32 @@
-import { For, Show } from 'solid-js';
+import { createSignal, For, Show } from 'solid-js';
 import { layerTypes } from '~/model/layerTypes';
-import { layout } from '~/model/layout';
+import { layout, setLayout } from '~/model/layout';
 import { viewerState } from '~/model/viewerState';
 
 export default function Canvas() {
+  const [selectedRectIndex, setSelectedRectIndex] = createSignal<number | null>(null);
+
+  const selectedRect = () => {
+    const index = selectedRectIndex();
+    return index != null ? layout.rects[index] : null;
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Delete') {
+      setLayout('rects', (rects) => rects.filter((r, index) => index !== selectedRectIndex()));
+      setSelectedRectIndex(null);
+    }
+  };
+
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+    <svg
+      tabIndex={0}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 200 200"
+      width="200"
+      height="200"
+      onkeydown={handleKeyDown}
+    >
       <defs>
         <pattern
           id="hatch-pattern"
@@ -21,10 +42,13 @@ export default function Canvas() {
         </mask>
       </defs>
       <For each={layout.rects}>
-        {(rect) => {
+        {(rect, index) => {
           const layer = layerTypes.find((l) => l.name === rect.layer);
-          const hidden = () => viewerState.hiddenLayers.includes(layer.name);
+          if (!layer) {
+            return;
+          }
 
+          const hidden = () => viewerState.hiddenLayers.includes(layer.name);
           return (
             <Show when={!hidden()}>
               <rect
@@ -34,11 +58,22 @@ export default function Canvas() {
                 width={rect.width}
                 fill={layer.color}
                 mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
+                onClick={() => setSelectedRectIndex(index)}
               />
             </Show>
           );
         }}
       </For>
+      {selectedRect() && (
+        <rect
+          x={selectedRect()!.x}
+          y={selectedRect()!.y}
+          height={selectedRect()!.height}
+          width={selectedRect()!.width}
+          fill="none"
+          stroke="red"
+        />
+      )}
       <line
         x1={0}
         y1={viewerState.crossSectionY}
