@@ -16,6 +16,17 @@ export default function LayoutView() {
       >
         Download magic
       </button>
+      <button
+        onClick={async () => {
+          const magic = toMagic(layout)
+          const res = await fetch('https://siliwiz-server-73miufol2q-uc.a.run.app/magic', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({magicFile :magic})})
+          const data = await res.json()
+          console.log(data)
+          downloadFile('siliwiz.spice', data.spiceFile);
+        }}
+      >
+        Download SPICE
+      </button>
     </>
   );
 }
