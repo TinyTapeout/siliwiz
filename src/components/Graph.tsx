@@ -1,7 +1,7 @@
 import { react } from 'plotly.js-basic-dist';
-import { createEffect, onMount } from 'solid-js';
+import { createEffect, createSignal, onMount } from 'solid-js';
 
-const data = [
+export const [data, setData] = createSignal([
   // 'time',         'GATE',         'DRAIN'
   [0.0, 0.0, 1.8],
   [1.0e-14, 0.0, 1.8],
@@ -228,7 +228,7 @@ const data = [
   [1.983e-9, 0.0, 1.8],
   [1.993e-9, 0.0, 1.8],
   [2.0e-9, 0.0, 1.8],
-];
+]);
 
 export default function Graph() {
   let graphDiv: HTMLDivElement | undefined;
@@ -248,19 +248,20 @@ export default function Graph() {
       if (!graphDiv) {
         return;
       }
+      const table = data();
 
       react(
         graphDiv,
         [
           {
-            x: data.map((row) => row[0]),
-            y: data.map((row) => row[1]),
+            x: table.map((row) => row[0]),
+            y: table.map((row) => row[1]),
             name: 'GATE',
             type: 'scatter',
           },
           {
-            x: data.map((row) => row[0]),
-            y: data.map((row) => row[2]),
+            x: table.map((row) => row[0]),
+            y: table.map((row) => row[2]),
             name: 'DRAIN',
             type: 'scatter',
           },
