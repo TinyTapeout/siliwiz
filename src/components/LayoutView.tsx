@@ -16,6 +16,7 @@ export default function LayoutView() {
       >
         Download magic
       </button>
+      &nbsp;
       <button
         onClick={async () => {
           const magic = toMagic(layout)

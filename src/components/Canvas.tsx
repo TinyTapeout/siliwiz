@@ -51,28 +51,42 @@ export default function Canvas() {
           const hidden = () => viewerState.hiddenLayers.includes(layer.name);
           return (
             <Show when={!hidden()}>
-              <rect
-                x={rect.x}
-                y={rect.y}
-                height={rect.height}
-                width={rect.width}
-                fill={layer.color}
-                mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
-                onClick={() => setSelectedRectIndex(index)}
-              />
+              <g onClick={() => setSelectedRectIndex(index)}>
+                <rect
+                  x={rect.x}
+                  y={rect.y}
+                  height={rect.height}
+                  width={rect.width}
+                  fill={layer.color}
+                  mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
+                />
+                <Show when={rect.label}>
+                  <text
+                    style={{ 'user-select': 'none' }}
+                    x={rect.x + rect.width / 2}
+                    y={rect.y}
+                    text-anchor="middle"
+                    alignment-baseline="before-edge"
+                  >
+                    {rect.label}
+                  </text>
+                </Show>
+              </g>
             </Show>
           );
         }}
       </For>
       {selectedRect() && (
-        <rect
-          x={selectedRect()!.x}
-          y={selectedRect()!.y}
-          height={selectedRect()!.height}
-          width={selectedRect()!.width}
-          fill="none"
-          stroke="red"
-        />
+        <>
+          <rect
+            x={selectedRect()!.x}
+            y={selectedRect()!.y}
+            height={selectedRect()!.height}
+            width={selectedRect()!.width}
+            fill="none"
+            stroke="red"
+          />
+        </>
       )}
       <line
         x1={0}
