@@ -1,5 +1,5 @@
 import { react } from 'plotly.js-basic-dist';
-import { createEffect, createSignal, onMount } from 'solid-js';
+import { createEffect, onMount } from 'solid-js';
 
 const data = [
   // 'time',         'GATE',         'DRAIN'
