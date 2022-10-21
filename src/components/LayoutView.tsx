@@ -1,13 +1,10 @@
 import { layout } from '~/model/layout';
 import { toMagic } from '~/model/toMagic';
-import { simulate } from '~/spice/simulate';
 import { downloadFile } from '~/utils/download-file';
 import Editor from './Editor';
 import Palette from './Palette';
 
 export default function LayoutView() {
-  simulate('');
-
   return (
     <>
       <Palette />
@@ -22,6 +19,7 @@ export default function LayoutView() {
       &nbsp;
       <button
         onClick={async () => {
+          const start = new Date().getTime();
           const magic = toMagic(layout);
           const res = await fetch('https://siliwiz-server-73miufol2q-uc.a.run.app/magic', {
             method: 'POST',
@@ -29,11 +27,11 @@ export default function LayoutView() {
             body: JSON.stringify({ magicFile: magic }),
           });
           const data = await res.json();
-          console.log(data);
           downloadFile('siliwiz.spice', data.spiceFile);
+          console.log('Download time:', new Date().getTime() - start, 'ms');
         }}
       >
-        Download SPICE
+        Download Extracted Spice
       </button>
     </>
   );
