@@ -2,7 +2,11 @@ import { ILayout, ILayoutRect } from '~/model/layout';
 import { layerTypes } from './layerTypes';
 
 function magicRect(rect: ILayoutRect) {
-  return `${rect.x} ${rect.y} ${rect.x + rect.width} ${rect.y + rect.height}`;
+  const x = Math.round(rect.x);
+  const y = Math.round(rect.y);
+  const width = Math.round(rect.x + rect.width);
+  const height = Math.round(rect.y + rect.height);
+  return `${x} ${y} ${width} ${height}`;
 }
 
 export function toMagic(layout: ILayout) {
