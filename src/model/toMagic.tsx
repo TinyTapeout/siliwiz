@@ -9,11 +9,11 @@ function magicRect(rect: ILayoutRect) {
   return `${x} ${y} ${width} ${height}`;
 }
 
-export function toMagic(layout: ILayout) {
+export function toMagic(layout: ILayout, tech: string = `sky130A`) {
   const result = [
     `magic`,
-    `tech sky130A`,
-    `magscale 1 2`,
+    `tech ${tech}`,
+    `magscale 1 ${tech === 'sky130A' ? 2 : 1}`,
     `timestamp ${Math.floor(new Date().getTime() / 1000)}`,
   ];
   for (const layer of layerTypes) {

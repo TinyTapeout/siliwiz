@@ -7,6 +7,9 @@ import DRCList from './DRCList';
 import Editor from './Editor';
 import Palette from './Palette';
 
+const serverUrl = 'https://siliwiz-server-73miufol2q-uc.a.run.app/magic';
+// const serverUrl = 'http://localhost:8086/magic';
+
 interface IMagicResponse {
   spiceFile: string;
   magicOutput: string;
@@ -14,11 +17,27 @@ interface IMagicResponse {
 
 export default function LayoutView() {
   const [drc, setDRC] = createSignal<IDRCItem[]>([]);
+  const [tech, setTech] = createSignal<'sky130A' | 'sample_6m'>('sky130A');
 
   return (
     <>
       <Palette />
       <Editor />
+      <div>
+        Tech:{' '}
+        <label>
+          <input type="radio" checked={tech() === 'sky130A'} onClick={() => setTech('sky130A')} />{' '}
+          sky130A
+        </label>{' '}
+        <label>
+          <input
+            type="radio"
+            checked={tech() === 'sample_6m'}
+            onClick={() => setTech('sample_6m')}
+          />{' '}
+          sample_6m
+        </label>
+      </div>
       <button
         onClick={() => {
           downloadFile('siliwiz.mag', toMagic(layout));
@@ -30,11 +49,11 @@ export default function LayoutView() {
       <button
         onClick={async () => {
           const start = new Date().getTime();
-          const magic = toMagic(layout);
-          const res = await fetch('https://siliwiz-server-73miufol2q-uc.a.run.app/magic', {
+          const magic = toMagic(layout, tech());
+          const res = await fetch(serverUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ magicFile: magic }),
+            body: JSON.stringify({ magicFile: magic, tech: tech() }),
           });
           const data: IMagicResponse = await res.json();
           setDRC(parseMagicDRC(data.magicOutput));
@@ -47,11 +66,11 @@ export default function LayoutView() {
       <button
         onClick={async () => {
           const start = new Date().getTime();
-          const magic = toMagic(layout);
-          const res = await fetch('https://siliwiz-server-73miufol2q-uc.a.run.app/magic', {
+          const magic = toMagic(layout, tech());
+          const res = await fetch(serverUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ magicFile: magic }),
+            body: JSON.stringify({ magicFile: magic, tech: tech() }),
           });
           const data: IMagicResponse = await res.json();
           downloadFile('siliwiz.spice', data.spiceFile);
