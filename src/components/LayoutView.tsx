@@ -1,7 +1,7 @@
 import { createSignal } from 'solid-js';
 import { IDRCItem, parseMagicDRC } from '~/model/drc';
 import { layout } from '~/model/layout';
-import { toMagic } from '~/model/toMagic';
+import { toMagic } from '~/model/magic';
 import { downloadFile } from '~/utils/download-file';
 import DRCList from './DRCList';
 import Editor from './Editor';
