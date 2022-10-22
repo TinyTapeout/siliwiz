@@ -16,7 +16,7 @@ interface IMagicResponse {
 }
 
 export default function LayoutView() {
-  const [drc, setDRC] = createSignal<IDRCItem[]>([]);
+  const [drc, setDRC] = createSignal<IDRCItem[] | undefined>();
   const [tech, setTech] = createSignal<'sky130A' | 'sample_6m'>('sky130A');
 
   return (
@@ -49,6 +49,7 @@ export default function LayoutView() {
       <button
         onClick={async () => {
           const start = new Date().getTime();
+          setDRC(undefined);
           const magic = toMagic(layout, tech());
           const res = await fetch(serverUrl, {
             method: 'POST',
