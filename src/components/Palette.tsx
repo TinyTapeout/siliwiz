@@ -1,6 +1,6 @@
-import { createSignal, For } from 'solid-js';
+import { For } from 'solid-js';
 import { layerTypes } from '~/model/layerTypes';
-import { viewerState, setViewerState } from '~/model/viewerState';
+import { setViewerState, viewerState } from '~/model/viewerState';
 import styles from './Palette.module.css';
 
 export default function Palette() {

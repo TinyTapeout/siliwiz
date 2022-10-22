@@ -1,0 +1,4 @@
+diff --git a/node_modules/solid-record/dist/cjs/index.js b/node_modules/solid-record/dist/cjs/index.cjs
+similarity index 100%
+rename from node_modules/solid-record/dist/cjs/index.js
+rename to node_modules/solid-record/dist/cjs/index.cjs

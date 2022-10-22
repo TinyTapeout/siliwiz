@@ -1,9 +1,8 @@
-import { createSignal, Show } from 'solid-js';
+import { createSignal } from 'solid-js';
 import { IDRCItem, parseMagicDRC } from '~/model/drc';
 import { layout } from '~/model/layout';
 import { toMagic } from '~/model/toMagic';
 import { downloadFile } from '~/utils/download-file';
-import { parseTCLList } from '~/utils/tcl-parser';
 import DRCList from './DRCList';
 import Editor from './Editor';
 import Palette from './Palette';
