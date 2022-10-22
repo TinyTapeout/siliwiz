@@ -77,18 +77,18 @@ export default function Canvas() {
           );
         }}
       </For>
-      {selectedRect() && (
-        <>
+      <Show when={selectedRect()} keyed>
+        {(rect) => (
           <rect
-            x={selectedRect()!.x}
-            y={selectedRect()!.y}
-            height={selectedRect()!.height}
-            width={selectedRect()!.width}
+            x={rect.x}
+            y={rect.y}
+            height={rect.height}
+            width={rect.width}
             fill="none"
             stroke="blue"
           />
-        </>
-      )}
+        )}
+      </Show>
       {activeDRCItem()?.coords.map((rect) => (
         <rect
           x={rect.x0}
