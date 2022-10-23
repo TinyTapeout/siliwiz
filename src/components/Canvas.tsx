@@ -125,22 +125,28 @@ export default function Canvas() {
                   fill={layer.color}
                   mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
                 />
-                <Show when={rect.label}>
-                  <text
-                    style={{ 'user-select': 'none' }}
-                    x={rect.x + rect.width / 2}
-                    y={rect.y}
-                    text-anchor="middle"
-                    alignment-baseline="before-edge"
-                  >
-                    {rect.label}
-                  </text>
-                </Show>
               </g>
             </Show>
           );
         }}
       </For>
+
+      <For each={layout.rects}>
+        {(rect, index) => (
+          <Show when={rect.label}>
+            <text
+              style={{ 'user-select': 'none' }}
+              x={rect.x + rect.width / 2}
+              y={rect.y}
+              text-anchor="middle"
+              alignment-baseline="before-edge"
+            >
+              {rect.label}
+            </text>
+          </Show>
+        )}
+      </For>
+
       <Show when={selectedRect()} keyed>
         {(rect) => (
           <rect
