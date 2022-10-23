@@ -39,7 +39,7 @@ ${netlist}
 
 * Models:
 .model nmos NMOS (vto=1 tox=15n cbd=20f cbs=20f gamma=0.37)
-.model pmos NMOS (vto=1 tox=15n cbd=20f cbs=20f gamma=0.37)
+.model pmos PMOS (vto=1 tox=15n cbd=20f cbs=20f gamma=0.37)
 
 * Simulation parameters:
 .tran 500n 50u
