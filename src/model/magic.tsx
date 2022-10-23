@@ -1,4 +1,4 @@
-import { ILayout, ILayoutRect } from '~/model/layout';
+import { ILayout, ILayoutRect, sortRects } from '~/model/layout';
 import { Point2D } from '~/utils/geometry';
 import { layerTypes } from './layerTypes';
 
@@ -48,7 +48,19 @@ export function fromMagic(source: string, translate: Point2D = { x: 0, y: 0 }, s
       }
     }
   }
-  return { rects } as ILayout;
+  for (const rect of rects) {
+    const layer = layerTypes.find((l) => l.name === rect.layer);
+    for (const intersectLayer of layer?.intersectLayers ?? []) {
+      rects.push({
+        x: rect.x,
+        y: rect.y,
+        width: rect.width,
+        height: rect.height,
+        layer: intersectLayer,
+      });
+    }
+  }
+  return { rects: sortRects(rects) } as ILayout;
 }
 
 export function toMagic(layout: ILayout, tech: string = `sky130A`) {

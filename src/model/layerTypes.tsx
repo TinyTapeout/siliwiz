@@ -5,6 +5,9 @@ export interface ILayerInfo {
   hatched?: boolean;
   crossY: number;
   crossHeight: number;
+
+  /* List of layers that always intersect with this layer */
+  intersectLayers?: string[];
 }
 
 export const layerTypes: ILayerInfo[] = [
@@ -13,7 +16,7 @@ export const layerTypes: ILayerInfo[] = [
     magicName: 'pmos',
     color: '#cccc00',
     hatched: true,
-    crossY: 80,
+    crossY: 100,
     crossHeight: 200,
   },
   // { name: 'N DIFF', magicName: 'ndiff', color: '#8080ff', crossY: 80, crossHeight: 20 },
@@ -24,49 +27,74 @@ export const layerTypes: ILayerInfo[] = [
     name: 'ntransistor',
     magicName: 'ntransistor',
     color: 'rgb(169, 131, 101)',
-    crossY: 80,
-    crossHeight: 20,
+    crossY: 100,
+    crossHeight: 0,
+    intersectLayers: ['ndiffusion', 'polysilicon'],
   },
   {
     name: 'ptransistor',
     magicName: 'ptransistor',
     color: 'rgb(184,  73, 83)',
-    crossY: 80,
-    crossHeight: 20,
+    crossY: 100,
+    crossHeight: 0,
+    intersectLayers: ['pdiffusion', 'polysilicon'],
   },
   {
     name: 'nwell',
     magicName: 'nwell',
     color: 'gray',
-    crossY: 80,
-    crossHeight: 20,
+    crossY: 100,
+    crossHeight: 30,
     hatched: true,
   },
-  { name: 'ndiffusion', magicName: 'ndiffusion', color: '#8080ff', crossY: 70, crossHeight: 10 },
-  { name: 'pdiffusion', magicName: 'pdiffusion', color: '#4040ff', crossY: 70, crossHeight: 10 },
-  { name: 'pdcontact', magicName: 'pdcontact', color: '#ffff80', crossY: 70, crossHeight: 10 },
-  { name: 'ndcontact', magicName: 'ndcontact', color: '#ff80ff', crossY: 70, crossHeight: 10 },
+  { name: 'ndiffusion', magicName: 'ndiffusion', color: '#8080ff', crossY: 100, crossHeight: 15 },
+  { name: 'pdiffusion', magicName: 'pdiffusion', color: '#4040ff', crossY: 100, crossHeight: 15 },
+  {
+    name: 'pdcontact',
+    magicName: 'pdcontact',
+    color: '#ffff80',
+    crossY: 70,
+    crossHeight: 30,
+    intersectLayers: ['metal1', 'pdiffusion'],
+  },
+  {
+    name: 'ndcontact',
+    magicName: 'ndcontact',
+    color: '#ff80ff',
+    crossY: 70,
+    crossHeight: 30,
+    intersectLayers: ['metal1', 'ndiffusion'],
+  },
   {
     name: 'nsubstratencontact',
     magicName: 'nsubstratencontact',
     color: 'purple',
     crossY: 70,
-    crossHeight: 10,
+    crossHeight: 30,
+    intersectLayers: ['metal1', 'nwell'],
   },
   {
     name: 'psubstratepcontact',
     magicName: 'psubstratepcontact',
     color: 'orange',
     crossY: 70,
-    crossHeight: 10,
+    crossHeight: 30,
+    intersectLayers: ['metal1', 'P SUB'],
   },
   {
     name: 'polysilicon',
     magicName: 'polysilicon',
     color: 'rgb(220, 95, 95)',
-    crossY: 70,
+    crossY: 85,
     crossHeight: 10,
   },
-  { name: 'polycontact', magicName: 'polycontact', color: '#80ff80', crossY: 60, crossHeight: 10 },
-  { name: 'metal1', magicName: 'metal1', color: 'rgb(125, 166, 250)', crossY: 50, crossHeight: 10 },
+  {
+    name: 'polycontact',
+    magicName: 'polycontact',
+    color: '#80ff80',
+    crossY: 70,
+    crossHeight: 15,
+    intersectLayers: ['metal1', 'polysilicon'],
+  },
+  { name: 'metal1', magicName: 'metal1', color: 'rgb(125, 166, 250)', crossY: 55, crossHeight: 15 },
 ];
