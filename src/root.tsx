@@ -2,9 +2,9 @@
 import { lazy, Suspense } from 'solid-js';
 import { Body, ErrorBoundary, Head, Html, Meta, Scripts, Title } from 'solid-start';
 import LayoutView from './components/LayoutView';
-import SimulationParams, { gateLength } from './components/SimulationParams';
+import SimulationParams from './components/SimulationParams';
 import './root.css';
-import { spiceFile } from './sim/simulate';
+import { spiceFile } from './model/spiceFile';
 
 export default function Root() {
   const Graph = lazy(() => import('./components/Graph'));
@@ -25,7 +25,7 @@ export default function Root() {
           <Suspense fallback={<div>Loading graph...</div>}>
             <Graph />
           </Suspense>
-          <textarea value={spiceFile(1, gateLength())} cols="100" rows="15" readonly />
+          <textarea value={spiceFile()} cols="100" rows="15" readonly />
         </ErrorBoundary>
         <Scripts />
       </Body>

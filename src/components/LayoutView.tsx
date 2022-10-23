@@ -2,6 +2,7 @@ import { createSignal } from 'solid-js';
 import { IDRCItem, parseMagicDRC } from '~/model/drc';
 import { layout } from '~/model/layout';
 import { toMagic } from '~/model/magic';
+import { setSpiceInput } from '~/model/spiceFile';
 import { downloadFile } from '~/utils/download-file';
 import DRCList from './DRCList';
 import Editor from './Editor';
@@ -17,7 +18,7 @@ interface IMagicResponse {
 
 export default function LayoutView() {
   const [drc, setDRC] = createSignal<IDRCItem[] | undefined>();
-  const [tech, setTech] = createSignal<'sky130A' | 'sample_6m'>('sky130A');
+  const [tech, setTech] = createSignal<'sky130A' | 'sample_6m'>('sample_6m');
 
   return (
     <>
@@ -74,11 +75,11 @@ export default function LayoutView() {
             body: JSON.stringify({ magicFile: magic, tech: tech() }),
           });
           const data: IMagicResponse = await res.json();
-          downloadFile('siliwiz.spice', data.spiceFile);
+          setSpiceInput(data.spiceFile);
           console.log('Download time:', new Date().getTime() - start, 'ms');
         }}
       >
-        Download Extracted Spice
+        Run ngspice
       </button>
       <DRCList drc={drc()} />
     </>

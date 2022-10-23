@@ -1,7 +1,5 @@
 import { createSignal } from 'solid-js';
 
-export const [simulationResult, setSimulationResult] = createSignal([
+export const [simulationResult, setSimulationResult] = createSignal<number[][]>([
   // 'time', 'IN', 'OUT'
-  [0.0, 0.0, 1.8],
-  [1.0, 1.8, 0.0],
 ]);
