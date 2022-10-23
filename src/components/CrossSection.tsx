@@ -1,6 +1,6 @@
 import { For } from 'solid-js';
 import { layerTypes } from '~/model/layerTypes';
-import { layout } from '~/model/layout';
+import { layout, rectLayer } from '~/model/layout';
 import { viewerState, setViewerState } from '~/model/viewerState';
 
 export default function CrossSection() {
@@ -37,7 +37,7 @@ export default function CrossSection() {
         </defs>
         <For each={crossRects()}>
           {(rect) => {
-            const layer = layerTypes.find((l) => l.name === rect.layer);
+            const layer = rectLayer(rect);
             if (!layer) {
               return;
             }

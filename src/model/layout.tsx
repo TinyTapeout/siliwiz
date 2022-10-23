@@ -72,6 +72,10 @@ port 2 nsew
 << end >>
 `;
 
+export function rectLayer(rect: Pick<ILayoutRect, 'layer'>) {
+  return layerTypes.find((l) => l.name === rect.layer);
+}
+
 export function sortRects(rects: ILayoutRect[]) {
   return rects.sort((a, b) => {
     const layerA = layerTypes.findIndex((l) => l.name === a.layer);

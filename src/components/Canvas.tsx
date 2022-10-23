@@ -1,7 +1,7 @@
 import { createSignal, For, Show } from 'solid-js';
 import { activeDRCItem } from '~/model/drc';
 import { layerTypes } from '~/model/layerTypes';
-import { layout, layoutUndo, setLayout, sortRects } from '~/model/layout';
+import { layout, layoutUndo, rectLayer, setLayout, sortRects } from '~/model/layout';
 import { viewerState } from '~/model/viewerState';
 import { domRectFromPoints, Point2D } from '~/utils/geometry';
 import { ctrlCmdPressed } from '~/utils/keyboard';
@@ -108,7 +108,7 @@ export default function Canvas() {
       </defs>
       <For each={layout.rects}>
         {(rect, index) => {
-          const layer = layerTypes.find((l) => l.name === rect.layer);
+          const layer = rectLayer(rect);
           if (!layer) {
             return;
           }
@@ -162,7 +162,7 @@ export default function Canvas() {
 
       <Show when={newRect()} keyed>
         {(rect) => {
-          const layer = layerTypes.find((l) => l.name === rect.layer);
+          const layer = rectLayer(rect);
           if (!layer) {
             return;
           }
