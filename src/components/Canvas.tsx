@@ -135,7 +135,7 @@ export default function Canvas() {
         {(rect, index) => (
           <Show when={rect.label}>
             <text
-              style={{ 'user-select': 'none' }}
+              style={{ 'user-select': 'none', 'pointer-events': 'none' }}
               x={rect.x + rect.width / 2}
               y={rect.y}
               text-anchor="middle"
