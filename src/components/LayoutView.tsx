@@ -49,8 +49,8 @@ export default function LayoutView() {
       &nbsp;
       <button
         onClick={async () => {
-          const start = new Date().getTime();
           setDRC(undefined);
+          const start = new Date().getTime();
           const magic = toMagic(layout, tech());
           const res = await fetch(serverUrl, {
             method: 'POST',
@@ -59,27 +59,11 @@ export default function LayoutView() {
           });
           const data: IMagicResponse = await res.json();
           setDRC(parseMagicDRC(data.magicOutput));
-          console.log('Download time:', new Date().getTime() - start, 'ms');
-        }}
-      >
-        Magic DRC
-      </button>
-      &nbsp;
-      <button
-        onClick={async () => {
-          const start = new Date().getTime();
-          const magic = toMagic(layout, tech());
-          const res = await fetch(serverUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ magicFile: magic, tech: tech() }),
-          });
-          const data: IMagicResponse = await res.json();
           setSpiceInput(data.spiceFile);
           console.log('Download time:', new Date().getTime() - start, 'ms');
         }}
       >
-        Run ngspice
+        Magic DRC + Extract spice
       </button>
       <DRCList drc={drc()} />
     </>
