@@ -5,6 +5,7 @@ import { layout, layoutUndo, rectLayer, setLayout, sortRects } from '~/model/lay
 import { viewerState } from '~/model/viewerState';
 import { domRectFromPoints, Point2D } from '~/utils/geometry';
 import { ctrlCmdPressed } from '~/utils/keyboard';
+import Scale from './Scale';
 
 interface INewRect {
   layer: string;
@@ -200,6 +201,8 @@ export default function Canvas(props: { size: number }) {
         stroke="black"
         stroke-width="1"
       />
+
+      <Scale y={props.size} />
     </svg>
   );
 }
