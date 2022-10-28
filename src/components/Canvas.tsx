@@ -12,7 +12,7 @@ interface INewRect {
   end: Point2D;
 }
 
-export default function Canvas() {
+export default function Canvas(props: { size: number }) {
   const [selectedRectIndex, setSelectedRectIndex] = createSignal<number | null>(null);
   const [svgRef, setSVGRef] = createSignal<SVGSVGElement | null>(null);
   const [newRect, setNewRect] = createSignal<INewRect | null>(null);
@@ -83,9 +83,9 @@ export default function Canvas() {
     <svg
       tabIndex={0}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 200 200"
-      width="200"
-      height="200"
+      viewBox={`0 0 ${props.size} ${props.size}`}
+      width={props.size}
+      height={props.size}
       ref={setSVGRef}
       onkeydown={handleKeyDown}
       onmousedown={handleMouseDown}
@@ -195,7 +195,7 @@ export default function Canvas() {
       <line
         x1={0}
         y1={viewerState.crossSectionY}
-        x2={200}
+        x2={props.size}
         y2={viewerState.crossSectionY}
         stroke="black"
         stroke-width="1"

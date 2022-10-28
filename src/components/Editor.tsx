@@ -1,3 +1,4 @@
+import { createSignal } from 'solid-js';
 import { layout, layoutUndo, setLayout } from '~/model/layout';
 import { downloadFile } from '~/utils/download-file';
 import { openFiles } from '~/utils/files';
@@ -36,6 +37,8 @@ export default function Editor() {
     );
   };
 
+  const [canvasSize, setCanvasSize] = createSignal(1);
+
   return (
     <>
       <div style={{ 'margin-top': '16px' }}>
@@ -52,8 +55,19 @@ export default function Editor() {
         <button onClick={saveDesign}>Save</button>
       </div>
       <div style={{ display: 'flex' }}>
-        <Canvas />
-        <CrossSection />
+        <Canvas size={canvasSize() * 200} />
+        <CrossSection height={canvasSize() * 200} />
+      </div>
+      <div>
+        Canvas size:{' '}
+        <label>
+          <input type="radio" checked={canvasSize() === 1} onClick={() => setCanvasSize(1)} />
+          x1
+        </label>
+        <label>
+          <input type="radio" checked={canvasSize() === 2} onClick={() => setCanvasSize(2)} />
+          x2
+        </label>
       </div>
     </>
   );

@@ -1,19 +1,24 @@
 import { For } from 'solid-js';
-import { layerTypes } from '~/model/layerTypes';
 import { layout, rectLayer } from '~/model/layout';
-import { viewerState, setViewerState } from '~/model/viewerState';
+import { setViewerState, viewerState } from '~/model/viewerState';
 
-export default function CrossSection() {
+export default function CrossSection(props: { height: number }) {
   const crossRects = () =>
     layout.rects.filter(
       (r) => r.y <= viewerState.crossSectionY && r.y + r.height >= viewerState.crossSectionY,
     );
+  const sliderTranslate = () => `-${props.height / 2 - 15}px, ${props.height / 2 - 10}px`;
   return (
     <div style={{ display: 'flex' }}>
       <span style={{ width: '30px' }}>
         <input
           type="range"
-          style={{ transform: 'translate(-85px, 90px) rotate(90deg)', width: '200px' }}
+          min={0}
+          max={props.height}
+          style={{
+            transform: `translate(${sliderTranslate()}) rotate(90deg)`,
+            width: props.height + 'px',
+          }}
           value={viewerState.crossSectionOffset}
           onInput={(e) =>
             setViewerState('crossSectionOffset', (e.target as HTMLInputElement).valueAsNumber)

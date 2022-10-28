@@ -9,10 +9,10 @@ export interface IViewerState {
 }
 
 export const [viewerState, setViewerState] = createStore<IViewerState>({
-  crossSectionOffset: 50,
+  crossSectionOffset: 100,
   hiddenLayers: [],
 
   get crossSectionY() {
-    return this.crossSectionOffset * 2;
+    return this.crossSectionOffset;
   },
 });
