@@ -1,7 +1,6 @@
 import { createSignal, For, Show } from 'solid-js';
 import { activeDRCItem } from '~/model/drc';
-import { layerTypes } from '~/model/layerTypes';
-import { layout, layoutUndo, rectLayer, setLayout, sortRects } from '~/model/layout';
+import { ILayoutRect, layout, layoutUndo, rectLayer, setLayout, sortRects } from '~/model/layout';
 import { viewerState } from '~/model/viewerState';
 import { domRectFromPoints, Point2D } from '~/utils/geometry';
 import { ctrlCmdPressed } from '~/utils/keyboard';
@@ -80,6 +79,13 @@ export default function Canvas(props: { size: number }) {
     }
   };
 
+  const rectDoubleClick = (rect: ILayoutRect, index: number) => {
+    const label = prompt('Enter new label (or an empty string to delete label)', rect.label);
+    if (label != null) {
+      setLayout('rects', index, { ...rect, label });
+    }
+  };
+
   return (
     <svg
       tabIndex={0}
@@ -117,7 +123,16 @@ export default function Canvas(props: { size: number }) {
           const hidden = () => viewerState.hiddenLayers.includes(layer.name);
           return (
             <Show when={!hidden()}>
-              <g onClick={() => setSelectedRectIndex(index)}>
+              <g
+                onClick={() => setSelectedRectIndex(index)}
+                onDblClick={(e) => rectDoubleClick(rect, index())}
+                onMouseDown={(e) => {
+                  if (e.detail > 1) {
+                    // Prevent text selection on double click
+                    e.preventDefault();
+                  }
+                }}
+              >
                 <rect
                   x={rect.x}
                   y={rect.y}
