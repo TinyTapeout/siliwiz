@@ -18,17 +18,15 @@ export interface ILayout {
 
 const inverter = `magic
 tech sample_6m
-timestamp 1666466782
+timestamp 1666617554
 << nwell >>
 rect -12 14 13 41
-<< ntransistor >>
-rect 0 2 2 7
-<< ptransistor >>
-rect 0 19 2 24
 << ndiffusion >>
+rect 0 2 2 7
 rect -1 2 0 7
 rect 2 2 3 7
 << pdiffusion >>
+rect 0 19 2 24
 rect -1 19 0 24
 rect 2 19 3 24
 << ndcontact >>
@@ -42,6 +40,8 @@ rect -6 -13 8 -8
 << nsubstratencontact >>
 rect -6 34 8 39
 << polysilicon >>
+rect 0 2 2 7
+rect 0 19 2 24
 rect 0 24 2 27
 rect 0 15 2 19
 rect -3 11 2 15

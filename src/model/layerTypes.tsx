@@ -24,22 +24,6 @@ export const layerTypes: ILayerInfo[] = [
   // { name: 'CONTACT', magicName: 'polycont', color: '#80ff80', crossY: 70, crossHeight: 10 },
 
   {
-    name: 'ntransistor',
-    magicName: 'ntransistor',
-    color: 'rgb(169, 131, 101)',
-    crossY: 100,
-    crossHeight: 0,
-    intersectLayers: ['ndiffusion', 'polysilicon'],
-  },
-  {
-    name: 'ptransistor',
-    magicName: 'ptransistor',
-    color: 'rgb(184,  73, 83)',
-    crossY: 100,
-    crossHeight: 0,
-    intersectLayers: ['pdiffusion', 'polysilicon'],
-  },
-  {
     name: 'nwell',
     magicName: 'nwell',
     color: 'gray',
