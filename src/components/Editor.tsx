@@ -37,11 +37,15 @@ export default function Editor() {
     );
   };
 
+  const clear = () => {
+    setLayout('rects', []);
+  };
+
   const canvasSize = () => 2;
 
   return (
     <>
-      <div style={{ 'margin': '16px 0 8px' }}>
+      <div style={{ margin: '16px 0 8px' }}>
         <button onClick={() => layoutUndo.undo()} disabled={!layoutUndo.isUndoable()}>
           Undo
         </button>
@@ -53,6 +57,8 @@ export default function Editor() {
         <button onClick={loadDesign}>Load</button>
         &nbsp;
         <button onClick={saveDesign}>Save</button>
+        &nbsp;
+        <button onClick={clear}>Clear</button>
       </div>
       <div style={{ display: 'flex' }}>
         <Canvas size={canvasSize() * 200} />
