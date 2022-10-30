@@ -49,10 +49,10 @@ export default function CrossSection(props: { height: number }) {
 
             return (
               <rect
-                x={rect.x}
+                x={rect.x / 2}
                 y={layer.crossY}
                 height={layer.crossHeight}
-                width={rect.width}
+                width={rect.width / 2}
                 fill={layer.color}
                 mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
               />
