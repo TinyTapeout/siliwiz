@@ -24,7 +24,7 @@ export default function SimulationParams() {
       Max:{' '}
       <input
         type="range"
-        min="1"
+        min="0"
         max="5"
         step="0.05"
         value={maxInVoltage()}
