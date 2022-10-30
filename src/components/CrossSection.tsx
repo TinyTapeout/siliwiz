@@ -1,4 +1,4 @@
-import { For } from 'solid-js';
+import { For, Show } from 'solid-js';
 import { layout, rectLayer } from '~/model/layout';
 import { setViewerState, viewerState } from '~/model/viewerState';
 
@@ -47,15 +47,19 @@ export default function CrossSection(props: { height: number }) {
               return;
             }
 
+            const hidden = () => viewerState.hiddenLayers.includes(layer.name);
+
             return (
-              <rect
-                x={rect.x}
-                y={layer.crossY}
-                height={layer.crossHeight}
-                width={rect.width}
-                fill={layer.color}
-                mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
-              />
+              <Show when={!hidden()}>
+                <rect
+                  x={rect.x}
+                  y={layer.crossY}
+                  height={layer.crossHeight}
+                  width={rect.width}
+                  fill={layer.color}
+                  mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
+                />
+              </Show>
             );
           }}
         </For>
