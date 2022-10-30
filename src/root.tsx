@@ -5,6 +5,9 @@ import LayoutView from './components/LayoutView';
 import SimulationParams from './components/SimulationParams';
 import './root.css';
 import { spiceFile } from './model/spiceFile';
+import { downloadFile } from './utils/download-file';
+import { toMagic } from './model/magic';
+import { layout } from './model/layout';
 
 export default function Root() {
   const Graph = lazy(() => import('./components/Graph'));
@@ -32,9 +35,16 @@ export default function Root() {
               onclick={(e) => setShowSpice((e.target as HTMLInputElement).checked)}
             />
             Show SPICE
-          </label><br />
+          </label>
+          <br />
           <Show when={showSpice()}>
-            <textarea value={spiceFile()} cols="100" rows="15" readonly />
+            <textarea value={spiceFile()} cols="100" rows="15" readonly /><br />
+            <button onClick={() => downloadFile('siliwiz.mag', toMagic(layout))}>
+              Download MAGIC
+            </button>&nbsp;
+            <button onClick={() => downloadFile('siliwiz.spice', spiceFile())}>
+              Download SPICE
+            </button>
           </Show>
         </ErrorBoundary>
         <Scripts />

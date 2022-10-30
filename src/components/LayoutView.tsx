@@ -3,7 +3,6 @@ import { IDRCItem, parseMagicDRC } from '~/model/drc';
 import { layout } from '~/model/layout';
 import { defaultTech, toMagic } from '~/model/magic';
 import { setSpiceInput } from '~/model/spiceFile';
-import { downloadFile } from '~/utils/download-file';
 import DRCList from './DRCList';
 import Editor from './Editor';
 import Palette from './Palette';
