@@ -18,3 +18,7 @@ export async function openFiles({ accept }: IOpenFilesOptions = {}) {
     };
   });
 }
+
+export function basename(path: string) {
+  return path.replace(/^.*[\\/]/, '');
+}

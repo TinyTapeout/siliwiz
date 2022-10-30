@@ -1,10 +1,10 @@
-import { createSignal } from 'solid-js';
 import { layout, layoutUndo, setLayout } from '~/model/layout';
 import { downloadFile } from '~/utils/download-file';
 import { openFiles } from '~/utils/files';
 import { tryJsonParse } from '~/utils/json';
 import Canvas from './Canvas';
 import CrossSection from './CrossSection';
+import Presets from './Presets';
 
 export default function Editor() {
   const loadDesign = async () => {
@@ -59,6 +59,8 @@ export default function Editor() {
         <button onClick={saveDesign}>Save</button>
         &nbsp;
         <button onClick={clear}>Clear</button>
+        &nbsp;
+        <Presets />
       </div>
       <div style={{ display: 'flex' }}>
         <Canvas size={canvasSize() * 200} />
