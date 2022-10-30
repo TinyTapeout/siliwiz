@@ -1,5 +1,5 @@
 // @refresh reload
-import { lazy, Suspense } from 'solid-js';
+import { createSignal, lazy, Show, Suspense } from 'solid-js';
 import { Body, ErrorBoundary, Head, Html, Meta, Scripts, Title } from 'solid-start';
 import LayoutView from './components/LayoutView';
 import SimulationParams from './components/SimulationParams';
@@ -8,6 +8,7 @@ import { spiceFile } from './model/spiceFile';
 
 export default function Root() {
   const Graph = lazy(() => import('./components/Graph'));
+  const [showSpice, setShowSpice] = createSignal(false);
 
   return (
     <Html lang="en">
@@ -25,7 +26,16 @@ export default function Root() {
           <Suspense fallback={<div>Loading graph...</div>}>
             <Graph />
           </Suspense>
-          <textarea value={spiceFile()} cols="100" rows="15" readonly />
+          <label>
+            <input
+              type="checkbox"
+              onclick={(e) => setShowSpice((e.target as HTMLInputElement).checked)}
+            />
+            Show SPICE
+          </label><br />
+          <Show when={showSpice()}>
+            <textarea value={spiceFile()} cols="100" rows="15" readonly />
+          </Show>
         </ErrorBoundary>
         <Scripts />
       </Body>

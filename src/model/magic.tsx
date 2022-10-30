@@ -2,6 +2,8 @@ import { ILayout, ILayoutRect, rectLayer, sortRects } from '~/model/layout';
 import { Point2D } from '~/utils/geometry';
 import { layerTypes } from './layerTypes';
 
+export const defaultTech = 'sample_6m';
+
 function magicRect(rect: ILayoutRect) {
   const x = Math.round(rect.x);
   const y = Math.round(rect.y);
@@ -63,7 +65,7 @@ export function fromMagic(source: string, translate: Point2D = { x: 0, y: 0 }, s
   return { rects: sortRects(rects) } as ILayout;
 }
 
-export function toMagic(layout: ILayout, tech: string = `sky130A`) {
+export function toMagic(layout: ILayout, tech = defaultTech) {
   const result = [
     `magic`,
     `tech ${tech}`,

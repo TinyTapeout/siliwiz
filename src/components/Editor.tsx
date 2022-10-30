@@ -37,11 +37,11 @@ export default function Editor() {
     );
   };
 
-  const [canvasSize, setCanvasSize] = createSignal(1);
+  const canvasSize = () => 2;
 
   return (
     <>
-      <div style={{ 'margin-top': '16px' }}>
+      <div style={{ 'margin': '16px 0 8px' }}>
         <button onClick={() => layoutUndo.undo()} disabled={!layoutUndo.isUndoable()}>
           Undo
         </button>
@@ -57,17 +57,6 @@ export default function Editor() {
       <div style={{ display: 'flex' }}>
         <Canvas size={canvasSize() * 200} />
         <CrossSection height={canvasSize() * 200} />
-      </div>
-      <div>
-        Canvas size:{' '}
-        <label>
-          <input type="radio" checked={canvasSize() === 1} onClick={() => setCanvasSize(1)} />
-          x1
-        </label>
-        <label>
-          <input type="radio" checked={canvasSize() === 2} onClick={() => setCanvasSize(2)} />
-          x2
-        </label>
       </div>
     </>
   );
