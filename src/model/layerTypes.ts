@@ -19,6 +19,7 @@ export const layerTypes: ILayerInfo[] = [
     hatched: true,
     crossY: 100,
     crossHeight: 200,
+    description: 'p-doped silicon that is the base layer everything else is built on'
   },
   // { name: 'N DIFF', magicName: 'ndiff', color: '#8080ff', crossY: 80, crossHeight: 20 },
   // { name: 'POLY', magicName: 'poly', color: '#ff8080', crossY: 70, crossHeight: 10 },
