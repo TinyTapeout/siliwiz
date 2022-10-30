@@ -42,7 +42,7 @@ ${netlist}
 .model pmos PMOS (vto=1 tox=15n cbd=20f cbs=20f gamma=0.37)
 
 * Simulation parameters:
-.tran 500n 50u
+.tran 500n 60u
 
 .end
 `;
