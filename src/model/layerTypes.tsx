@@ -5,6 +5,7 @@ export interface ILayerInfo {
   hatched?: boolean;
   crossY: number;
   crossHeight: number;
+  description?: string;
 
   /* List of layers that always intersect with this layer */
   intersectLayers?: string[];
@@ -39,6 +40,7 @@ export const layerTypes: ILayerInfo[] = [
     color: '#ffff80',
     crossY: 70,
     crossHeight: 30,
+    description: 'connects between p-diffusion and metal',
     intersectLayers: ['metal1', 'pdiffusion'],
   },
   {
@@ -47,6 +49,7 @@ export const layerTypes: ILayerInfo[] = [
     color: '#ff80ff',
     crossY: 70,
     crossHeight: 30,
+    description: 'connects between n-diffusion and metal',
     intersectLayers: ['metal1', 'ndiffusion'],
   },
   {

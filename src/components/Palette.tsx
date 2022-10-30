@@ -13,6 +13,7 @@ export default function Palette() {
               [styles.item]: true,
               [styles.active]: viewerState.activeLayer == layer.name,
             }}
+            title={layer.description}
             onClick={() => {
               setViewerState('activeLayer', layer.name);
             }}
