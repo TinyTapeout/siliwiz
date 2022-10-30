@@ -3,15 +3,25 @@ import { createSignal, lazy, Show, Suspense } from 'solid-js';
 import { Body, ErrorBoundary, Head, Html, Meta, Scripts, Title } from 'solid-start';
 import LayoutView from './components/LayoutView';
 import SimulationParams from './components/SimulationParams';
-import './root.css';
-import { spiceFile } from './model/spiceFile';
-import { downloadFile } from './utils/download-file';
+import { layout, setLayout } from './model/layout';
 import { toMagic } from './model/magic';
-import { layout } from './model/layout';
+import { spiceFile } from './model/spiceFile';
+import './root.css';
+import { downloadFile } from './utils/download-file';
 
 export default function Root() {
   const Graph = lazy(() => import('./components/Graph'));
   const [showSpice, setShowSpice] = createSignal(false);
+
+  if (typeof location !== 'undefined') {
+    const urlParams = new URLSearchParams(location.search);
+    const preset = urlParams.get('preset');
+    import(`~/../presets/${preset}.json`).then((module) => {
+      if (module && module.rects) {
+        setLayout('rects', module.rects);
+      }
+    });
+  }
 
   return (
     <Html lang="en">
@@ -38,10 +48,12 @@ export default function Root() {
           </label>
           <br />
           <Show when={showSpice()}>
-            <textarea value={spiceFile()} cols="100" rows="15" readonly /><br />
+            <textarea value={spiceFile()} cols="100" rows="15" readonly />
+            <br />
             <button onClick={() => downloadFile('siliwiz.mag', toMagic(layout))}>
               Download MAGIC
-            </button>&nbsp;
+            </button>
+            &nbsp;
             <button onClick={() => downloadFile('siliwiz.spice', spiceFile())}>
               Download SPICE
             </button>
