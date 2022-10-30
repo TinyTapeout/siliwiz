@@ -95,6 +95,13 @@ export const layerTypes: ILayerInfo[] = [
     crossHeight: 10,
   },
   {
+    name: 'polyres',
+    magicName: 'polyres',
+    color: 'gold',
+    crossY: 85,
+    crossHeight: 10,
+  },
+  {
     name: 'polycontact',
     magicName: 'polycontact',
     color: '#80ff80',
