@@ -62,7 +62,14 @@ export default function Canvas(props: { size: number }) {
   const handleMouseUp = (e: MouseEvent) => {
     const rect = newRect();
     if (rect) {
+      setNewRect(null);
+
       const domRect = domRectFromPoints(rect.start, rect.end);
+      if (domRect.width < 3 || domRect.height < 3) {
+        // Don't create a rect that's too small, see https://github.com/wokwi/siliwiz/issues/10
+        return;
+      }
+
       setLayout('rects', (rects) =>
         sortRects([
           ...rects,
@@ -75,7 +82,6 @@ export default function Canvas(props: { size: number }) {
           },
         ]),
       );
-      setNewRect(null);
     }
   };
 
