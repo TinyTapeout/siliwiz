@@ -31,9 +31,10 @@ export const layerTypes: ILayerInfo[] = [
     crossY: 100,
     crossHeight: 30,
     hatched: true,
+    description: 'used to isolate p-diffusion from the p-substrate'
   },
-  { name: 'ndiffusion', magicName: 'ndiffusion', color: '#8080ff', crossY: 100, crossHeight: 15 },
-  { name: 'pdiffusion', magicName: 'pdiffusion', color: '#4040ff', crossY: 100, crossHeight: 15 },
+  { name: 'ndiffusion', magicName: 'ndiffusion', color: '#8080ff', crossY: 100, crossHeight: 15, description: 'n-diffusion layer used to make n mosfets' },
+  { name: 'pdiffusion', magicName: 'pdiffusion', color: '#4040ff', crossY: 100, crossHeight: 15, description: 'p-diffusion layer used to make p mosfets' },
   {
     name: 'pdcontact',
     magicName: 'pdcontact',
@@ -58,6 +59,7 @@ export const layerTypes: ILayerInfo[] = [
     color: 'purple',
     crossY: 70,
     crossHeight: 30,
+    description: 'connects between n-well and metal',
     intersectLayers: ['metal1', 'nwell'],
   },
   {
@@ -66,6 +68,7 @@ export const layerTypes: ILayerInfo[] = [
     color: 'orange',
     crossY: 70,
     crossHeight: 30,
+    description: 'connects between p-substrate and metal',
     intersectLayers: ['metal1', 'P SUB'],
   },
   {
@@ -73,6 +76,7 @@ export const layerTypes: ILayerInfo[] = [
     magicName: 'polysilicon',
     color: 'rgb(220, 95, 95)',
     crossY: 85,
+    description: 'polycrystalline silicon, used as the gate for mosfets',
     crossHeight: 10,
   },
   {
@@ -81,7 +85,14 @@ export const layerTypes: ILayerInfo[] = [
     color: '#80ff80',
     crossY: 70,
     crossHeight: 15,
+    description: 'connects between polysilicon and metal',
     intersectLayers: ['metal1', 'polysilicon'],
   },
-  { name: 'metal1', magicName: 'metal1', color: 'rgb(125, 166, 250)', crossY: 55, crossHeight: 15 },
+  { name: 'metal1',
+    magicName: 'metal1',
+    color: 'rgb(125, 166, 250)',
+    crossY: 55, 
+    crossHeight: 15,
+    description: 'metal layer used for wiring up the circuit'
+  },
 ];
