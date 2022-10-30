@@ -1,8 +1,7 @@
 import { createStore } from 'solid-js/store';
 import { record } from 'solid-record';
-import { layerTypes } from './layerTypes';
-import { fromMagic } from './magic';
 import inverter from '~/../presets/inverter.json';
+import { layerTypes } from './layerTypes';
 
 export interface ILayoutRect {
   x: number;
