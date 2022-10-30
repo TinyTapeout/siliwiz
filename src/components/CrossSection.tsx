@@ -25,7 +25,7 @@ export default function CrossSection(props: { height: number }) {
           }
         />
       </span>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
         <defs>
           <pattern
             id="hatch-pattern"
