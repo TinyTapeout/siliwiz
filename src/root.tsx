@@ -1,8 +1,7 @@
 // @refresh reload
-import { createSignal, lazy, Show, Suspense } from 'solid-js';
+import { createSignal, Show } from 'solid-js';
 import { Body, ErrorBoundary, Head, Html, Meta, Scripts, Title } from 'solid-start';
 import LayoutView from './components/LayoutView';
-import SimulationParams from './components/SimulationParams';
 import { layout, setLayout } from './model/layout';
 import { toMagic } from './model/magic';
 import { spiceFile } from './model/spiceFile';
@@ -10,7 +9,6 @@ import './root.css';
 import { downloadFile } from './utils/download-file';
 
 export default function Root() {
-  const Graph = lazy(() => import('./components/Graph'));
   const [showSpice, setShowSpice] = createSignal(false);
 
   if (typeof location !== 'undefined') {
@@ -35,10 +33,6 @@ export default function Root() {
           <h1>Siliwiz</h1>
           <LayoutView />
           <hr style={{ margin: '1em 0' }} />
-          <SimulationParams />
-          <Suspense fallback={<div>Loading graph...</div>}>
-            <Graph />
-          </Suspense>
           <label>
             <input
               type="checkbox"

@@ -1,3 +1,4 @@
+import { createSignal, lazy, Show, Suspense } from 'solid-js';
 import { layout, layoutUndo, setLayout } from '~/model/layout';
 import { downloadFile } from '~/utils/download-file';
 import { openFiles } from '~/utils/files';
@@ -5,6 +6,7 @@ import { tryJsonParse } from '~/utils/json';
 import Canvas from './Canvas';
 import CrossSection from './CrossSection';
 import Presets from './Presets';
+import SimulationParams from './SimulationParams';
 
 export default function Editor() {
   const loadDesign = async () => {
@@ -42,6 +44,9 @@ export default function Editor() {
   };
 
   const canvasSize = () => 2;
+  const [activeTab, setActiveTab] = createSignal('graph');
+
+  const Graph = lazy(() => import('./Graph'));
 
   return (
     <>
@@ -64,7 +69,24 @@ export default function Editor() {
       </div>
       <div style={{ display: 'flex' }}>
         <Canvas size={canvasSize() * 200} />
-        <CrossSection height={canvasSize() * 200} />
+        <div>
+          <div style={{ 'padding-left': '32px' }}>
+            <button onclick={() => setActiveTab('graph')}>Graph</button>&nbsp;
+            <button onclick={() => setActiveTab('xsection')}>Cross Section</button>
+          </div>
+          <Show when={activeTab() === 'graph'}>
+            <Suspense fallback={<div>Loading graph...</div>}>
+              <Graph />
+            </Suspense>
+            <div style={{ 'padding-left': '32px' }}>
+              <SimulationParams />
+            </div>
+          </Show>
+
+          <Show when={activeTab() === 'xsection'}>
+            <CrossSection height={canvasSize() * 200} />
+          </Show>
+        </div>
       </div>
     </>
   );

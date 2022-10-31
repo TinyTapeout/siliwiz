@@ -7,7 +7,7 @@ export default function CrossSection(props: { height: number }) {
     layout.rects.filter(
       (r) => r.y <= viewerState.crossSectionY && r.y + r.height >= viewerState.crossSectionY,
     );
-  const sliderTranslate = () => `-${props.height / 2 - 15}px, ${props.height / 2 - 10}px`;
+  const sliderTranslate = () => `-${props.height / 2 - 15}px, ${props.height / 2 - 32}px`;
   return (
     <div style={{ display: 'flex' }}>
       <span style={{ width: '30px' }}>
