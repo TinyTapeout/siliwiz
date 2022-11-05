@@ -5,6 +5,7 @@ import { openFiles } from '~/utils/files';
 import { tryJsonParse } from '~/utils/json';
 import Canvas from './Canvas';
 import CrossSection from './CrossSection';
+import CrossSectionSlider from './CrossSectionSlider';
 import Presets from './Presets';
 import SimulationParams from './SimulationParams';
 
@@ -44,7 +45,6 @@ export default function Editor() {
   };
 
   const canvasSize = () => 2;
-  const [activeTab, setActiveTab] = createSignal('graph');
 
   const Graph = lazy(() => import('./Graph'));
 
@@ -69,24 +69,18 @@ export default function Editor() {
       </div>
       <div style={{ display: 'flex' }}>
         <Canvas size={canvasSize() * 200} />
+        <CrossSectionSlider />
         <div>
+          <Suspense fallback={<div>Loading graph...</div>}>
+            <Graph />
+          </Suspense>
           <div style={{ 'padding-left': '32px' }}>
-            <button onclick={() => setActiveTab('graph')}>Graph</button>&nbsp;
-            <button onclick={() => setActiveTab('xsection')}>Cross Section</button>
+            <SimulationParams />
           </div>
-          <Show when={activeTab() === 'graph'}>
-            <Suspense fallback={<div>Loading graph...</div>}>
-              <Graph />
-            </Suspense>
-            <div style={{ 'padding-left': '32px' }}>
-              <SimulationParams />
-            </div>
-          </Show>
-
-          <Show when={activeTab() === 'xsection'}>
-            <CrossSection height={canvasSize() * 200} />
-          </Show>
         </div>
+      </div>
+      <div>
+        <CrossSection />
       </div>
     </>
   );
