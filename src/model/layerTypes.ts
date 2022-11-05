@@ -7,6 +7,9 @@ export interface ILayerInfo {
   crossHeight: number;
   description?: string;
 
+  /* Whether this layer is masked by polysilicon */
+  masked?: boolean;
+
   /* List of layers that always intersect with this layer */
   intersectLayers?: string[];
 }
@@ -40,6 +43,7 @@ export const layerTypes: ILayerInfo[] = [
     color: '#8080ff',
     crossY: 100,
     crossHeight: 15,
+    masked: true,
     description: 'n-diffusion layer used to make n mosfets',
   },
   {
@@ -48,6 +52,7 @@ export const layerTypes: ILayerInfo[] = [
     color: '#4040ff',
     crossY: 100,
     crossHeight: 15,
+    masked: true,
     description: 'p-diffusion layer used to make p mosfets',
   },
   {

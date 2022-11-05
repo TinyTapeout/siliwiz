@@ -7,10 +7,17 @@ export default function CrossSection() {
     layout.rects.filter(
       (r) => r.y <= viewerState.crossSectionY && r.y + r.height >= viewerState.crossSectionY,
     );
+  const polyRects = () => crossRects().filter((r) => r.layer === 'polysilicon');
   return (
     <div>
       <h3>Cross Section View</h3>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="400" height="100" style={{outline: 'solid black 1px'}}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 400 100"
+        width="400"
+        height="100"
+        style={{ outline: 'solid black 1px' }}
+      >
         <defs>
           <pattern
             id="hatch-pattern"
@@ -23,6 +30,12 @@ export default function CrossSection() {
           </pattern>
           <mask id="hatch-mask" x="0" y="0" width="1" height="1">
             <rect x="0" y="0" width="1000" height="1000" fill="url(#hatch-pattern)" />
+          </mask>
+          <mask id="poly-mask">
+            <rect x="0" y="0" width="1000" height="1000" fill="white" />
+            <For each={polyRects()}>
+              {(rect) => <rect x={rect.x} y={0} height={200} width={rect.width} fill="black" />}
+            </For>
           </mask>
         </defs>
         <For each={crossRects()}>
@@ -42,7 +55,13 @@ export default function CrossSection() {
                   height={layer.crossHeight}
                   width={rect.width}
                   fill={layer.color}
-                  mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
+                  mask={
+                    layer.hatched
+                      ? 'url(#hatch-mask)'
+                      : layer.masked
+                      ? 'url(#poly-mask)'
+                      : undefined
+                  }
                 />
               </Show>
             );
