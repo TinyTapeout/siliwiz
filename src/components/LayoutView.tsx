@@ -1,47 +1,35 @@
-import { createSignal } from 'solid-js';
-import { IDRCItem, parseMagicDRC } from '~/model/drc';
+import { createEffect, createSignal, Show } from 'solid-js';
+import { IDRCItem } from '~/model/drc';
 import { layout } from '~/model/layout';
-import { defaultTech, toMagic } from '~/model/magic';
-import { setSpiceInput } from '~/model/spiceFile';
+import { runMagic } from '~/model/runMagic';
 import DRCList from './DRCList';
 import Editor from './Editor';
 import Palette from './Palette';
 
-const serverUrl = 'https://siliwiz-server-73miufol2q-uc.a.run.app/magic';
-// const serverUrl = 'http://localhost:8086/magic';
-
-interface IMagicResponse {
-  spiceFile: string;
-  magicOutput: string;
-}
-
 export default function LayoutView() {
   const [drc, setDRC] = createSignal<IDRCItem[] | undefined>();
+  const [updating, setUpdating] = createSignal(false);
+
+  const update = async () => {
+    setDRC(undefined);
+    setUpdating(true);
+    const drc = await runMagic(layout);
+    setUpdating(false);
+    setDRC(drc);
+  };
+
+  createEffect(update);
 
   return (
     <>
       <Palette />
       <Editor />
       <div style={{ 'margin-top': '8px' }}>
-        <button
-          onClick={async () => {
-            setDRC(undefined);
-            const start = new Date().getTime();
-            const magic = toMagic(layout);
-            const res = await fetch(serverUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ magicFile: magic, tech: defaultTech }),
-            });
-            const data: IMagicResponse = await res.json();
-            setDRC(parseMagicDRC(data.magicOutput));
-            setSpiceInput(data.spiceFile);
-            console.log('Download time:', new Date().getTime() - start, 'ms');
-          }}
-        >
-          Magic DRC + Extract spice
-        </button>
+        <button onClick={update}>Magic DRC + Extract spice</button>
       </div>
+      <Show when={updating()}>
+        <div style={{ 'margin-top': '16px' }}>⚙️ DRC Updating...</div>
+      </Show>
       <DRCList drc={drc()} />
     </>
   );
