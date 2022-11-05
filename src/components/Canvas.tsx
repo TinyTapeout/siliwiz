@@ -35,6 +35,20 @@ export default function Canvas(props: { size: number }) {
     if (upperKey === 'Y' && cmdCtrl) {
       layoutUndo.redo();
     }
+
+    const selection = selectedRect();
+    if (upperKey === 'L' && selection) {
+      const newLength = prompt('Enter new length in um', selection.height.toString());
+      if (newLength) {
+        setLayout('rects', selectedRectIndex()!, { height: parseFloat(newLength) });
+      }
+    }
+    if (upperKey === 'W' && selection) {
+      const newWidth = prompt('Enter new width in um', selection.width.toString());
+      if (newWidth) {
+        setLayout('rects', selectedRectIndex()!, { width: parseFloat(newWidth) });
+      }
+    }
   };
 
   const translatePoint = ({ x, y }: Point2D) => {
