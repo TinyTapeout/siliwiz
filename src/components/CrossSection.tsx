@@ -1,31 +1,16 @@
 import { For, Show } from 'solid-js';
 import { layout, rectLayer } from '~/model/layout';
-import { setViewerState, viewerState } from '~/model/viewerState';
+import { viewerState } from '~/model/viewerState';
 
-export default function CrossSection(props: { height: number }) {
+export default function CrossSection() {
   const crossRects = () =>
     layout.rects.filter(
       (r) => r.y <= viewerState.crossSectionY && r.y + r.height >= viewerState.crossSectionY,
     );
-  const sliderTranslate = () => `-${props.height / 2 - 15}px, ${props.height / 2 - 10}px`;
   return (
-    <div style={{ display: 'flex' }}>
-      <span style={{ width: '30px' }}>
-        <input
-          type="range"
-          min={0}
-          max={props.height}
-          style={{
-            transform: `translate(${sliderTranslate()}) rotate(90deg)`,
-            width: props.height + 'px',
-          }}
-          value={viewerState.crossSectionOffset}
-          onInput={(e) =>
-            setViewerState('crossSectionOffset', (e.target as HTMLInputElement).valueAsNumber)
-          }
-        />
-      </span>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <div>
+      <h3>Cross Section View</h3>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="400" height="100" style={{outline: 'solid black 1px'}}>
         <defs>
           <pattern
             id="hatch-pattern"
@@ -53,7 +38,7 @@ export default function CrossSection(props: { height: number }) {
               <Show when={!hidden()}>
                 <rect
                   x={rect.x}
-                  y={layer.crossY}
+                  y={layer.crossY - 50}
                   height={layer.crossHeight}
                   width={rect.width}
                   fill={layer.color}
