@@ -38,8 +38,8 @@ Vin in 0 pulse (${minInVoltage()} ${maxInVoltage()} 0 50u 50u 1 1)
 ${netlist}
 
 * Models:
-.model nmos NMOS (vto=1 tox=15n cbd=20f cbs=20f gamma=0.37)
-.model pmos PMOS (vto=1 tox=15n cbd=20f cbs=20f gamma=0.37)
+.model nmos nmos (vto=1 tox=15n uo=600 cbd=20f cbs=20f gamma=0.37)
+.model pmos pmos (vto=-1 tox=15n uo=230 cbd=20f cbs=20f gamma=0.37)
 
 * Simulation parameters:
 .tran 500n 60u
