@@ -4,6 +4,7 @@ export const [spiceInput, setSpiceInput] = createSignal<string>('');
 export const [minInVoltage, setMinInVoltage] = createSignal<number>(0);
 export const [maxInVoltage, setMaxInVoltage] = createSignal<number>(5);
 export const [pulseDelay, setPulseDelay] = createSignal<number>(0);
+export const [riseTime, setRiseTime] = createSignal<number>(50);
 
 export function processMagicSpice(magicSpice: string) {
   const circuit = magicSpice.match(/\n.subckt ([^\n]*)\n(.+)\n.ends\n/s);
@@ -33,7 +34,7 @@ Vdd vdd 0 5 ; power supply: 5V
 Vss vss 0 0 ; ground
 
 * Input pulse: ramp the \`in\` signal
-Vin in 0 pulse (${minInVoltage()} ${maxInVoltage()} ${pulseDelay()}u 50u 50u 1 1)
+Vin in 0 pulse (${minInVoltage()} ${maxInVoltage()} ${pulseDelay()}u ${riseTime()}u 50u 1 1)
 
 * Extracted circuit:
 ${netlist}

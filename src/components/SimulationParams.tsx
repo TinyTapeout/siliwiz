@@ -3,9 +3,11 @@ import {
   maxInVoltage,
   minInVoltage,
   pulseDelay,
+  riseTime,
   setMaxInVoltage,
   setMinInVoltage,
   setPulseDelay,
+  setRiseTime,
   spiceFile,
 } from '~/model/spiceFile';
 import { simulate } from '~/sim/simulate';
@@ -49,6 +51,17 @@ export default function SimulationParams() {
         onInput={(e) => setPulseDelay((e.target as HTMLInputElement).valueAsNumber)}
       />
       {pulseDelay()} us
+      <br />
+      Rise time:{' '}
+      <input
+        type="range"
+        min="0"
+        max="50"
+        step="0.1"
+        value={riseTime()}
+        onInput={(e) => setRiseTime((e.target as HTMLInputElement).valueAsNumber)}
+      />
+      {riseTime()} us
     </div>
   );
 }
