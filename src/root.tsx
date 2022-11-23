@@ -2,6 +2,7 @@
 import { createSignal, Show } from 'solid-js';
 import { Body, ErrorBoundary, Head, Html, Meta, Scripts, Title } from 'solid-start';
 import LayoutView from './components/LayoutView';
+import SpiceDebugView from './components/SpiceDebugView';
 import { layout, setLayout } from './model/layout';
 import { toMagic } from './model/magic';
 import { spiceFile } from './model/spiceFile';
@@ -42,15 +43,7 @@ export default function Root() {
           </label>
           <br />
           <Show when={showSpice()}>
-            <textarea value={spiceFile()} cols="100" rows="15" readonly />
-            <br />
-            <button onClick={() => downloadFile('siliwiz.mag', toMagic(layout))}>
-              Download MAGIC
-            </button>
-            &nbsp;
-            <button onClick={() => downloadFile('siliwiz.spice', spiceFile())}>
-              Download SPICE
-            </button>
+            <SpiceDebugView />
           </Show>
         </ErrorBoundary>
         <Scripts />

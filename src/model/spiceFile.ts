@@ -5,6 +5,8 @@ export const [minInVoltage, setMinInVoltage] = createSignal<number>(0);
 export const [maxInVoltage, setMaxInVoltage] = createSignal<number>(5);
 export const [pulseDelay, setPulseDelay] = createSignal<number>(0);
 export const [riseTime, setRiseTime] = createSignal<number>(50);
+export const [enableCustomSpice, setEnableCustomSpice] = createSignal<boolean>(false);
+export const [customSpice, setCustomSpice] = createSignal<string>('');
 
 export function processMagicSpice(magicSpice: string) {
   const circuit = magicSpice.match(/\n.subckt ([^\n]*)\n(.+)\n.ends\n/s);
@@ -21,6 +23,10 @@ export function processMagicSpice(magicSpice: string) {
 }
 
 export function spiceFile() {
+  if (enableCustomSpice()) {
+    return customSpice();
+  }
+
   const input = processMagicSpice(spiceInput());
 
   const signals = input?.signals ?? [];
