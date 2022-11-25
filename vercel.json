@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://app.siliwiz.com",
+      "permanent": true
+    }
+  ]
+}
