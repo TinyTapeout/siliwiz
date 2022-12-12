@@ -1,9 +1,11 @@
 import { setSimulationResult } from '~/model/simulationResult';
 import { createSpice } from './spice/createSpice';
+import init, { XenaUi } from 'wasm_xena_lite';
+import { spiceFile } from '~/model/spiceFile';
 
 const spicePromise = createSpice();
 
-export async function simulate(spiceFile: string) {
+async function simulate_spice(spiceFile: string) {
   const spiceController = await spicePromise;
   const start = new Date().getTime();
   setSimulationResult([]);
@@ -24,4 +26,29 @@ export async function simulate(spiceFile: string) {
   }
   setSimulationResult(newData);
   console.log(`Simulation duration: ${new Date().getTime() - start}ms`);
+}
+
+async function createXena() {
+  await init();
+  return XenaUi.new();
+}
+const xenaPromise = createXena();
+
+async function simulate_xena(spiceFile: string) {
+  setSimulationResult([]);
+  const xenaUi = await xenaPromise;
+  const s = xenaUi.parse_cir(spiceFile, 0, 0);
+  const start = new Date().getTime();
+  const content = xenaUi.solve();
+  console.log(`Simulation duration: ${new Date().getTime() - start}ms`);
+  const newData: number[][] = [];
+  for (const line of content.split('\n').slice(1)) {
+    const parts = line.trim().split(/\s+/);
+    newData.push([parseFloat(parts[0]), parseFloat(parts[3]), parseFloat(parts[4])]);
+  }
+  setSimulationResult(newData);
+}
+
+export async function simulate(spiceFile: string) {
+  simulate_spice(spiceFile);
 }
