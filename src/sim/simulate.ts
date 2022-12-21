@@ -42,7 +42,7 @@ async function simulate_xena(spiceFile: string) {
   const content = xenaUi.solve();
   console.log(`Simulation duration: ${new Date().getTime() - start}ms`);
   const newData: number[][] = [];
-  for (const line of content.split('\n').slice(1)) {
+  for (const line of content.split('\n').slice(2)) {
     const parts = line.trim().split(/\s+/);
     newData.push([parseFloat(parts[0]), parseFloat(parts[3]), parseFloat(parts[4])]);
   }
@@ -50,5 +50,5 @@ async function simulate_xena(spiceFile: string) {
 }
 
 export async function simulate(spiceFile: string) {
-  simulate_spice(spiceFile);
+  simulate_xena(spiceFile);
 }

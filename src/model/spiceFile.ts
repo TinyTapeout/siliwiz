@@ -38,7 +38,7 @@ export function spiceFile() {
 
 Vdd vdd 0 5 ; power supply: 5V
 Vss vss 0 0 ; ground
-
+Rpower vdd 0 1e11
 * Input pulse: ramp the \`in\` signal
 Vin in 0 pulse (${minInVoltage()} ${maxInVoltage()} ${pulseDelay()}u ${riseTime()}u 50u 1 1)
 

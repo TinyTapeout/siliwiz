@@ -1,0 +1,16 @@
+{
+  "name": "wasm-xena-lite",
+  "collaborators": [
+    "Will Burke"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "wasm_xena_lite_bg.wasm",
+    "wasm_xena_lite.js",
+    "wasm_xena_lite.d.ts"
+  ],
+  "module": "wasm_xena_lite.js",
+  "type": "module",
+  "types": "wasm_xena_lite.d.ts",
+  "sideEffects": false
+}
