@@ -1,10 +1,10 @@
 import { parseMagicDRC } from './drc';
 import { ILayout } from './layout';
-import { toMagic, defaultTech } from './magic';
+import { defaultTech, toMagic } from './magic';
 import { setSpiceInput } from './spiceFile';
 
-const serverUrl = 'https://siliwiz-server-73miufol2q-uc.a.run.app/magic';
-// const serverUrl = 'http://localhost:8086/magic';
+const serverUrl = 'https://siliwiz-server-73miufol2q-uc.a.run.app/';
+// const serverUrl = 'http://localhost:8086/';
 
 interface IMagicResponse {
   spiceFile: string;
@@ -14,7 +14,7 @@ interface IMagicResponse {
 export async function runMagic(layout: ILayout) {
   const start = new Date().getTime();
   const magicInput = toMagic(layout, defaultTech);
-  const res = await fetch(serverUrl, {
+  const res = await fetch(new URL('/magic', serverUrl), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ magicFile: magicInput, tech: defaultTech }),
@@ -23,4 +23,8 @@ export async function runMagic(layout: ILayout) {
   setSpiceInput(data.spiceFile);
   console.log('Download time:', new Date().getTime() - start, 'ms');
   return parseMagicDRC(data.magicOutput);
+}
+
+export function getTechFileURL() {
+  return new URL('/sample6m.tech', serverUrl);
 }
