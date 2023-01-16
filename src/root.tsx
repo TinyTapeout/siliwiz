@@ -3,11 +3,8 @@ import { createSignal, Show } from 'solid-js';
 import { Body, ErrorBoundary, Head, Html, Meta, Scripts, Title } from 'solid-start';
 import LayoutView from './components/LayoutView';
 import SpiceDebugView from './components/SpiceDebugView';
-import { layout, setLayout } from './model/layout';
-import { toMagic } from './model/magic';
-import { spiceFile } from './model/spiceFile';
+import { setLayout } from './model/layout';
 import './root.css';
-import { downloadFile } from './utils/download-file';
 
 export default function Root() {
   const [showSpice, setShowSpice] = createSignal(false);
