@@ -1,9 +1,11 @@
 import { createEffect, createSignal } from 'solid-js';
 import {
+  dcSweep,
   maxInVoltage,
   minInVoltage,
   pulseDelay,
   riseTime,
+  setDCSweep,
   setMaxInVoltage,
   setMinInVoltage,
   setPulseDelay,
@@ -63,6 +65,13 @@ export default function SimulationParams() {
         onInput={(e) => setRiseTime((e.target as HTMLInputElement).valueAsNumber)}
       />
       {riseTime()} us
+      <br />
+      <input
+        type="checkbox"
+        checked={dcSweep()}
+        onChange={(e) => setDCSweep((e.target as HTMLInputElement).checked)}
+      />{' '}
+      DC Sweep
     </div>
   );
 }
