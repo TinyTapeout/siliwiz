@@ -8,6 +8,7 @@ import {
   setMinInVoltage,
   setPulseDelay,
   setRiseTime,
+  signalNames,
   spiceFile,
 } from '~/model/spiceFile';
 import { simulate } from '~/sim/simulate';
@@ -16,7 +17,7 @@ export const [gateLength, setGateLength] = createSignal(5);
 
 export default function SimulationParams() {
   createEffect(() => {
-    simulate(spiceFile());
+    simulate(spiceFile(), signalNames());
   });
   return (
     <div>

@@ -1,6 +1,7 @@
 import { react } from 'plotly.js-basic-dist';
-import { createEffect, createSignal, onMount } from 'solid-js';
+import { createEffect, onMount } from 'solid-js';
 import { simulationResult } from '~/model/simulationResult';
+import { signalNames } from '~/model/spiceFile';
 
 export default function Graph() {
   let graphDiv: HTMLDivElement | undefined;
@@ -21,23 +22,15 @@ export default function Graph() {
         return;
       }
       const table = simulationResult();
-
+      const signals = signalNames();
       react(
         graphDiv,
-        [
-          {
-            x: table.map((row) => row[0]),
-            y: table.map((row) => row[1]),
-            name: 'IN',
-            type: 'scatter',
-          },
-          {
-            x: table.map((row) => row[0]),
-            y: table.map((row) => row[2]),
-            name: 'OUT',
-            type: 'scatter',
-          },
-        ],
+        signals.split(' ').map((name, index) => ({
+          x: table.map((row) => row[0]),
+          y: table.map((row) => row[index + 1]),
+          name,
+          type: 'scatter',
+        })),
         layout,
       );
     });

@@ -3,7 +3,7 @@ import { createSpice } from './spice/createSpice';
 
 const spicePromise = createSpice();
 
-export async function simulate(spiceFile: string) {
+export async function simulate(spiceFile: string, signalNames: string) {
   const spiceController = await spicePromise;
   const start = new Date().getTime();
   setSimulationResult([]);
@@ -13,7 +13,7 @@ export async function simulate(spiceFile: string) {
     'run',
     'set wr_singlescale',
     'set wr_vecnames',
-    'wrdata siliwiz.txt in out',
+    `wrdata siliwiz.txt ${signalNames}`,
   ]);
   const file = spiceController.readFile('siliwiz.txt');
   const content = new TextDecoder().decode(file);

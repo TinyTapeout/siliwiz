@@ -7,6 +7,7 @@ export const [pulseDelay, setPulseDelay] = createSignal<number>(0);
 export const [riseTime, setRiseTime] = createSignal<number>(50);
 export const [enableCustomSpice, setEnableCustomSpice] = createSignal<boolean>(false);
 export const [customSpice, setCustomSpice] = createSignal<string>('');
+export const [signalNames, setSignalNames] = createSignal('in out');
 
 export function processMagicSpice(magicSpice: string) {
   const circuit = magicSpice.match(/\n.subckt ([^\n]*)\n(.+)\n.ends\n/s);

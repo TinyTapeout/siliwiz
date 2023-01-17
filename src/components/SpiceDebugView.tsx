@@ -5,6 +5,8 @@ import {
   enableCustomSpice,
   setCustomSpice,
   setEnableCustomSpice,
+  setSignalNames,
+  signalNames,
   spiceFile,
 } from '~/model/spiceFile';
 import { downloadFile } from '~/utils/download-file';
@@ -13,6 +15,12 @@ export default function SpiceDebugView() {
   const isReadOnly = () => !enableCustomSpice();
   return (
     <>
+      Plot signals (space separated):{' '}
+      <input
+        value={signalNames()}
+        onChange={(e) => setSignalNames((e.target as HTMLInputElement).value)}
+      />
+      <br />
       <textarea
         value={spiceFile()}
         cols="100"
