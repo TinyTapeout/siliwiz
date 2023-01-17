@@ -20,7 +20,7 @@ export async function simulate(spiceFile: string, signalNames: string) {
   const newData: number[][] = [];
   for (const line of content.split('\n').slice(1)) {
     const parts = line.trim().split(/\s+/);
-    newData.push([parseFloat(parts[0]), parseFloat(parts[1]), parseFloat(parts[2])]);
+    newData.push(parts.map((item) => parseFloat(item)));
   }
   setSimulationResult(newData);
   console.log(`Simulation duration: ${new Date().getTime() - start}ms`);
