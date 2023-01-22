@@ -1,4 +1,4 @@
-import { Delete, Height, Edit, SwapVert, SwapHoriz } from '@suid/icons-material';
+import { Delete, Edit, SwapHoriz, SwapVert } from '@suid/icons-material';
 import { ListItemIcon, ListItemText, Menu, MenuItem } from '@suid/material';
 import { createSignal, For, Show } from 'solid-js';
 import { activeDRCItem } from '~/model/drc';
@@ -149,13 +149,7 @@ export default function Canvas(props: { size: number }) {
 
   return (
     <>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl()}
-        open={open()}
-        onClose={handleClose}
-        MenuListProps={{ 'aria-labelledby': 'basic-button' }}
-      >
+      <Menu anchorEl={anchorEl()} open={open()} onClose={handleClose}>
         <MenuItem onClick={handleDelete}>
           <ListItemIcon>
             <Delete fontSize="small" />

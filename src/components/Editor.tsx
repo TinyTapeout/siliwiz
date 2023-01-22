@@ -1,9 +1,8 @@
-import { createSignal, lazy, Show, Suspense } from 'solid-js';
+import { lazy, Suspense } from 'solid-js';
 import { layout, layoutUndo, setLayout } from '~/model/layout';
 import { downloadFile } from '~/utils/download-file';
 import { openFiles } from '~/utils/files';
 import { tryJsonParse } from '~/utils/json';
-import Canvas from './Canvas';
 import CrossSection from './CrossSection';
 import CrossSectionSlider from './CrossSectionSlider';
 import Presets from './Presets';
@@ -47,6 +46,7 @@ export default function Editor() {
   const canvasSize = () => 2;
 
   const Graph = lazy(() => import('./Graph'));
+  const Canvas = lazy(() => import('./Canvas'));
 
   return (
     <>
@@ -68,7 +68,22 @@ export default function Editor() {
         <Presets />
       </div>
       <div style={{ display: 'flex' }}>
-        <Canvas size={canvasSize() * 200} />
+        <Suspense
+          fallback={
+            <div
+              style={{
+                width: '400px',
+                height: '400px',
+                'line-height': '400px',
+                'text-align': 'center',
+              }}
+            >
+              Loading...
+            </div>
+          }
+        >
+          <Canvas size={canvasSize() * 200} />
+        </Suspense>
         <CrossSectionSlider />
         <div>
           <Suspense fallback={<div>Loading graph...</div>}>
