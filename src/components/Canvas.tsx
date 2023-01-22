@@ -4,6 +4,7 @@ import { ILayoutRect, layout, layoutUndo, rectLayer, setLayout, sortRects } from
 import { viewerState } from '~/model/viewerState';
 import { domRectFromPoints, Point2D } from '~/utils/geometry';
 import { ctrlCmdPressed } from '~/utils/keyboard';
+import styles from './Canvas.module.css';
 import Scale from './Scale';
 
 interface INewRect {
@@ -159,6 +160,7 @@ export default function Canvas(props: { size: number }) {
                   height={rect.height}
                   width={rect.width}
                   fill={layer.color}
+                  class={styles.rect}
                   mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
                 />
               </g>
