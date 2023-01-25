@@ -123,4 +123,29 @@ export const layerTypes: ILayerInfo[] = [
     crossHeight: 15,
     description: 'metal layer used for wiring up the circuit',
   },
+  {
+    name: 'metal2',
+    magicName: 'metal2',
+    color: 'rgb(125, 200, 250)',
+    crossY: 10,
+    crossHeight: 20, // bit thicker than met1
+    description: 'metal layer 2, used to connect to the mimcap layer',
+  },
+  {
+    name: 'mimcap',
+    magicName: 'mimcap',
+    color: 'rgb(100, 100, 100)',
+    crossY: 45, // should be just above met1
+    crossHeight: 5,
+    description: 'thin layer of metal used to form metal-insulator-metal capacitors',
+  },
+  {
+    name: 'mimcap connect',
+    magicName: 'mimcapcontact',
+    color: '#80ff80',
+    crossY: 30,
+    crossHeight: 15,
+    description: 'connects between mimcap and metal2,
+    intersectLayers: ['metal2', 'mimcap'],
+  },
 ];
