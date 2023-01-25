@@ -145,7 +145,7 @@ export const layerTypes: ILayerInfo[] = [
     color: '#80ff80',
     crossY: 30,
     crossHeight: 15,
-    description: 'connects between mimcap and metal2,
+    description: 'connects between mimcap and metal2',
     intersectLayers: ['metal2', 'mimcap'],
   },
 ];
