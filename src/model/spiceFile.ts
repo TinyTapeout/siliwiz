@@ -44,7 +44,7 @@ export function spiceFile() {
     ? `.dc vdd ${minInVoltage()} ${maxInVoltage()} 0.1`
     : `.tran 500n 60u`;
 
-  return `*SiliWiz Simulation
+  return `* SiliWiz Simulation (app rev ${__COMMIT_HASH__})
 
 *signals: ${signals?.join(' ')}
 
