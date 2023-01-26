@@ -124,14 +124,6 @@ export const layerTypes: ILayerInfo[] = [
     description: 'metal layer used for wiring up the circuit',
   },
   {
-    name: 'metal2',
-    magicName: 'metal2',
-    color: 'rgb(125, 200, 250)',
-    crossY: 10,
-    crossHeight: 20, // bit thicker than met1
-    description: 'metal layer 2, used to connect to the mimcap layer',
-  },
-  {
     name: 'mimcap',
     magicName: 'mimcap',
     color: 'rgb(100, 100, 100)',
@@ -156,5 +148,13 @@ export const layerTypes: ILayerInfo[] = [
     crossHeight: 25,
     description: 'connects between metal1 and metal2',
     intersectLayers: ['metal2', 'metal1'],
+  },
+  {
+    name: 'metal2',
+    magicName: 'metal2',
+    color: 'rgb(125, 200, 250)',
+    crossY: 10,
+    crossHeight: 20, // bit thicker than met1
+    description: 'metal layer 2, used to connect to the mimcap layer',
   },
 ];
