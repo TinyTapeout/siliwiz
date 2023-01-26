@@ -44,6 +44,12 @@ export default function Root() {
           </Show>
         </ErrorBoundary>
         <Scripts />
+        <hr />
+        <footer>
+          <small>
+            SiliWiz revision {__COMMIT_HASH__}, built at {__BUILD_TIME__}.
+          </small>
+        </footer>
       </Body>
     </Html>
   );

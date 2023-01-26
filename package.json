@@ -13,6 +13,7 @@
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-replace": "^5.0.0",
     "@suid/vite-plugin": "0.1.1",
+    "@types/node": "^18.11.18",
     "patch-package": "^6.4.7",
     "solid-start-node": "^0.2.16",
     "typescript": "^4.8.3",
