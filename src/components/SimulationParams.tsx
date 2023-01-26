@@ -15,8 +15,6 @@ import {
 } from '~/model/spiceFile';
 import { simulate } from '~/sim/simulate';
 
-export const [gateLength, setGateLength] = createSignal(5);
-
 export default function SimulationParams() {
   createEffect(() => {
     simulate(spiceFile(), signalNames());
