@@ -153,7 +153,7 @@ export const layerTypes: ILayerInfo[] = [
     magicName: 'm2contact',
     color: '#80ff80',
     crossY: 30,
-    crossHeight: 55,
+    crossHeight: 25,
     description: 'connects between metal1 and metal2',
     intersectLayers: ['metal2', 'metal1'],
   },
