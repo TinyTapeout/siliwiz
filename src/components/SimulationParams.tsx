@@ -1,4 +1,4 @@
-import { createEffect, createSignal } from 'solid-js';
+import { createEffect, createSignal, Show } from 'solid-js';
 import {
   dcSweep,
   maxInVoltage,
@@ -21,7 +21,13 @@ export default function SimulationParams() {
   });
   return (
     <div>
-      Input voltage: <br />
+      <input
+        type="checkbox"
+        checked={dcSweep()}
+        onChange={(e) => setDCSweep((e.target as HTMLInputElement).checked)}
+      />{' '}
+      DC Sweep
+      <br /> Input voltage: <br />
       Min:{' '}
       <input
         type="range"
@@ -42,34 +48,30 @@ export default function SimulationParams() {
         onInput={(e) => setMaxInVoltage((e.target as HTMLInputElement).valueAsNumber)}
       />
       {maxInVoltage()}V<br />
-      Pulse delay:{' '}
-      <input
-        type="range"
-        min="0"
-        max="50"
-        step="0.1"
-        value={pulseDelay()}
-        onInput={(e) => setPulseDelay((e.target as HTMLInputElement).valueAsNumber)}
-      />
-      {pulseDelay()} us
-      <br />
-      Rise time:{' '}
-      <input
-        type="range"
-        min="0"
-        max="50"
-        step="0.1"
-        value={riseTime()}
-        onInput={(e) => setRiseTime((e.target as HTMLInputElement).valueAsNumber)}
-      />
-      {riseTime()} us
-      <br />
-      <input
-        type="checkbox"
-        checked={dcSweep()}
-        onChange={(e) => setDCSweep((e.target as HTMLInputElement).checked)}
-      />{' '}
-      DC Sweep
+      <Show when={!dcSweep()}>
+        Pulse delay:{' '}
+        <input
+          type="range"
+          min="0"
+          max="50"
+          step="0.1"
+          value={pulseDelay()}
+          onInput={(e) => setPulseDelay((e.target as HTMLInputElement).valueAsNumber)}
+        />
+        {pulseDelay()} us
+        <br />
+        Rise time:{' '}
+        <input
+          type="range"
+          min="0"
+          max="50"
+          step="0.1"
+          value={riseTime()}
+          onInput={(e) => setRiseTime((e.target as HTMLInputElement).valueAsNumber)}
+        />
+        {riseTime()} us
+        <br />
+      </Show>
     </div>
   );
 }
