@@ -51,7 +51,7 @@ export default function CrossSection() {
               <Show when={!hidden()}>
                 <rect
                   x={rect.x}
-                  y={layer.crossY - 50}
+                  y={layer.crossY - 10}
                   height={layer.crossHeight}
                   width={rect.width}
                   fill={layer.color}
