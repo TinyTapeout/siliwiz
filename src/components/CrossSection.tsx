@@ -13,9 +13,9 @@ export default function CrossSection() {
       <h3>Cross Section View</h3>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 400 100"
+        viewBox="0 0 400 120"
         width="400"
-        height="100"
+        height="120"
         style={{ outline: 'solid black 1px' }}
       >
         <defs>

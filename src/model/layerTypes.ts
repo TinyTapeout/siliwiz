@@ -33,7 +33,7 @@ export const layerTypes: ILayerInfo[] = [
     magicName: 'nwell',
     color: 'gray',
     crossY: 100,
-    crossHeight: 30,
+    crossHeight: 25,
     hatched: true,
     description: 'used to isolate p-diffusion from the p-substrate',
   },
