@@ -149,7 +149,7 @@ export default function Canvas(props: { size: number }) {
 
   return (
     <>
-      <Menu anchorEl={anchorEl()} open={open()} onClose={handleClose}>
+      <Menu anchorEl={anchorEl()} open={open()} onClose={handleClose} onClick={handleClose}>
         <MenuItem onClick={handleDelete}>
           <ListItemIcon>
             <Delete fontSize="small" />
