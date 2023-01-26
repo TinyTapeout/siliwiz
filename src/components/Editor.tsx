@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'solid-js';
 import { layout, layoutUndo, setLayout } from '~/model/layout';
+import { getSpiceParams, setSpiceParams } from '~/model/spiceFile';
 import { downloadFile } from '~/utils/download-file';
 import { openFiles } from '~/utils/files';
 import { tryJsonParse } from '~/utils/json';
@@ -22,9 +23,8 @@ export default function Editor() {
     if (frozenLayout.version !== 1 || frozenLayout.app !== 'siliwiz') {
       alert('Error: unsupported file version');
     }
-    if (frozenLayout.rects) {
-      setLayout('rects', frozenLayout.rects);
-    }
+    setLayout('rects', frozenLayout.rects ?? []);
+    setSpiceParams(frozenLayout.graph ?? {});
   };
 
   const saveDesign = () => {
@@ -35,6 +35,7 @@ export default function Editor() {
         app: 'siliwiz',
         timestamp: Math.floor(new Date().getTime() / 1000),
         rects: layout.rects,
+        graph: getSpiceParams(),
       }),
     );
   };

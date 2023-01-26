@@ -1,5 +1,14 @@
 import { createSignal } from 'solid-js';
 
+export interface ISpiceParams {
+  dcSweep: boolean;
+  minInVoltage: number;
+  maxInVoltage: number;
+  pulseDelay: number;
+  riseTime: number;
+  signalNames: string;
+}
+
 export const [spiceInput, setSpiceInput] = createSignal<string>('');
 export const [dcSweep, setDCSweep] = createSignal<boolean>(false);
 export const [minInVoltage, setMinInVoltage] = createSignal<number>(0);
@@ -9,6 +18,38 @@ export const [riseTime, setRiseTime] = createSignal<number>(50);
 export const [enableCustomSpice, setEnableCustomSpice] = createSignal<boolean>(false);
 export const [customSpice, setCustomSpice] = createSignal<string>('');
 export const [signalNames, setSignalNames] = createSignal('in out');
+
+export function getSpiceParams(): ISpiceParams {
+  return {
+    dcSweep: dcSweep(),
+    minInVoltage: minInVoltage(),
+    maxInVoltage: maxInVoltage(),
+    pulseDelay: pulseDelay(),
+    riseTime: riseTime(),
+    signalNames: signalNames(),
+  };
+}
+
+export function setSpiceParams(params: Partial<ISpiceParams>) {
+  if (params.dcSweep !== undefined) {
+    setDCSweep(params.dcSweep);
+  }
+  if (params.minInVoltage !== undefined) {
+    setMinInVoltage(params.minInVoltage);
+  }
+  if (params.maxInVoltage !== undefined) {
+    setMaxInVoltage(params.maxInVoltage);
+  }
+  if (params.pulseDelay !== undefined) {
+    setPulseDelay(params.pulseDelay);
+  }
+  if (params.riseTime !== undefined) {
+    setRiseTime(params.riseTime);
+  }
+  if (params.signalNames !== undefined) {
+    setSignalNames(params.signalNames);
+  }
+}
 
 export function processMagicSpice(magicSpice: string) {
   const circuit = magicSpice.match(/\n.subckt ([^\n]*)\n(.+)\n.ends\n/s);

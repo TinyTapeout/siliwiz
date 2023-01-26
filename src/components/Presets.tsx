@@ -1,5 +1,6 @@
 import { For } from 'solid-js';
 import { setLayout } from '~/model/layout';
+import { setSpiceParams } from '~/model/spiceFile';
 import { basename } from '~/utils/files';
 
 export default function Presets() {
@@ -11,7 +12,9 @@ export default function Presets() {
         onChange={(e) => {
           const selected = (e.target as HTMLSelectElement).value;
           if (selected) {
-            setLayout('rects', (pages[selected] as any)?.rects ?? []);
+            const preset = pages[selected] as any;
+            setLayout('rects', preset?.rects ?? []);
+            setSpiceParams(preset?.graph ?? {});
           }
         }}
       >
