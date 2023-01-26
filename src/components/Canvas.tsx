@@ -21,10 +21,13 @@ export default function Canvas(props: { size: number }) {
   const [newRect, setNewRect] = createSignal<INewRect | null>(null);
 
   // Context menu
-  const [anchorEl, setAnchorEl] = createSignal<null | SVGGElement>(null);
-  const open = () => Boolean(anchorEl());
+  const [contextMenu, setContextMenu] = createSignal<{
+    left: number;
+    top: number;
+  } | null>(null);
+  const open = () => Boolean(contextMenu());
   const handleClose = () => {
-    setAnchorEl(null);
+    setContextMenu(null);
   };
 
   const selectedRect = () => {
@@ -149,7 +152,13 @@ export default function Canvas(props: { size: number }) {
 
   return (
     <>
-      <Menu anchorEl={anchorEl()} open={open()} onClose={handleClose} onClick={handleClose}>
+      <Menu
+        open={open()}
+        onClose={handleClose}
+        onClick={handleClose}
+        anchorReference="anchorPosition"
+        anchorPosition={contextMenu() ?? undefined}
+      >
         <MenuItem onClick={handleDelete}>
           <ListItemIcon>
             <Delete fontSize="small" />
@@ -214,7 +223,15 @@ export default function Canvas(props: { size: number }) {
                 <g
                   onClick={(event) => {
                     setSelectedRectIndex(index);
-                    setAnchorEl(event.currentTarget);
+                    event.preventDefault();
+                    setContextMenu(
+                      contextMenu() === null
+                        ? {
+                            left: event.clientX + 2,
+                            top: event.clientY,
+                          }
+                        : null,
+                    );
                   }}
                   onMouseDown={(e) => {
                     if (e.detail > 1) {
