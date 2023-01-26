@@ -140,12 +140,21 @@ export const layerTypes: ILayerInfo[] = [
     description: 'thin layer of metal used to form metal-insulator-metal capacitors',
   },
   {
-    name: 'mimcap connect',
+    name: 'mimcap contact',
     magicName: 'mimcapcontact',
     color: '#80ff80',
     crossY: 30,
     crossHeight: 15,
     description: 'connects between mimcap and metal2',
     intersectLayers: ['metal2', 'mimcap'],
+  },
+  {
+    name: 'm2 contact',
+    magicName: 'm2contact',
+    color: '#80ff80',
+    crossY: 30,
+    crossHeight: 55,
+    description: 'connects between metal1 and metal2',
+    intersectLayers: ['metal2', 'metal1'],
   },
 ];
