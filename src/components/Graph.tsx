@@ -15,6 +15,9 @@ export default function Graph() {
         t: 50,
         pad: 4,
       },
+      yaxis: {
+        range: [-0.25, 5.25],
+      },
     };
 
     createEffect(() => {
