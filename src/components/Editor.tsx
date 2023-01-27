@@ -4,7 +4,6 @@ import { getSpiceParams } from '~/model/spiceFile';
 import { downloadFile } from '~/utils/download-file';
 import { openFiles } from '~/utils/files';
 import { tryJsonParse } from '~/utils/json';
-import CrossSection from './CrossSection';
 import CrossSectionSlider from './CrossSectionSlider';
 import Presets from './Presets';
 import SimulationParams from './SimulationParams';
@@ -48,6 +47,7 @@ export default function Editor() {
 
   const Graph = lazy(() => import('./Graph'));
   const Canvas = lazy(() => import('./Canvas'));
+  const CrossSection = lazy(() => import('./CrossSection'));
 
   return (
     <>
@@ -95,9 +95,22 @@ export default function Editor() {
           </div>
         </div>
       </div>
-      <div>
+      <Suspense
+        fallback={
+          <div
+            style={{
+              width: '400px',
+              height: '100px',
+              'line-height': '100px',
+              'text-align': 'center',
+            }}
+          >
+            Loading...
+          </div>
+        }
+      >
         <CrossSection />
-      </div>
+      </Suspense>
     </>
   );
 }

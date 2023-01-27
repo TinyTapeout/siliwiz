@@ -1,4 +1,5 @@
-import { For, Show } from 'solid-js';
+import { Popover, Typography } from '@suid/material';
+import { createSignal, For, Show } from 'solid-js';
 import { layout, rectLayer } from '~/model/layout';
 import { viewerState } from '~/model/viewerState';
 
@@ -8,9 +9,42 @@ export default function CrossSection() {
       (r) => r.y <= viewerState.crossSectionY && r.y + r.height >= viewerState.crossSectionY,
     );
   const polyRects = () => crossRects().filter((r) => r.layer === 'polysilicon');
+
+  // Layer name tooltip
+  const [anchorEl, setAnchorEl] = createSignal<Element | null>(null);
+  const [currentLayerHeight, setCurrentLayerHeight] = createSignal(0); // [px]
+  const [currentLayerName, setCurrentLayerName] = createSignal('');
+  const handlePopoverOpen = (event: { currentTarget: Element }) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = () => Boolean(anchorEl());
+
   return (
     <div>
       <h3>Cross Section View</h3>
+      <Popover
+        id="mouse-over-popover"
+        sx={{ pointerEvents: 'none' }}
+        open={open()}
+        anchorEl={anchorEl()}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        onClose={handlePopoverClose}
+        disableRestoreFocus
+      >
+        <Typography sx={{ p: 1 }}>{currentLayerName}</Typography>
+      </Popover>
+
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 400 120"
@@ -50,6 +84,17 @@ export default function CrossSection() {
             return (
               <Show when={!hidden()}>
                 <rect
+                  aria-owns={open() ? 'mouse-over-popover' : undefined}
+                  aria-haspopup="true"
+                  onMouseEnter={(e) => {
+                    handlePopoverOpen(e);
+                    setCurrentLayerHeight(layer.crossY + layer.crossHeight - 10);
+                    setCurrentLayerName(layer.name);
+                  }}
+                  onMouseLeave={(e) => {
+                    handlePopoverClose();
+                    setCurrentLayerName('');
+                  }}
                   x={rect.x}
                   y={layer.crossY - 10}
                   height={layer.crossHeight}
@@ -67,6 +112,12 @@ export default function CrossSection() {
             );
           }}
         </For>
+        <Show when={currentLayerName().length > 0}>
+          <text x={0} y={currentLayerHeight()} fill="red">
+            {currentLayerName()}
+          </text>
+          <rect x={0} y={currentLayerHeight()} width={400} height={1} fill="red" />
+        </Show>
       </svg>
     </div>
   );
