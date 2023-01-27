@@ -1,5 +1,5 @@
 import { Delete, Edit, SwapHoriz, SwapVert } from '@suid/icons-material';
-import { ListItemIcon, ListItemText, Menu, MenuItem } from '@suid/material';
+import { ListItemIcon, ListItemText, Menu, MenuItem, Typography } from '@suid/material';
 import { createSignal, For, Show } from 'solid-js';
 import { activeDRCItem } from '~/model/drc';
 import {
@@ -22,6 +22,13 @@ interface INewRect {
   start: Point2D;
   end: Point2D;
 }
+
+const keyboardShortcuts = {
+  Delete: 'D',
+  EditWidth: 'W',
+  EditLength: 'E',
+  SetLabel: 'S',
+};
 
 export default function Canvas(props: { size: number }) {
   const [svgRef, setSVGRef] = createSignal<SVGSVGElement | null>(null);
@@ -47,32 +54,68 @@ export default function Canvas(props: { size: number }) {
     setSelectedRectIndex(null);
   };
 
+  const handleSetLabel = () => {
+    const selection = selectedRect();
+    const selectionIndex = selectedRectIndex();
+    if (selection == null || selectionIndex == null) {
+      return;
+    }
+    const label = prompt('Enter new label (or an empty string to delete label)', selection.label);
+    if (label != null) {
+      setLayout('rects', selectionIndex, { ...selection, label });
+    }
+  };
+
+  const handleEditWidth = () => {
+    const selection = selectedRect();
+    if (!selection) {
+      return;
+    }
+    const newWidth = prompt('Enter new width in um', selection.width.toString());
+    if (newWidth) {
+      setLayout('rects', selectedRectIndex()!, { width: parseFloat(newWidth) });
+    }
+  };
+
+  const handleEditLength = () => {
+    const selection = selectedRect();
+    if (!selection) {
+      return;
+    }
+    const newLength = prompt('Enter new length in um', selection.height.toString());
+    if (newLength) {
+      setLayout('rects', selectedRectIndex()!, { height: parseFloat(newLength) });
+    }
+  };
   const handleKeyDown = (e: KeyboardEvent) => {
     const cmdCtrl = ctrlCmdPressed(e);
     const upperKey = e.key.toUpperCase();
-    if (e.key === 'Delete') {
+    if (e.key === 'Delete' || upperKey === keyboardShortcuts.Delete) {
       handleDelete();
+      return true;
     }
     if (upperKey === 'Z' && cmdCtrl) {
       layoutUndo.undo();
+      return true;
     }
     if (upperKey === 'Y' && cmdCtrl) {
       layoutUndo.redo();
+      return true;
     }
 
-    const selection = selectedRect();
-    if (upperKey === 'L' && selection) {
-      const newLength = prompt('Enter new length in um', selection.height.toString());
-      if (newLength) {
-        setLayout('rects', selectedRectIndex()!, { height: parseFloat(newLength) });
-      }
+    if (upperKey === keyboardShortcuts.SetLabel) {
+      handleSetLabel();
+      return true;
     }
-    if (upperKey === 'W' && selection) {
-      const newWidth = prompt('Enter new width in um', selection.width.toString());
-      if (newWidth) {
-        setLayout('rects', selectedRectIndex()!, { width: parseFloat(newWidth) });
-      }
+    if (upperKey === keyboardShortcuts.EditLength) {
+      handleEditWidth();
+      return true;
     }
+    if (upperKey === keyboardShortcuts.EditWidth) {
+      handleEditLength();
+      return true;
+    }
+    return false; /* not handled */
   };
 
   const translatePoint = ({ x, y }: Point2D) => {
@@ -123,72 +166,60 @@ export default function Canvas(props: { size: number }) {
     }
   };
 
-  const handleSetLabel = () => {
-    const selection = selectedRect();
-    const selectionIndex = selectedRectIndex();
-    if (selection == null || selectionIndex == null) {
-      return;
-    }
-    const label = prompt('Enter new label (or an empty string to delete label)', selection.label);
-    if (label != null) {
-      setLayout('rects', selectionIndex, { ...selection, label });
-    }
-  };
-
-  const handleEditWidth = () => {
-    const selection = selectedRect();
-    if (!selection) {
-      return;
-    }
-    const newWidth = prompt('Enter new width in um', selection.width.toString());
-    if (newWidth) {
-      setLayout('rects', selectedRectIndex()!, { width: parseFloat(newWidth) });
-    }
-  };
-
-  const handleEditLength = () => {
-    const selection = selectedRect();
-    if (!selection) {
-      return;
-    }
-    const newLength = prompt('Enter new length in um', selection.height.toString());
-    if (newLength) {
-      setLayout('rects', selectedRectIndex()!, { height: parseFloat(newLength) });
-    }
-  };
-
   return (
     <>
       <Menu
         open={open()}
         onClose={handleClose}
         onClick={handleClose}
+        onKeyDown={(e) => {
+          if (handleKeyDown(e)) {
+            e.preventDefault();
+            svgRef()?.focus({ preventScroll: true });
+            setContextMenu(null);
+          }
+        }}
         anchorReference="anchorPosition"
         anchorPosition={contextMenu() ?? undefined}
+        sx={{
+          '& .MuiMenu-list': { width: 180, maxWidth: '100%' },
+        }}
       >
         <MenuItem onClick={handleDelete}>
           <ListItemIcon>
             <Delete fontSize="small" />
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            {keyboardShortcuts.Delete}
+          </Typography>
         </MenuItem>
         <MenuItem onClick={handleSetLabel}>
           <ListItemIcon>
             <Edit fontSize="small" />
           </ListItemIcon>
           <ListItemText>Set Label</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            {keyboardShortcuts.SetLabel}
+          </Typography>
         </MenuItem>
         <MenuItem onClick={handleEditWidth}>
           <ListItemIcon>
             <SwapHoriz fontSize="small" />
           </ListItemIcon>
           <ListItemText>Edit Width</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            {keyboardShortcuts.EditWidth}
+          </Typography>
         </MenuItem>
         <MenuItem onClick={handleEditLength}>
           <ListItemIcon>
             <SwapVert fontSize="small" />
           </ListItemIcon>
           <ListItemText>Edit Length</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            {keyboardShortcuts.EditLength}
+          </Typography>
         </MenuItem>
       </Menu>
       <svg
