@@ -32,7 +32,7 @@ export default function SpiceDebugView() {
       <br />
       <button onClick={() => downloadFile('siliwiz.mag', toMagic(layout))}>Download MAGIC</button>
       &nbsp;
-      <a href="/assets/siliwiz.tech" target="_blank" download="sample6m.tech">
+      <a href="/assets/siliwiz.tech" target="_blank" download="siliwiz.tech">
         Tech File
       </a>
       &nbsp;

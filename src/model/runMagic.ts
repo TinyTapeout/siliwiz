@@ -26,5 +26,5 @@ export async function runMagic(layout: ILayout) {
 }
 
 export function getTechFileURL() {
-  return new URL('/sample6m.tech', serverUrl);
+  return new URL('/siliwiz.tech', serverUrl);
 }

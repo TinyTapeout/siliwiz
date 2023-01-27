@@ -2,7 +2,7 @@ import { ILayout, ILayoutRect, rectLayer, sortRects } from '~/model/layout';
 import { Point2D } from '~/utils/geometry';
 import { layerTypes } from './layerTypes';
 
-export const defaultTech = 'sample_6m';
+export const defaultTech = 'siliwiz';
 
 function magicRect(rect: ILayoutRect) {
   const x = Math.round(rect.x);
