@@ -7,6 +7,7 @@ export async function simulate(spiceFile: string, signalNames: string) {
   const spiceController = await spicePromise;
   const start = new Date().getTime();
   setSimulationResult([]);
+  spiceController.writeFile('siliwiz.txt', '');
   spiceController.writeFile('/siliwiz.cir', spiceFile);
   spiceController.run([
     'source siliwiz.cir',

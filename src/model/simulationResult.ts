@@ -1,5 +1,4 @@
 import { createSignal } from 'solid-js';
 
-export const [simulationResult, setSimulationResult] = createSignal<number[][]>([
-  // 'time', 'IN', 'OUT'
-]);
+/** The data table that is used for plotting the graph */
+export const [simulationResult, setSimulationResult] = createSignal<number[][]>([]);
