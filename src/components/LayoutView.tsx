@@ -24,9 +24,6 @@ export default function LayoutView() {
     <>
       <Palette />
       <Editor />
-      <div style={{ 'margin-top': '8px' }}>
-        <button onClick={update}>Magic DRC + Extract spice</button>
-      </div>
       <Show when={updating()}>
         <div style={{ 'margin-top': '16px' }}>⚙️ DRC Updating...</div>
       </Show>
