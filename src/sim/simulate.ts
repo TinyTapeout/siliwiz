@@ -3,7 +3,15 @@ import { createSpice } from './spice/createSpice';
 
 const spicePromise = createSpice();
 
+/**
+ * This counter is used to prevent a race condition where older calls to `simulate()` return after newer calls finished, thus
+ * displaying outdated results.
+ */
+let simulationCounter = 0;
+
 export async function simulate(spiceFile: string, signalNames: string) {
+  simulationCounter++;
+  let currentSimulationIndex = simulationCounter;
   const spiceController = await spicePromise;
   const start = new Date().getTime();
   setSimulationResult([]);
@@ -23,6 +31,10 @@ export async function simulate(spiceFile: string, signalNames: string) {
     const parts = line.trim().split(/\s+/);
     newData.push(parts.map((item) => parseFloat(item)));
   }
-  setSimulationResult(newData);
   console.log(`Simulation duration: ${new Date().getTime() - start}ms`);
+  if (currentSimulationIndex === simulationCounter) {
+    setSimulationResult(newData);
+  } else {
+    console.log('Old simulation result discarded.');
+  }
 }
