@@ -9,6 +9,7 @@
   },
   "type": "module",
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20230115.0",
     "@rollup/plugin-babel": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-replace": "^5.0.0",

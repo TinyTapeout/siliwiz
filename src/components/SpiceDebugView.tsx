@@ -1,6 +1,5 @@
 import { layout } from '~/model/layout';
 import { toMagic } from '~/model/magic';
-import { getTechFileURL } from '~/model/runMagic';
 import {
   enableCustomSpice,
   setCustomSpice,
@@ -33,7 +32,7 @@ export default function SpiceDebugView() {
       <br />
       <button onClick={() => downloadFile('siliwiz.mag', toMagic(layout))}>Download MAGIC</button>
       &nbsp;
-      <a href={getTechFileURL().toString()} target="_blank" download="sample6m.tech">
+      <a href="/assets/siliwiz.tech" target="_blank" download="sample6m.tech">
         Tech File
       </a>
       &nbsp;
