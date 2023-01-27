@@ -3,7 +3,7 @@ import { createSignal, Show } from 'solid-js';
 import { Body, ErrorBoundary, Head, Html, Meta, Scripts, Title } from 'solid-start';
 import LayoutView from './components/LayoutView';
 import SpiceDebugView from './components/SpiceDebugView';
-import { setLayout } from './model/layout';
+import { loadPreset, setLayout } from './model/layout';
 import './root.css';
 
 export default function Root() {
@@ -14,7 +14,7 @@ export default function Root() {
     const preset = urlParams.get('preset');
     import(`~/../presets/${preset}.json`).then((module) => {
       if (module && module.rects) {
-        setLayout('rects', module.rects);
+        loadPreset(module);
       }
     });
   }

@@ -3,6 +3,7 @@ import { createStore } from 'solid-js/store';
 import { record } from 'solid-record';
 import inverter from '~/../presets/inverter.json';
 import { layerTypes } from './layerTypes';
+import { ISpiceParams, setSpiceParams } from './spiceFile';
 
 export interface ILayoutRect {
   x: number;
@@ -38,3 +39,14 @@ export const [layout, setLayout, layoutUndo] = record(
     rects: inverter.rects,
   }),
 );
+
+export interface ILayoutSnapshot {
+  rects?: ILayoutRect[];
+  graph?: Partial<ISpiceParams>;
+}
+
+export function loadPreset(preset: ILayoutSnapshot) {
+  setLayout('rects', preset?.rects ?? []);
+  setSpiceParams(preset?.graph ?? {});
+  setSelectedRectIndex(null);
+}

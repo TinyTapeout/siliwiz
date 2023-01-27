@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'solid-js';
-import { layout, layoutUndo, setLayout, setSelectedRectIndex } from '~/model/layout';
-import { getSpiceParams, setSpiceParams } from '~/model/spiceFile';
+import { layout, layoutUndo, loadPreset, setLayout, setSelectedRectIndex } from '~/model/layout';
+import { getSpiceParams } from '~/model/spiceFile';
 import { downloadFile } from '~/utils/download-file';
 import { openFiles } from '~/utils/files';
 import { tryJsonParse } from '~/utils/json';
@@ -23,9 +23,7 @@ export default function Editor() {
     if (frozenLayout.version !== 1 || frozenLayout.app !== 'siliwiz') {
       alert('Error: unsupported file version');
     }
-    setLayout('rects', frozenLayout.rects ?? []);
-    setSpiceParams(frozenLayout.graph ?? {});
-    setSelectedRectIndex(null);
+    loadPreset(frozenLayout);
   };
 
   const saveDesign = () => {
