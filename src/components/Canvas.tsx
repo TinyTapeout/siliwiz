@@ -2,7 +2,15 @@ import { Delete, Edit, SwapHoriz, SwapVert } from '@suid/icons-material';
 import { ListItemIcon, ListItemText, Menu, MenuItem } from '@suid/material';
 import { createSignal, For, Show } from 'solid-js';
 import { activeDRCItem } from '~/model/drc';
-import { layout, layoutUndo, rectLayer, setLayout, sortRects } from '~/model/layout';
+import {
+  layout,
+  layoutUndo,
+  rectLayer,
+  selectedRectIndex,
+  setLayout,
+  setSelectedRectIndex,
+  sortRects,
+} from '~/model/layout';
 import { viewerState } from '~/model/viewerState';
 import { domRectFromPoints, Point2D } from '~/utils/geometry';
 import { ctrlCmdPressed } from '~/utils/keyboard';
@@ -16,7 +24,6 @@ interface INewRect {
 }
 
 export default function Canvas(props: { size: number }) {
-  const [selectedRectIndex, setSelectedRectIndex] = createSignal<number | null>(null);
   const [svgRef, setSVGRef] = createSignal<SVGSVGElement | null>(null);
   const [newRect, setNewRect] = createSignal<INewRect | null>(null);
 

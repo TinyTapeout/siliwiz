@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'solid-js';
-import { layout, layoutUndo, setLayout } from '~/model/layout';
+import { layout, layoutUndo, setLayout, setSelectedRectIndex } from '~/model/layout';
 import { getSpiceParams, setSpiceParams } from '~/model/spiceFile';
 import { downloadFile } from '~/utils/download-file';
 import { openFiles } from '~/utils/files';
@@ -25,6 +25,7 @@ export default function Editor() {
     }
     setLayout('rects', frozenLayout.rects ?? []);
     setSpiceParams(frozenLayout.graph ?? {});
+    setSelectedRectIndex(null);
   };
 
   const saveDesign = () => {
@@ -42,6 +43,7 @@ export default function Editor() {
 
   const clear = () => {
     setLayout('rects', []);
+    setSelectedRectIndex(null);
   };
 
   const canvasSize = () => 2;

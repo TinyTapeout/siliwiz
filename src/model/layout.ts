@@ -1,3 +1,4 @@
+import { createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { record } from 'solid-record';
 import inverter from '~/../presets/inverter.json';
@@ -31,6 +32,7 @@ export function sortRects(rects: ILayoutRect[]) {
   });
 }
 
+export const [selectedRectIndex, setSelectedRectIndex] = createSignal<number | null>(null);
 export const [layout, setLayout, layoutUndo] = record(
   createStore<ILayout>({
     rects: inverter.rects,

@@ -1,5 +1,5 @@
 import { For } from 'solid-js';
-import { setLayout } from '~/model/layout';
+import { setLayout, setSelectedRectIndex } from '~/model/layout';
 import { setSpiceParams } from '~/model/spiceFile';
 import { basename } from '~/utils/files';
 
@@ -15,6 +15,7 @@ export default function Presets() {
             const preset = pages[selected] as any;
             setLayout('rects', preset?.rects ?? []);
             setSpiceParams(preset?.graph ?? {});
+            setSelectedRectIndex(null);
           }
         }}
       >
