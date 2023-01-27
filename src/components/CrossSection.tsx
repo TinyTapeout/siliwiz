@@ -12,13 +12,13 @@ export default function CrossSection() {
 
   // Layer name tooltip
   const [anchorEl, setAnchorEl] = createSignal<Element | null>(null);
-  const [currentLayerHeight, setCurrentLayerHeight] = createSignal(0); // [px]
   const [currentLayerName, setCurrentLayerName] = createSignal('');
   const handlePopoverOpen = (event: { currentTarget: Element }) => {
     setAnchorEl(event.currentTarget);
   };
   const handlePopoverClose = () => {
     setAnchorEl(null);
+    setCurrentLayerName('');
   };
 
   const open = () => Boolean(anchorEl());
@@ -88,13 +88,9 @@ export default function CrossSection() {
                   aria-haspopup="true"
                   onMouseEnter={(e) => {
                     handlePopoverOpen(e);
-                    setCurrentLayerHeight(layer.crossY + layer.crossHeight - 10);
                     setCurrentLayerName(layer.name);
                   }}
-                  onMouseLeave={(e) => {
-                    handlePopoverClose();
-                    setCurrentLayerName('');
-                  }}
+                  onMouseLeave={handlePopoverClose}
                   x={rect.x}
                   y={layer.crossY - 10}
                   height={layer.crossHeight}
@@ -112,12 +108,6 @@ export default function CrossSection() {
             );
           }}
         </For>
-        <Show when={currentLayerName().length > 0}>
-          <text x={0} y={currentLayerHeight()} fill="red">
-            {currentLayerName()}
-          </text>
-          <rect x={0} y={currentLayerHeight()} width={400} height={1} fill="red" />
-        </Show>
       </svg>
     </div>
   );
