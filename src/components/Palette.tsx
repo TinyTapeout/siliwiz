@@ -1,7 +1,9 @@
+import { Checkbox } from '@suid/material';
 import { For } from 'solid-js';
 import { layerTypes } from '~/model/layerTypes';
 import { setViewerState, viewerState } from '~/model/viewerState';
 import styles from './Palette.module.css';
+import { Visibility, VisibilityOff } from '@suid/icons-material';
 
 export default function Palette() {
   return (
@@ -18,12 +20,16 @@ export default function Palette() {
               setViewerState('activeLayer', layer.name);
             }}
           >
-            <input
-              type="checkbox"
+            {viewerState.hiddenLayers.includes(layer.name)}
+            <Checkbox
+              sx={{ p: 0.5 }}
+              color="default"
+              icon={<VisibilityOff />}
+              checkedIcon={<Visibility />}
               checked={!viewerState.hiddenLayers.includes(layer.name)}
-              onChange={(e) =>
+              onChange={(e, checked) => {
+                e.stopPropagation();
                 setViewerState('hiddenLayers', (hiddenLayers) => {
-                  const { checked } = e.target as HTMLInputElement;
                   if (checked) {
                     return hiddenLayers.filter((l) => l !== layer.name);
                   } else {
@@ -31,10 +37,11 @@ export default function Palette() {
                       ? [...hiddenLayers, layer.name]
                       : hiddenLayers;
                   }
-                })
-              }
+                });
+              }}
             />
             <span class={styles.color} style={{ background: layer.color }} />
+            &nbsp;
             <span>{layer.name}</span>
           </div>
         )}
