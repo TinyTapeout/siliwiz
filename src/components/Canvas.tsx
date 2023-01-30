@@ -25,8 +25,8 @@ interface INewRect {
 
 const keyboardShortcuts = {
   Delete: 'D',
-  EditWidth: 'F',
-  EditLength: 'R',
+  EditWidth: 'R',
+  EditLength: 'F',
   SetLabel: 'S',
 };
 
@@ -107,11 +107,11 @@ export default function Canvas(props: { size: number }) {
       handleSetLabel();
       return true;
     }
-    if (upperKey === keyboardShortcuts.EditLength) {
+    if (upperKey === keyboardShortcuts.EditWidth) {
       handleEditWidth();
       return true;
     }
-    if (upperKey === keyboardShortcuts.EditWidth) {
+    if (upperKey === keyboardShortcuts.EditLength) {
       handleEditLength();
       return true;
     }
