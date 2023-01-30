@@ -5,6 +5,8 @@ import inverter from '~/../presets/inverter.json';
 import { layerTypes } from './layerTypes';
 import { ISpiceParams, setSpiceParams } from './spiceFile';
 
+export const lambdaToMicrons = 0.09;
+
 export interface ILayoutRect {
   x: number;
   y: number;

@@ -3,6 +3,7 @@ import { ListItemIcon, ListItemText, Menu, MenuItem, Typography } from '@suid/ma
 import { createSignal, For, Show } from 'solid-js';
 import { activeDRCItem } from '~/model/drc';
 import {
+  lambdaToMicrons,
   layout,
   layoutUndo,
   rectLayer,
@@ -71,9 +72,10 @@ export default function Canvas(props: { size: number }) {
     if (!selection) {
       return;
     }
-    const newWidth = prompt('Enter new width in um', selection.width.toString());
+    const currentValue = (selection.width * lambdaToMicrons).toFixed(2).replace(/\.?0+$/, '');
+    const newWidth = prompt('Enter new width in µm', currentValue);
     if (newWidth) {
-      setLayout('rects', selectedRectIndex()!, { width: parseFloat(newWidth) });
+      setLayout('rects', selectedRectIndex()!, { width: parseFloat(newWidth) / lambdaToMicrons });
     }
   };
 
@@ -82,9 +84,10 @@ export default function Canvas(props: { size: number }) {
     if (!selection) {
       return;
     }
-    const newLength = prompt('Enter new length in um', selection.height.toString());
+    const currentValue = (selection.height * lambdaToMicrons).toFixed(2).replace(/\.?0+$/, '');
+    const newLength = prompt('Enter new length in µm', currentValue);
     if (newLength) {
-      setLayout('rects', selectedRectIndex()!, { height: parseFloat(newLength) });
+      setLayout('rects', selectedRectIndex()!, { height: parseFloat(newLength) / lambdaToMicrons });
     }
   };
   const handleKeyDown = (e: KeyboardEvent) => {
