@@ -25,8 +25,8 @@ interface INewRect {
 
 const keyboardShortcuts = {
   Delete: 'D',
-  EditWidth: 'R',
-  EditLength: 'F',
+  EditWidth: 'F',
+  EditLength: 'R',
   SetLabel: 'S',
 };
 
