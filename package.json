@@ -8,7 +8,8 @@
     "build:element": "rollup --config rollup.config.mjs",
     "format:check": "prettier --check **/*.{ts,js} !dist/** !node_modules/** !.solid/** !**/spice.js",
     "start": "solid-start start",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "prepare": "husky install"
   },
   "type": "module",
   "devDependencies": {
@@ -26,11 +27,13 @@
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-solid": "^0.9.4",
+    "lint-staged": "^13.1.0",
     "patch-package": "^6.4.7",
     "prettier": "^2.8.3",
     "solid-start-node": "^0.2.16",
     "typescript": "^4.9.5",
-    "vite": "^3.2.1"
+    "vite": "^3.2.1",
+    "husky": "^8.0.0"
   },
   "dependencies": {
     "@solidjs/meta": "^0.28.2",
@@ -43,6 +46,15 @@
     "solid-record": "^0.2.1",
     "solid-start": "^0.2.16",
     "undici": "^5.15.2"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "**/*.js": [
+      "prettier --write"
+    ]
   },
   "engines": {
     "node": ">=16"
