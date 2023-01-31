@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // @refresh reload
-import { lazy, Suspense } from 'solid-js';
-import { Body, Head, Html, Link, Meta, Title } from 'solid-start';
+import { lazy } from 'solid-js';
+import { Body, Head, Html, Link, Meta, Scripts, Title } from 'solid-start';
 import { AnalyticsScript } from './components/AnalyticsScript';
 import { loadPreset } from './model/layout';
 import './root.css';
@@ -32,9 +32,8 @@ export default function Root() {
         <AnalyticsScript />
       </Head>
       <Body>
-        <Suspense fallback={'Loading...'}>
-          <Siliwiz />
-        </Suspense>
+        <Siliwiz />
+        <Scripts />
       </Body>
     </Html>
   );
