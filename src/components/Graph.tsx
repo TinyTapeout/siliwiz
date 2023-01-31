@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { react } from 'plotly.js-basic-dist';
 import { createEffect, onMount } from 'solid-js';
 import { simulationResult } from '~/model/simulationResult';

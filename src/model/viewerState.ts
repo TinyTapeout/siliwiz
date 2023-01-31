@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { createStore } from 'solid-js/store';
 
 export interface IViewerState {

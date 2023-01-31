@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { Delete, Edit, SwapHoriz, SwapVert } from '@suid/icons-material';
 import { ListItemIcon, ListItemText, Menu, MenuItem, Typography } from '@suid/material';
 import { createSignal, For, Show } from 'solid-js';

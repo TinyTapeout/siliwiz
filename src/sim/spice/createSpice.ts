@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 import spice from './spice';
 
 export interface SpiceController {

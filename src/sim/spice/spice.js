@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 
 var Module = (() => {
   var _scriptDir = import.meta.url;

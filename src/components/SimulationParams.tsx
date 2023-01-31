@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { createEffect, createSignal, Show } from 'solid-js';
 import {
   dcSweep,

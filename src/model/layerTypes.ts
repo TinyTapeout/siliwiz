@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 export interface ILayerInfo {
   name: string;
   magicName: string;

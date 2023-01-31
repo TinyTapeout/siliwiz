@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { setSimulationResult } from '~/model/simulationResult';
 import { createSpice } from './spice/createSpice';
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { AppBar, Button, CssBaseline, ThemeProvider, Toolbar, Typography } from '@suid/material';
 import { createSignal, Show } from 'solid-js';
 import { ErrorBoundary, Scripts } from 'solid-start';

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { lazy, Suspense } from 'solid-js';
 import { layout, layoutUndo, loadPreset, setLayout, setSelectedRectIndex } from '~/model/layout';
 import { getSpiceParams } from '~/model/spiceFile';

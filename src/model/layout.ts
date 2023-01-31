@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { record } from 'solid-record';

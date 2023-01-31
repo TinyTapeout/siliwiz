@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // @refresh reload
 import { lazy, Suspense } from 'solid-js';
 import { Body, Head, Html, Link, Meta, Title } from 'solid-start';

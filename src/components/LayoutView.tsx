@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { createEffect, createSignal, Show } from 'solid-js';
 import { IDRCItem } from '~/model/drc';
 import { layout } from '~/model/layout';

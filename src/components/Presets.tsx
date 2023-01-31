@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { For } from 'solid-js';
 import { loadPreset } from '~/model/layout';
 import { basename } from '~/utils/files';

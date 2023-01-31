@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { layout } from '~/model/layout';
 import { toMagic } from '~/model/magic';
 import {

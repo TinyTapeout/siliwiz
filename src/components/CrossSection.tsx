@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { Popover, Typography } from '@suid/material';
 import { createSignal, For, Show } from 'solid-js';
 import { layout, rectLayer } from '~/model/layout';

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { Checkbox } from '@suid/material';
 import { For } from 'solid-js';
 import { layerTypes } from '~/model/layerTypes';
