@@ -13,7 +13,7 @@ let simulationCounter = 0;
 
 export async function simulate(spiceFile: string, signalNames: string) {
   simulationCounter++;
-  let currentSimulationIndex = simulationCounter;
+  const currentSimulationIndex = simulationCounter;
   const spiceController = await spicePromise;
   const start = new Date().getTime();
   setSimulationResult([]);

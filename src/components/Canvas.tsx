@@ -15,7 +15,7 @@ import {
   sortRects,
 } from '~/model/layout';
 import { viewerState } from '~/model/viewerState';
-import { domRectFromPoints, Point2D } from '~/utils/geometry';
+import { domRectFromPoints, type Point2D } from '~/utils/geometry';
 import { ctrlCmdPressed } from '~/utils/keyboard';
 import styles from './Canvas.module.css';
 import Scale from './Scale';
@@ -71,27 +71,30 @@ export default function Canvas(props: { size: number }) {
 
   const handleEditWidth = () => {
     const selection = selectedRect();
-    if (!selection) {
+    const selectionIndex = selectedRectIndex();
+    if (selection == null || selectionIndex == null) {
       return;
     }
     const currentValue = (selection.width * lambdaToMicrons).toFixed(2).replace(/\.?0+$/, '');
     const newWidth = prompt('Enter new width in µm', currentValue);
-    if (newWidth) {
-      setLayout('rects', selectedRectIndex()!, { width: parseFloat(newWidth) / lambdaToMicrons });
+    if (newWidth != null) {
+      setLayout('rects', selectionIndex, { width: parseFloat(newWidth) / lambdaToMicrons });
     }
   };
 
   const handleEditLength = () => {
     const selection = selectedRect();
-    if (!selection) {
+    const selectionIndex = selectedRectIndex();
+    if (selection == null || selectionIndex == null) {
       return;
     }
     const currentValue = (selection.height * lambdaToMicrons).toFixed(2).replace(/\.?0+$/, '');
     const newLength = prompt('Enter new length in µm', currentValue);
-    if (newLength) {
-      setLayout('rects', selectedRectIndex()!, { height: parseFloat(newLength) / lambdaToMicrons });
+    if (newLength != null) {
+      setLayout('rects', selectionIndex, { height: parseFloat(newLength) / lambdaToMicrons });
     }
   };
+
   const handleKeyDown = (e: KeyboardEvent) => {
     const cmdCtrl = ctrlCmdPressed(e);
     const upperKey = e.key.toUpperCase();
@@ -125,7 +128,7 @@ export default function Canvas(props: { size: number }) {
 
   const translatePoint = ({ x, y }: Point2D) => {
     const matrix = svgRef()?.getScreenCTM();
-    if (!matrix) {
+    if (matrix == null) {
       return { x, y };
     }
     const transformedPoint = new DOMPoint(x, y).matrixTransform(matrix.inverse());
@@ -135,19 +138,19 @@ export default function Canvas(props: { size: number }) {
   const handleMouseDown = (e: MouseEvent) => {
     const layer = viewerState.activeLayer;
     const point = translatePoint({ x: e.clientX, y: e.clientY });
-    if (layer) {
+    if (layer != null) {
       setNewRect({ start: point, end: point, layer });
     }
   };
 
   const handleMouseMove = (e: MouseEvent) => {
     const point = translatePoint({ x: e.clientX, y: e.clientY });
-    setNewRect((rect) => (rect ? { ...rect, end: point } : null));
+    setNewRect((rect) => (rect != null ? { ...rect, end: point } : null));
   };
 
   const handleMouseUp = (e: MouseEvent) => {
     const rect = newRect();
-    if (rect) {
+    if (rect != null) {
       setNewRect(null);
 
       const domRect = domRectFromPoints(rect.start, rect.end);
@@ -177,6 +180,7 @@ export default function Canvas(props: { size: number }) {
         open={open()}
         onClose={handleClose}
         onClick={handleClose}
+        // eslint-disable-next-line solid/reactivity
         onKeyDown={(e) => {
           if (handleKeyDown(e)) {
             e.preventDefault();
@@ -234,10 +238,10 @@ export default function Canvas(props: { size: number }) {
         width={props.size}
         height={props.size}
         ref={setSVGRef}
-        onkeydown={handleKeyDown}
-        onmousedown={handleMouseDown}
-        onmousemove={handleMouseMove}
-        onmouseup={handleMouseUp}
+        onKeyDown={handleKeyDown}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
       >
         <defs>
           <pattern
@@ -256,7 +260,7 @@ export default function Canvas(props: { size: number }) {
         <For each={layout.rects}>
           {(rect, index) => {
             const layer = rectLayer(rect);
-            if (!layer) {
+            if (layer == null) {
               return;
             }
 
@@ -330,7 +334,7 @@ export default function Canvas(props: { size: number }) {
         <Show when={newRect()} keyed>
           {(rect) => {
             const layer = rectLayer(rect);
-            if (!layer) {
+            if (layer == null) {
               return;
             }
 

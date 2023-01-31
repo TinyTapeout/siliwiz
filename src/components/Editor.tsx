@@ -16,11 +16,11 @@ export default function Editor() {
   const loadDesign = async () => {
     const files = await openFiles({ accept: ['application/json'] });
     const text = await files?.item(0)?.text();
-    if (!text) {
+    if (text == null) {
       return;
     }
     const frozenLayout = tryJsonParse(text);
-    if (!frozenLayout) {
+    if (frozenLayout == null) {
       alert('Error: unsupported file format');
     }
     if (frozenLayout.version !== 1 || frozenLayout.app !== 'siliwiz') {

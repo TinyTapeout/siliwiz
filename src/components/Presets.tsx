@@ -12,12 +12,12 @@ export default function Presets() {
       <select
         onChange={(e) => {
           const selected = (e.target as HTMLSelectElement).value;
-          if (selected) {
+          if (selected !== '') {
             loadPreset(pages[selected] as any);
           }
         }}
       >
-        <option></option>
+        <option value="" />
         <For each={Object.keys(pages)}>
           {(name) => <option value={name}>{basename(name)}</option>}
         </For>

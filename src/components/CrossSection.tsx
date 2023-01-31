@@ -44,7 +44,7 @@ export default function CrossSection() {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Typography sx={{ p: 1 }}>{currentLayerName}</Typography>
+        <Typography sx={{ p: 1 }}>{currentLayerName()}</Typography>
       </Popover>
 
       <svg

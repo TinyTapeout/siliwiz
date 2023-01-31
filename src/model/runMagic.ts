@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { parseMagicDRC } from './drc';
-import { ILayout } from './layout';
+import type { ILayout } from './layout';
 import { defaultTech, toMagic } from './magic';
 import { setSpiceInput } from './spiceFile';
 

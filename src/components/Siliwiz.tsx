@@ -30,7 +30,7 @@ export default function Siliwiz() {
         <label>
           <input
             type="checkbox"
-            onclick={(e) => setShowSpice((e.target as HTMLInputElement).checked)}
+            onClick={(e) => setShowSpice((e.target as HTMLInputElement).checked)}
           />
           Show SPICE
         </label>

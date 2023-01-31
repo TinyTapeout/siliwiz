@@ -15,7 +15,7 @@ export default function Palette() {
           <div
             classList={{
               [styles.item]: true,
-              [styles.active]: viewerState.activeLayer == layer.name,
+              [styles.active]: viewerState.activeLayer === layer.name,
             }}
             title={layer.description}
             onClick={() => {

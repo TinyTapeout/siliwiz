@@ -28,7 +28,7 @@ export default function Graph() {
       }
       const table = simulationResult();
       const signals = signalNames();
-      react(
+      void react(
         graphDiv,
         signals.split(' ').map((name, index) => ({
           x: table.map((row) => row[0]),

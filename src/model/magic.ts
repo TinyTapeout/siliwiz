@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { ILayout, ILayoutRect, rectLayer, sortRects } from '~/model/layout';
-import { Point2D } from '~/utils/geometry';
+import { type ILayout, type ILayoutRect, rectLayer, sortRects } from '~/model/layout';
+import type { Point2D } from '~/utils/geometry';
 import { layerTypes } from './layerTypes';
 
 export const defaultTech = 'siliwiz';
@@ -35,7 +35,7 @@ export function fromMagic(source: string, translate: Point2D = { x: 0, y: 0 }, s
     } else if (line.startsWith('flabel')) {
       const lineParts = line.split(' ');
       const layerName = lineParts[1];
-      const [x1Orig, y1, x2, y2Orig] = lineParts.slice(2, 6).map((s) => parseInt(s, 10));
+      const [x1Orig, , , y2Orig] = lineParts.slice(2, 6).map((s) => parseInt(s, 10));
       const label = lineParts[12];
       const x1 = scale * x1Orig + translate.x;
       const y2 = scale * -y2Orig + translate.y;
@@ -64,7 +64,9 @@ export function fromMagic(source: string, translate: Point2D = { x: 0, y: 0 }, s
       });
     }
   }
-  return { rects: sortRects(rects) } as ILayout;
+
+  const result: ILayout = { rects: sortRects(rects) };
+  return result;
 }
 
 export function toMagic(layout: ILayout, tech = defaultTech) {
@@ -74,14 +76,14 @@ export function toMagic(layout: ILayout, tech = defaultTech) {
     `magscale 1 ${tech === 'sky130A' ? 2 : 1}`,
     `timestamp ${Math.floor(new Date().getTime() / 1000)}`,
   ];
-  const labels: { layerName: string; rect: ILayoutRect }[] = [];
+  const labels: Array<{ layerName: string; rect: ILayoutRect }> = [];
   for (const layer of layerTypes) {
     const rects = layout.rects.filter((r) => r.layer === layer.name);
-    if (rects.length) {
+    if (rects.length > 0) {
       result.push(`<< ${layer.magicName} >>`);
       for (const rect of rects) {
         result.push(`rect ${magicRect(rect)}`);
-        if (rect.label) {
+        if (rect.label != null) {
           labels.push({ layerName: layer.magicName, rect });
         }
       }
@@ -90,6 +92,9 @@ export function toMagic(layout: ILayout, tech = defaultTech) {
   result.push('<< labels >>');
   let portIndex = 1;
   for (const { layerName, rect } of labels) {
+    if (rect.label == null) {
+      continue;
+    }
     result.push(`flabel ${layerName} s ${magicRect(rect)} 0 FreeSans 240 90 0 0 ${rect.label}`);
     result.push(`port ${portIndex} nsew signal output`);
     portIndex++;

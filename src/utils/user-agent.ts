@@ -3,9 +3,9 @@ export function getUserAgent() {
 }
 
 export function isMac() {
-  return getUserAgent().indexOf('Macintosh') >= 0;
+  return getUserAgent().includes('Macintosh');
 }
 
 export function isMobile() {
-  return getUserAgent().indexOf('Mobi') >= 0;
+  return getUserAgent().includes('Mobi');
 }

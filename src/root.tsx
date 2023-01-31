@@ -9,11 +9,13 @@ export default function Root() {
   if (typeof location !== 'undefined') {
     const urlParams = new URLSearchParams(location.search);
     const preset = urlParams.get('preset');
-    import(`~/../presets/${preset}.json`).then((module) => {
-      if (module && module.rects) {
-        loadPreset(module);
-      }
-    });
+    if (preset != null) {
+      void import(`~/../presets/${preset}.json`).then((module) => {
+        if (module?.rects != null) {
+          loadPreset(module);
+        }
+      });
+    }
   }
 
   const Siliwiz = lazy(() => import('~/components/Siliwiz'));
