@@ -1,5 +1,6 @@
 {
   "name": "siliwiz",
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
