@@ -6,7 +6,7 @@
     "lint": "eslint --ext .ts,.tsx .",
     "build": "solid-start build",
     "build:element": "rollup --config rollup.config.mjs",
-    "format:check": "prettier --check **/*.{ts,js} !dist/** !node_modules/** !.solid/** !**/spice.js",
+    "format:check": "prettier --check **/*.{ts,js,css,tsx} !dist/** !node_modules/** !.solid/** !**/spice.js",
     "start": "solid-start start",
     "postinstall": "patch-package",
     "prepare": "husky install"
@@ -52,7 +52,7 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "**/*.js": [
+    "**/*.{js,css}": [
       "prettier --write"
     ]
   },
