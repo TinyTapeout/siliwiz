@@ -2,6 +2,7 @@
   "version": 1,
   "app": "siliwiz",
   "author": "Uri Shaked",
+  "license": "CC-BY-SA-4.0",
   "timestamp": 1667163347,
   "rects": [
     { "x": 156.25, "y": 32.5, "width": 130, "height": 128.75, "layer": "pwell" },
