@@ -2,6 +2,7 @@
 // @refresh reload
 import { lazy, Suspense } from 'solid-js';
 import { Body, Head, Html, Link, Meta, Title } from 'solid-start';
+import { AnalyticsScript } from './components/AnalyticsScript';
 import { loadPreset } from './model/layout';
 import './root.css';
 
@@ -28,6 +29,7 @@ export default function Root() {
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
         <Link rel="preconnect" href="https://fonts.googleapis.com" />
         <Link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" />
+        <AnalyticsScript />
       </Head>
       <Body>
         <Suspense fallback={'Loading...'}>
