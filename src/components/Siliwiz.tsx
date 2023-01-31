@@ -6,6 +6,7 @@ import { ErrorBoundary, Scripts } from 'solid-start';
 import LayoutView from '~/components/LayoutView';
 import SpiceDebugView from '~/components/SpiceDebugView';
 import { theme } from '~/config/theme';
+import { Footer } from './Footer';
 
 export default function Siliwiz() {
   const [showSpice, setShowSpice] = createSignal(false);
@@ -40,13 +41,7 @@ export default function Siliwiz() {
       </ErrorBoundary>
       <Scripts />
       <hr />
-      <footer>
-        <small>
-          SiliWiz revision{' '}
-          <a href="https://github.com/wokwi/siliwiz/commit/__COMMIT_HASH__">{__COMMIT_HASH__}</a>,
-          built at {__BUILD_TIME__}.
-        </small>
-      </footer>
+      <Footer />
     </ThemeProvider>
   );
 }
