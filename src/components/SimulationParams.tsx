@@ -1,4 +1,6 @@
-import { createEffect, createSignal, Show } from 'solid-js';
+// SPDX-License-Identifier: Apache-2.0
+
+import { createEffect, Show } from 'solid-js';
 import {
   dcSweep,
   maxInVoltage,
@@ -17,7 +19,7 @@ import { simulate } from '~/sim/simulate';
 
 export default function SimulationParams() {
   createEffect(() => {
-    simulate(spiceFile(), signalNames());
+    void simulate(spiceFile(), signalNames());
   });
   return (
     <div>

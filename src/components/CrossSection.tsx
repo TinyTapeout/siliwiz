@@ -1,4 +1,7 @@
-import { For, Show } from 'solid-js';
+// SPDX-License-Identifier: Apache-2.0
+
+import { Popover, Typography } from '@suid/material';
+import { createSignal, For, Show } from 'solid-js';
 import { layout, rectLayer } from '~/model/layout';
 import { viewerState } from '~/model/viewerState';
 
@@ -8,9 +11,42 @@ export default function CrossSection() {
       (r) => r.y <= viewerState.crossSectionY && r.y + r.height >= viewerState.crossSectionY,
     );
   const polyRects = () => crossRects().filter((r) => r.layer === 'polysilicon');
+
+  // Layer name tooltip
+  const [anchorEl, setAnchorEl] = createSignal<Element | null>(null);
+  const [currentLayerName, setCurrentLayerName] = createSignal('');
+  const handlePopoverOpen = (event: { currentTarget: Element }) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+    setCurrentLayerName('');
+  };
+
+  const open = () => Boolean(anchorEl());
+
   return (
     <div>
       <h3>Cross Section View</h3>
+      <Popover
+        id="mouse-over-popover"
+        sx={{ pointerEvents: 'none' }}
+        open={open()}
+        anchorEl={anchorEl()}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        onClose={handlePopoverClose}
+        disableRestoreFocus
+      >
+        <Typography sx={{ p: 1 }}>{currentLayerName()}</Typography>
+      </Popover>
+
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 400 120"
@@ -50,6 +86,13 @@ export default function CrossSection() {
             return (
               <Show when={!hidden()}>
                 <rect
+                  aria-owns={open() ? 'mouse-over-popover' : undefined}
+                  aria-haspopup="true"
+                  onMouseEnter={(e) => {
+                    handlePopoverOpen(e);
+                    setCurrentLayerName(layer.name);
+                  }}
+                  onMouseLeave={handlePopoverClose}
                   x={rect.x}
                   y={layer.crossY - 10}
                   height={layer.crossHeight}

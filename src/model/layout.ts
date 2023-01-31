@@ -1,7 +1,13 @@
+// SPDX-License-Identifier: Apache-2.0
+
+import { createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { record } from 'solid-record';
 import inverter from '~/../presets/inverter.json';
 import { layerTypes } from './layerTypes';
+import { type ISpiceParams, setSpiceParams } from './spiceFile';
+
+export const lambdaToMicrons = 0.09;
 
 export interface ILayoutRect {
   x: number;
@@ -31,8 +37,21 @@ export function sortRects(rects: ILayoutRect[]) {
   });
 }
 
+export const [selectedRectIndex, setSelectedRectIndex] = createSignal<number | null>(null);
 export const [layout, setLayout, layoutUndo] = record(
+  // eslint-disable-next-line solid/reactivity
   createStore<ILayout>({
     rects: inverter.rects,
   }),
 );
+
+export interface ILayoutSnapshot {
+  rects?: ILayoutRect[];
+  graph?: Partial<ISpiceParams>;
+}
+
+export function loadPreset(preset: ILayoutSnapshot) {
+  setLayout('rects', preset?.rects ?? []);
+  setSpiceParams(preset?.graph ?? {});
+  setSelectedRectIndex(null);
+}

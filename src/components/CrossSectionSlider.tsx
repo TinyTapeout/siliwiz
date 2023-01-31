@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { setViewerState, viewerState } from '~/model/viewerState';
 
 export default function CrossSectionSlider() {
@@ -11,7 +13,7 @@ export default function CrossSectionSlider() {
         max={height}
         style={{
           transform: `translate(${sliderTranslate()}) rotate(90deg)`,
-          width: height + 'px',
+          width: `${height}px`,
         }}
         value={viewerState.crossSectionOffset}
         onInput={(e) =>

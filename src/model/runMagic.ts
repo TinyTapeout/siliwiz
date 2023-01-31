@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { parseMagicDRC } from './drc';
-import { ILayout } from './layout';
+import type { ILayout } from './layout';
 import { defaultTech, toMagic } from './magic';
 import { setSpiceInput } from './spiceFile';
 
@@ -26,5 +28,5 @@ export async function runMagic(layout: ILayout) {
 }
 
 export function getTechFileURL() {
-  return new URL('/sample6m.tech', serverUrl);
+  return new URL('/siliwiz.tech', serverUrl);
 }

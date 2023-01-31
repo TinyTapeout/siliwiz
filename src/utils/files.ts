@@ -6,10 +6,10 @@ export interface IOpenFilesOptions {
 export async function openFiles({ accept }: IOpenFilesOptions = {}) {
   const input = document.createElement('input');
   input.type = 'file';
-  if (accept) {
+  if (accept != null) {
     input.accept = accept.join(',');
   }
-  return new Promise<FileList | null>((resolve, reject) => {
+  return await new Promise<FileList | null>((resolve, reject) => {
     document.body.appendChild(input);
     input.remove();
     input.click();

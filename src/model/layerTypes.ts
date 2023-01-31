@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 export interface ILayerInfo {
   name: string;
   magicName: string;
@@ -21,7 +23,7 @@ export const layerTypes: ILayerInfo[] = [
     color: '#cccc00',
     hatched: true,
     crossY: 100,
-    crossHeight: 200,
+    crossHeight: 30,
     description: 'p-doped silicon that is the base layer everything else is built on',
   },
   {

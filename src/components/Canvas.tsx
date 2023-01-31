@@ -1,10 +1,21 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { Delete, Edit, SwapHoriz, SwapVert } from '@suid/icons-material';
-import { ListItemIcon, ListItemText, Menu, MenuItem } from '@suid/material';
+import { ListItemIcon, ListItemText, Menu, MenuItem, Typography } from '@suid/material';
 import { createSignal, For, Show } from 'solid-js';
 import { activeDRCItem } from '~/model/drc';
-import { layout, layoutUndo, rectLayer, setLayout, sortRects } from '~/model/layout';
+import {
+  lambdaToMicrons,
+  layout,
+  layoutUndo,
+  rectLayer,
+  selectedRectIndex,
+  setLayout,
+  setSelectedRectIndex,
+  sortRects,
+} from '~/model/layout';
 import { viewerState } from '~/model/viewerState';
-import { domRectFromPoints, Point2D } from '~/utils/geometry';
+import { domRectFromPoints, type Point2D } from '~/utils/geometry';
 import { ctrlCmdPressed } from '~/utils/keyboard';
 import styles from './Canvas.module.css';
 import Scale from './Scale';
@@ -15,8 +26,14 @@ interface INewRect {
   end: Point2D;
 }
 
+const keyboardShortcuts = {
+  Delete: 'D',
+  EditWidth: 'F',
+  EditLength: 'R',
+  SetLabel: 'S',
+};
+
 export default function Canvas(props: { size: number }) {
-  const [selectedRectIndex, setSelectedRectIndex] = createSignal<number | null>(null);
   const [svgRef, setSVGRef] = createSignal<SVGSVGElement | null>(null);
   const [newRect, setNewRect] = createSignal<INewRect | null>(null);
 
@@ -40,37 +57,78 @@ export default function Canvas(props: { size: number }) {
     setSelectedRectIndex(null);
   };
 
+  const handleSetLabel = () => {
+    const selection = selectedRect();
+    const selectionIndex = selectedRectIndex();
+    if (selection == null || selectionIndex == null) {
+      return;
+    }
+    const label = prompt('Enter new label (or an empty string to delete label)', selection.label);
+    if (label != null) {
+      setLayout('rects', selectionIndex, { ...selection, label });
+    }
+  };
+
+  const handleEditWidth = () => {
+    const selection = selectedRect();
+    const selectionIndex = selectedRectIndex();
+    if (selection == null || selectionIndex == null) {
+      return;
+    }
+    const currentValue = (selection.width * lambdaToMicrons).toFixed(2).replace(/\.?0+$/, '');
+    const newWidth = prompt('Enter new width in µm', currentValue);
+    if (newWidth != null) {
+      setLayout('rects', selectionIndex, { width: parseFloat(newWidth) / lambdaToMicrons });
+    }
+  };
+
+  const handleEditLength = () => {
+    const selection = selectedRect();
+    const selectionIndex = selectedRectIndex();
+    if (selection == null || selectionIndex == null) {
+      return;
+    }
+    const currentValue = (selection.height * lambdaToMicrons).toFixed(2).replace(/\.?0+$/, '');
+    const newLength = prompt('Enter new length in µm', currentValue);
+    if (newLength != null) {
+      setLayout('rects', selectionIndex, { height: parseFloat(newLength) / lambdaToMicrons });
+    }
+  };
+
   const handleKeyDown = (e: KeyboardEvent) => {
     const cmdCtrl = ctrlCmdPressed(e);
     const upperKey = e.key.toUpperCase();
-    if (e.key === 'Delete') {
+    if (e.key === 'Delete' || upperKey === keyboardShortcuts.Delete) {
       handleDelete();
+      return true;
     }
     if (upperKey === 'Z' && cmdCtrl) {
       layoutUndo.undo();
+      return true;
     }
     if (upperKey === 'Y' && cmdCtrl) {
       layoutUndo.redo();
+      return true;
     }
 
-    const selection = selectedRect();
-    if (upperKey === 'L' && selection) {
-      const newLength = prompt('Enter new length in um', selection.height.toString());
-      if (newLength) {
-        setLayout('rects', selectedRectIndex()!, { height: parseFloat(newLength) });
-      }
+    if (upperKey === keyboardShortcuts.SetLabel) {
+      handleSetLabel();
+      return true;
     }
-    if (upperKey === 'W' && selection) {
-      const newWidth = prompt('Enter new width in um', selection.width.toString());
-      if (newWidth) {
-        setLayout('rects', selectedRectIndex()!, { width: parseFloat(newWidth) });
-      }
+    if (upperKey === keyboardShortcuts.EditWidth) {
+      handleEditWidth();
+      return true;
     }
+    if (upperKey === keyboardShortcuts.EditLength) {
+      handleEditLength();
+      return true;
+    }
+    return false; /* not handled */
   };
 
   const translatePoint = ({ x, y }: Point2D) => {
     const matrix = svgRef()?.getScreenCTM();
-    if (!matrix) {
+    if (matrix == null) {
       return { x, y };
     }
     const transformedPoint = new DOMPoint(x, y).matrixTransform(matrix.inverse());
@@ -80,19 +138,19 @@ export default function Canvas(props: { size: number }) {
   const handleMouseDown = (e: MouseEvent) => {
     const layer = viewerState.activeLayer;
     const point = translatePoint({ x: e.clientX, y: e.clientY });
-    if (layer) {
+    if (layer != null) {
       setNewRect({ start: point, end: point, layer });
     }
   };
 
   const handleMouseMove = (e: MouseEvent) => {
     const point = translatePoint({ x: e.clientX, y: e.clientY });
-    setNewRect((rect) => (rect ? { ...rect, end: point } : null));
+    setNewRect((rect) => (rect != null ? { ...rect, end: point } : null));
   };
 
   const handleMouseUp = (e: MouseEvent) => {
     const rect = newRect();
-    if (rect) {
+    if (rect != null) {
       setNewRect(null);
 
       const domRect = domRectFromPoints(rect.start, rect.end);
@@ -116,72 +174,61 @@ export default function Canvas(props: { size: number }) {
     }
   };
 
-  const handleSetLabel = () => {
-    const selection = selectedRect();
-    const selectionIndex = selectedRectIndex();
-    if (selection == null || selectionIndex == null) {
-      return;
-    }
-    const label = prompt('Enter new label (or an empty string to delete label)', selection.label);
-    if (label != null) {
-      setLayout('rects', selectionIndex, { ...selection, label });
-    }
-  };
-
-  const handleEditWidth = () => {
-    const selection = selectedRect();
-    if (!selection) {
-      return;
-    }
-    const newWidth = prompt('Enter new width in um', selection.width.toString());
-    if (newWidth) {
-      setLayout('rects', selectedRectIndex()!, { width: parseFloat(newWidth) });
-    }
-  };
-
-  const handleEditLength = () => {
-    const selection = selectedRect();
-    if (!selection) {
-      return;
-    }
-    const newLength = prompt('Enter new length in um', selection.height.toString());
-    if (newLength) {
-      setLayout('rects', selectedRectIndex()!, { height: parseFloat(newLength) });
-    }
-  };
-
   return (
     <>
       <Menu
         open={open()}
         onClose={handleClose}
         onClick={handleClose}
+        // eslint-disable-next-line solid/reactivity
+        onKeyDown={(e) => {
+          if (handleKeyDown(e)) {
+            e.preventDefault();
+            svgRef()?.focus({ preventScroll: true });
+            setContextMenu(null);
+          }
+        }}
         anchorReference="anchorPosition"
         anchorPosition={contextMenu() ?? undefined}
+        sx={{
+          '& .MuiMenu-list': { width: 180, maxWidth: '100%' },
+        }}
       >
         <MenuItem onClick={handleDelete}>
           <ListItemIcon>
             <Delete fontSize="small" />
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            {keyboardShortcuts.Delete}
+          </Typography>
         </MenuItem>
         <MenuItem onClick={handleSetLabel}>
           <ListItemIcon>
             <Edit fontSize="small" />
           </ListItemIcon>
           <ListItemText>Set Label</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            {keyboardShortcuts.SetLabel}
+          </Typography>
         </MenuItem>
         <MenuItem onClick={handleEditWidth}>
           <ListItemIcon>
             <SwapHoriz fontSize="small" />
           </ListItemIcon>
           <ListItemText>Edit Width</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            {keyboardShortcuts.EditWidth}
+          </Typography>
         </MenuItem>
         <MenuItem onClick={handleEditLength}>
           <ListItemIcon>
             <SwapVert fontSize="small" />
           </ListItemIcon>
           <ListItemText>Edit Length</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            {keyboardShortcuts.EditLength}
+          </Typography>
         </MenuItem>
       </Menu>
       <svg
@@ -191,10 +238,10 @@ export default function Canvas(props: { size: number }) {
         width={props.size}
         height={props.size}
         ref={setSVGRef}
-        onkeydown={handleKeyDown}
-        onmousedown={handleMouseDown}
-        onmousemove={handleMouseMove}
-        onmouseup={handleMouseUp}
+        onKeyDown={handleKeyDown}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
       >
         <defs>
           <pattern
@@ -213,7 +260,7 @@ export default function Canvas(props: { size: number }) {
         <For each={layout.rects}>
           {(rect, index) => {
             const layer = rectLayer(rect);
-            if (!layer) {
+            if (layer == null) {
               return;
             }
 
@@ -287,7 +334,7 @@ export default function Canvas(props: { size: number }) {
         <Show when={newRect()} keyed>
           {(rect) => {
             const layer = rectLayer(rect);
-            if (!layer) {
+            if (layer == null) {
               return;
             }
 

@@ -1,9 +1,12 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { lazy, Suspense } from 'solid-js';
-import { layout, layoutUndo, setLayout } from '~/model/layout';
-import { getSpiceParams, setSpiceParams } from '~/model/spiceFile';
+import { layout, layoutUndo, loadPreset, setLayout, setSelectedRectIndex } from '~/model/layout';
+import { getSpiceParams } from '~/model/spiceFile';
 import { downloadFile } from '~/utils/download-file';
 import { openFiles } from '~/utils/files';
 import { tryJsonParse } from '~/utils/json';
+import Canvas from './Canvas';
 import CrossSection from './CrossSection';
 import CrossSectionSlider from './CrossSectionSlider';
 import Presets from './Presets';
@@ -13,18 +16,17 @@ export default function Editor() {
   const loadDesign = async () => {
     const files = await openFiles({ accept: ['application/json'] });
     const text = await files?.item(0)?.text();
-    if (!text) {
+    if (text == null) {
       return;
     }
     const frozenLayout = tryJsonParse(text);
-    if (!frozenLayout) {
+    if (frozenLayout == null) {
       alert('Error: unsupported file format');
     }
     if (frozenLayout.version !== 1 || frozenLayout.app !== 'siliwiz') {
       alert('Error: unsupported file version');
     }
-    setLayout('rects', frozenLayout.rects ?? []);
-    setSpiceParams(frozenLayout.graph ?? {});
+    loadPreset(frozenLayout);
   };
 
   const saveDesign = () => {
@@ -42,12 +44,12 @@ export default function Editor() {
 
   const clear = () => {
     setLayout('rects', []);
+    setSelectedRectIndex(null);
   };
 
   const canvasSize = () => 2;
 
   const Graph = lazy(() => import('./Graph'));
-  const Canvas = lazy(() => import('./Canvas'));
 
   return (
     <>
@@ -69,22 +71,7 @@ export default function Editor() {
         <Presets />
       </div>
       <div style={{ display: 'flex' }}>
-        <Suspense
-          fallback={
-            <div
-              style={{
-                width: '400px',
-                height: '400px',
-                'line-height': '400px',
-                'text-align': 'center',
-              }}
-            >
-              Loading...
-            </div>
-          }
-        >
-          <Canvas size={canvasSize() * 200} />
-        </Suspense>
+        <Canvas size={canvasSize() * 200} />
         <CrossSectionSlider />
         <div>
           <Suspense fallback={<div>Loading graph...</div>}>
@@ -95,9 +82,7 @@ export default function Editor() {
           </div>
         </div>
       </div>
-      <div>
-        <CrossSection />
-      </div>
+      <CrossSection />
     </>
   );
 }

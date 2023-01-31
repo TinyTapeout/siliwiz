@@ -1,5 +1,7 @@
-import { Show } from 'solid-js';
-import { IDRCItem, setActiveDRCItem } from '~/model/drc';
+// SPDX-License-Identifier: Apache-2.0
+
+import { For, Show } from 'solid-js';
+import { setActiveDRCItem, type IDRCItem } from '~/model/drc';
 import styles from './DRCList.module.css';
 
 export interface IDRCListProps {
@@ -14,15 +16,17 @@ export default function DRCList(props: IDRCListProps) {
           <h3>DRC Errors</h3>
           <Show when={drc.length === 0}>✅ DRC OK</Show>
           <ul class={styles.drcList}>
-            {drc.map((item) => (
-              <li
-                class={styles.drcItem}
-                onmouseover={() => setActiveDRCItem(item)}
-                onmouseout={() => setActiveDRCItem(null)}
-              >
-                {item.message}
-              </li>
-            ))}
+            <For each={drc}>
+              {(item) => (
+                <li
+                  class={styles.drcItem}
+                  onMouseOver={() => setActiveDRCItem(item)}
+                  onMouseOut={() => setActiveDRCItem(null)}
+                >
+                  {item.message}
+                </li>
+              )}
+            </For>
           </ul>
         </>
       )}

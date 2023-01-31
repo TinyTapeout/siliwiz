@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { createSignal } from 'solid-js';
 
 export interface ISpiceParams {
@@ -53,7 +55,7 @@ export function setSpiceParams(params: Partial<ISpiceParams>) {
 
 export function processMagicSpice(magicSpice: string) {
   const circuit = magicSpice.match(/\n.subckt ([^\n]*)\n(.+)\n.ends\n/s);
-  if (!circuit) {
+  if (circuit == null) {
     return null;
   }
 

@@ -1,55 +1,38 @@
+// SPDX-License-Identifier: Apache-2.0
 // @refresh reload
-import { createSignal, Show } from 'solid-js';
-import { Body, ErrorBoundary, Head, Html, Meta, Scripts, Title } from 'solid-start';
-import LayoutView from './components/LayoutView';
-import SpiceDebugView from './components/SpiceDebugView';
-import { setLayout } from './model/layout';
+import { lazy, Suspense } from 'solid-js';
+import { Body, Head, Html, Link, Meta, Title } from 'solid-start';
+import { loadPreset } from './model/layout';
 import './root.css';
 
 export default function Root() {
-  const [showSpice, setShowSpice] = createSignal(false);
-
   if (typeof location !== 'undefined') {
     const urlParams = new URLSearchParams(location.search);
     const preset = urlParams.get('preset');
-    import(`~/../presets/${preset}.json`).then((module) => {
-      if (module && module.rects) {
-        setLayout('rects', module.rects);
-      }
-    });
+    if (preset != null) {
+      void import(`~/../presets/${preset}.json`).then((module) => {
+        if (module?.rects != null) {
+          loadPreset(module);
+        }
+      });
+    }
   }
+
+  const Siliwiz = lazy(() => import('~/components/Siliwiz'));
 
   return (
     <Html lang="en">
       <Head>
-        <Title>SiliWiz Demo</Title>
+        <Title>SiliWiz</Title>
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Link rel="preconnect" href="https://fonts.googleapis.com" />
+        <Link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" />
       </Head>
       <Body>
-        <ErrorBoundary>
-          <h1>Siliwiz</h1>
-          <LayoutView />
-          <hr style={{ margin: '1em 0' }} />
-          <label>
-            <input
-              type="checkbox"
-              onclick={(e) => setShowSpice((e.target as HTMLInputElement).checked)}
-            />
-            Show SPICE
-          </label>
-          <br />
-          <Show when={showSpice()}>
-            <SpiceDebugView />
-          </Show>
-        </ErrorBoundary>
-        <Scripts />
-        <hr />
-        <footer>
-          <small>
-            SiliWiz revision {__COMMIT_HASH__}, built at {__BUILD_TIME__}.
-          </small>
-        </footer>
+        <Suspense fallback={'Loading...'}>
+          <Siliwiz />
+        </Suspense>
       </Body>
     </Html>
   );

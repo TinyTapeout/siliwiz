@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 interface ModuleConfig {
   arguments?: string;
   noInitialRun: boolean;

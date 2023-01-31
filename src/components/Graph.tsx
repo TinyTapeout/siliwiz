@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { react } from 'plotly.js-basic-dist';
 import { createEffect, onMount } from 'solid-js';
 import { simulationResult } from '~/model/simulationResult';
@@ -15,6 +17,9 @@ export default function Graph() {
         t: 50,
         pad: 4,
       },
+      yaxis: {
+        range: [-0.25, 5.25],
+      },
     };
 
     createEffect(() => {
@@ -23,7 +28,7 @@ export default function Graph() {
       }
       const table = simulationResult();
       const signals = signalNames();
-      react(
+      void react(
         graphDiv,
         signals.split(' ').map((name, index) => ({
           x: table.map((row) => row[0]),

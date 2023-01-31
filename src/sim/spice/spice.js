@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+/* eslint-disable */
 
 var Module = (() => {
   var _scriptDir = import.meta.url;

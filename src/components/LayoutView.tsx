@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { createEffect, createSignal, Show } from 'solid-js';
-import { IDRCItem } from '~/model/drc';
+import type { IDRCItem } from '~/model/drc';
 import { layout } from '~/model/layout';
 import { runMagic } from '~/model/runMagic';
 import DRCList from './DRCList';
@@ -24,9 +26,6 @@ export default function LayoutView() {
     <>
       <Palette />
       <Editor />
-      <div style={{ 'margin-top': '8px' }}>
-        <button onClick={update}>Magic DRC + Extract spice</button>
-      </div>
       <Show when={updating()}>
         <div style={{ 'margin-top': '16px' }}>⚙️ DRC Updating...</div>
       </Show>

@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: Apache-2.0
+
+import { lambdaToMicrons } from '~/model/layout';
+
 export default function Scale(props: { y: number }) {
   return (
     <g style={{ 'user-select': 'none' }}>
@@ -7,10 +11,10 @@ export default function Scale(props: { y: number }) {
         0µm
       </text>
       <text x={50} y={props.y - 12} text-anchor="middle" font-size="10">
-        {50 * 0.09}µm
+        {50 * lambdaToMicrons}µm
       </text>
       <text x={100} y={props.y - 12} text-anchor="middle" font-size="10">
-        {100 * 0.09}µm
+        {100 * lambdaToMicrons}µm
       </text>
     </g>
   );

@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { For } from 'solid-js';
-import { setLayout } from '~/model/layout';
-import { setSpiceParams } from '~/model/spiceFile';
+import { loadPreset } from '~/model/layout';
 import { basename } from '~/utils/files';
 
 export default function Presets() {
@@ -11,14 +12,12 @@ export default function Presets() {
       <select
         onChange={(e) => {
           const selected = (e.target as HTMLSelectElement).value;
-          if (selected) {
-            const preset = pages[selected] as any;
-            setLayout('rects', preset?.rects ?? []);
-            setSpiceParams(preset?.graph ?? {});
+          if (selected !== '') {
+            loadPreset(pages[selected] as any);
           }
         }}
       >
-        <option></option>
+        <option value="" />
         <For each={Object.keys(pages)}>
           {(name) => <option value={name}>{basename(name)}</option>}
         </For>

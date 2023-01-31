@@ -1,17 +1,19 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+
 .palette {
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
   border: solid #aaa 1px;
-  padding: 12px 12px 0;
+  padding: 12px 12px;
   border-radius: 12px;
 }
 
 .item {
   display: flex;
+  align-items: center;
   border-radius: 50%;
   margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
   cursor: pointer;
 }
 
