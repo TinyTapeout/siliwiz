@@ -40,7 +40,9 @@ export default function Siliwiz() {
       <hr />
       <footer>
         <small>
-          SiliWiz revision {__COMMIT_HASH__}, built at {__BUILD_TIME__}.
+          SiliWiz revision{' '}
+          <a href="https://github.com/wokwi/siliwiz/commit/__COMMIT_HASH__">{__COMMIT_HASH__}</a>,
+          built at {__BUILD_TIME__}.
         </small>
       </footer>
     </ThemeProvider>
