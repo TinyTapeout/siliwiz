@@ -9,4 +9,4 @@ vscode:
 ports:
   - name: SiliWiz App
     port: 5173
-    onOpen: open-browser
+    onOpen: open-preview
