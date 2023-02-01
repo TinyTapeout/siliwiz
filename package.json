@@ -19,6 +19,7 @@
     "@rollup/plugin-replace": "^5.0.0",
     "@suid/vite-plugin": "0.1.1",
     "@types/node": "^18.11.18",
+    "@types/three": "^0.149.0",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
@@ -27,13 +28,13 @@
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-solid": "^0.9.4",
+    "husky": "^8.0.0",
     "lint-staged": "^13.1.0",
     "patch-package": "^6.4.7",
     "prettier": "^2.8.3",
     "solid-start-node": "^0.2.16",
     "typescript": "^4.9.5",
-    "vite": "^3.2.1",
-    "husky": "^8.0.0"
+    "vite": "^3.2.1"
   },
   "dependencies": {
     "@solidjs/meta": "^0.28.2",
@@ -45,6 +46,7 @@
     "solid-js": "^1.6.9",
     "solid-record": "^0.2.1",
     "solid-start": "^0.2.16",
+    "three": "^0.149.0",
     "undici": "^5.15.2"
   },
   "lint-staged": {

@@ -3,6 +3,7 @@
 import { lazy, Suspense } from 'solid-js';
 import { layout, layoutUndo, loadPreset, setLayout, setSelectedRectIndex } from '~/model/layout';
 import { getSpiceParams } from '~/model/spiceFile';
+import { exportSTL } from '~/model/stl';
 import { downloadFile } from '~/utils/download-file';
 import { openFiles } from '~/utils/files';
 import { tryJsonParse } from '~/utils/json';
@@ -67,6 +68,8 @@ export default function Editor() {
         <button onClick={saveDesign}>Save</button>
         &nbsp;
         <button onClick={clear}>Clear</button>
+        &nbsp;
+        <button onClick={exportSTL}>STL</button>
         &nbsp;
         <Presets />
       </div>
