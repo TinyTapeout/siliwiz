@@ -54,6 +54,22 @@ export const layerTypes: ILayerInfo[] = [
     description: 'p-diffusion layer used to make p mosfets',
   },
   {
+    name: 'psubstratepdiff',
+    magicName: 'psubstratepdfiff',
+    color: '#4040ff',
+    crossY: 100,
+    crossHeight: 15,
+    description: 'p-diffusion layer used to connect to power supply',
+  },
+  {
+    name: 'nsubstratendiff',
+    magicName: 'nsubstratendiff',
+    color: '#8080ff',
+    crossY: 100,
+    crossHeight: 15,
+    description: 'n-diffusion layer used to connect to power supply',
+  },
+  {
     name: 'pdcontact',
     magicName: 'pdcontact',
     color: '#ffff80',
