@@ -52,6 +52,11 @@ export default function Canvas(props: { size: number }) {
     return index != null ? layout.rects[index] : null;
   };
 
+  const selectedRectLayer = () => {
+    const rect = selectedRect();
+    return rect != null ? rectLayer(rect) : null;
+  };
+
   const handleDelete = () => {
     setLayout('rects', (rects) => rects.filter((r, index) => index !== selectedRectIndex()));
     setSelectedRectIndex(null);
@@ -60,7 +65,7 @@ export default function Canvas(props: { size: number }) {
   const handleSetLabel = () => {
     const selection = selectedRect();
     const selectionIndex = selectedRectIndex();
-    if (selection == null || selectionIndex == null) {
+    if (selection == null || selectionIndex == null || !selectedRectLayer()?.hasLabels) {
       return;
     }
     const label = prompt('Enter new label (or an empty string to delete label)', selection.label);
@@ -203,7 +208,7 @@ export default function Canvas(props: { size: number }) {
             {keyboardShortcuts.Delete}
           </Typography>
         </MenuItem>
-        <MenuItem onClick={handleSetLabel}>
+        <MenuItem onClick={handleSetLabel} disabled={!selectedRectLayer()?.hasLabels}>
           <ListItemIcon>
             <Edit fontSize="small" />
           </ListItemIcon>

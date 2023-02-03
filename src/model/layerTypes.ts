@@ -9,10 +9,13 @@ export interface ILayerInfo {
   crossHeight: number;
   description?: string;
 
-  /* Whether this layer is masked by polysilicon */
+  /** Whether this layer is masked by polysilicon */
   masked?: boolean;
 
-  /* List of layers that always intersect with this layer */
+  /** Whether this layer supports labels (e.g. a metal layer) */
+  hasLabels?: boolean;
+
+  /** List of layers that always intersect with this layer */
   intersectLayers?: string[];
 }
 
@@ -139,6 +142,7 @@ export const layerTypes: ILayerInfo[] = [
     crossY: 55,
     crossHeight: 15,
     description: 'metal layer used for wiring up the circuit',
+    hasLabels: true,
   },
   {
     name: 'mimcap',
@@ -173,5 +177,6 @@ export const layerTypes: ILayerInfo[] = [
     crossY: 10,
     crossHeight: 20, // bit thicker than met1
     description: 'metal layer 2, used to connect to the mimcap layer',
+    hasLabels: true,
   },
 ];
