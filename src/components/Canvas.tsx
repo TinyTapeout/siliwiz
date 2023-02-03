@@ -36,6 +36,7 @@ const keyboardShortcuts = {
 export default function Canvas(props: { size: number }) {
   const [svgRef, setSVGRef] = createSignal<SVGSVGElement | null>(null);
   const [newRect, setNewRect] = createSignal<INewRect | null>(null);
+  const [popMenu, setPopMenu] = createSignal(false);
 
   // Context menu
   const [contextMenu, setContextMenu] = createSignal<{
@@ -157,6 +158,7 @@ export default function Canvas(props: { size: number }) {
     const rect = newRect();
     if (rect != null) {
       setNewRect(null);
+      setPopMenu(false); // Ensures the context menu won't pop after drawing a rect
 
       const domRect = domRectFromPoints(rect.start, rect.end);
       if (domRect.width < 3 || domRect.height < 3) {
@@ -274,6 +276,9 @@ export default function Canvas(props: { size: number }) {
               <Show when={!hidden()}>
                 <g
                   onClick={(event) => {
+                    if (!popMenu()) {
+                      return;
+                    }
                     setSelectedRectIndex(index);
                     event.preventDefault();
                     setContextMenu(
@@ -286,6 +291,7 @@ export default function Canvas(props: { size: number }) {
                     );
                   }}
                   onMouseDown={(e) => {
+                    setPopMenu(true);
                     if (e.detail > 1) {
                       // Prevent text selection on double click
                       e.preventDefault();
