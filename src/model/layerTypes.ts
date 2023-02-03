@@ -121,6 +121,7 @@ export const layerTypes: ILayerInfo[] = [
     color: 'gold',
     crossY: 85,
     crossHeight: 10,
+    description: 'polycrystalline silicon virtual layer, used to draw resistors',
   },
   {
     name: 'polycontact',
