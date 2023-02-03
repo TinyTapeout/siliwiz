@@ -158,13 +158,14 @@ export default function Canvas(props: { size: number }) {
     const rect = newRect();
     if (rect != null) {
       setNewRect(null);
-      setPopMenu(false); // Ensures the context menu won't pop after drawing a rect
 
       const domRect = domRectFromPoints(rect.start, rect.end);
       if (domRect.width < 3 || domRect.height < 3) {
         // Don't create a rect that's too small, see https://github.com/wokwi/siliwiz/issues/10
         return;
       }
+
+      setPopMenu(false); // Ensures the context menu won't pop after drawing a rect
 
       setLayout('rects', (rects) =>
         sortRects([
