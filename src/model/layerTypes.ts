@@ -12,6 +12,12 @@ export interface ILayerInfo {
   /** Whether this layer is masked by polysilicon */
   masked?: boolean;
 
+  /** For contact layers, set this to the merged contact layer name that will be displayed in the UI */
+  contactName?: string;
+
+  /** Whether this is the default layer for the given merged contact layer */
+  contactDefault?: boolean;
+
   /** Whether this layer supports labels (e.g. a metal layer) */
   hasLabels?: boolean;
 
@@ -81,6 +87,7 @@ export const layerTypes: ILayerInfo[] = [
     crossY: 70,
     crossHeight: 30,
     description: 'connects between p-diffusion and metal',
+    contactName: 'met1 contact',
     intersectLayers: ['metal1', 'pdiffusion'],
   },
   {
@@ -90,6 +97,7 @@ export const layerTypes: ILayerInfo[] = [
     crossY: 70,
     crossHeight: 30,
     description: 'connects between n-diffusion and metal',
+    contactName: 'met1 contact',
     intersectLayers: ['metal1', 'ndiffusion'],
   },
   {
@@ -99,6 +107,7 @@ export const layerTypes: ILayerInfo[] = [
     crossY: 70,
     crossHeight: 30,
     description: 'connects between n-well and metal',
+    contactName: 'met1 contact',
     intersectLayers: ['metal1', 'nwell'],
   },
   {
@@ -108,6 +117,7 @@ export const layerTypes: ILayerInfo[] = [
     crossY: 70,
     crossHeight: 30,
     description: 'connects between p-substrate and metal',
+    contactName: 'met1 contact',
     intersectLayers: ['metal1', 'P SUB'],
   },
   {
@@ -127,12 +137,14 @@ export const layerTypes: ILayerInfo[] = [
     description: 'polycrystalline silicon virtual layer, used to draw resistors',
   },
   {
-    name: 'polycontact',
+    name: 'met1 contact',
     magicName: 'polycontact',
     color: '#80ff80',
     crossY: 70,
     crossHeight: 15,
     description: 'connects between polysilicon and metal',
+    contactName: 'met1 contact',
+    contactDefault: true,
     intersectLayers: ['metal1', 'polysilicon'],
   },
   {
@@ -159,15 +171,18 @@ export const layerTypes: ILayerInfo[] = [
     crossY: 30,
     crossHeight: 15,
     description: 'connects between mimcap and metal2',
+    contactName: 'met2 contact',
     intersectLayers: ['metal2', 'mimcap'],
   },
   {
-    name: 'm2 contact',
+    name: 'met2 contact',
     magicName: 'm2contact',
     color: '#80ff80',
     crossY: 30,
     crossHeight: 25,
     description: 'connects between metal1 and metal2',
+    contactName: 'met2 contact',
+    contactDefault: true,
     intersectLayers: ['metal2', 'metal1'],
   },
   {

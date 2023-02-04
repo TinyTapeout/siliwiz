@@ -2,7 +2,7 @@
 
 import { Popover, Typography } from '@suid/material';
 import { createSignal, For, Show } from 'solid-js';
-import { layout, rectLayer } from '~/model/layout';
+import { layout, rectUnmergedLayer } from '~/model/layout';
 import { viewerState } from '~/model/viewerState';
 
 export default function CrossSection() {
@@ -76,7 +76,7 @@ export default function CrossSection() {
         </defs>
         <For each={crossRects()}>
           {(rect) => {
-            const layer = rectLayer(rect);
+            const layer = rectUnmergedLayer(layout, rect);
             if (!layer) {
               return;
             }

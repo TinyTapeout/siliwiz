@@ -22,8 +22,41 @@ export interface ILayout {
   rects: ILayoutRect[];
 }
 
+export function rectsOverlap(a: ILayoutRect, b: ILayoutRect) {
+  return a.x + a.width > b.x && a.x < b.x + b.width && a.y + a.height > b.y && a.y < b.y + b.height;
+}
+
 export function rectLayer(rect: Pick<ILayoutRect, 'layer'>) {
   return layerTypes.find((l) => l.name === rect.layer);
+}
+
+export function rectUnmergedLayer(layout: ILayout, rect: ILayoutRect) {
+  const baseLayer = rectLayer(rect);
+  if (baseLayer?.contactName == null) {
+    return baseLayer;
+  }
+
+  const candidateLayers = layerTypes.filter((l) => l.contactName === baseLayer.name);
+  const intersectingLayers = new Set<string>();
+  for (const otherRect of layout.rects) {
+    if (rectsOverlap(rect, otherRect) && otherRect.layer) {
+      intersectingLayers.add(otherRect.layer);
+    }
+  }
+
+  for (const candidateLayer of candidateLayers) {
+    let match = true;
+    for (const intersectingLayer of candidateLayer.intersectLayers ?? []) {
+      if (!intersectingLayers.has(intersectingLayer)) {
+        match = false;
+      }
+    }
+    if (match) {
+      return candidateLayer;
+    }
+  }
+
+  return baseLayer;
 }
 
 export function sortRects(rects: ILayoutRect[]) {

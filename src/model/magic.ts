@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { type ILayout, type ILayoutRect, rectLayer, sortRects } from '~/model/layout';
+import { rectLayer, sortRects, type ILayout, type ILayoutRect } from '~/model/layout';
 import type { Point2D } from '~/utils/geometry';
 import { layerTypes } from './layerTypes';
 
