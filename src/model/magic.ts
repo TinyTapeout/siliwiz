@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { rectLayer, sortRects, type ILayout, type ILayoutRect } from '~/model/layout';
+import {
+  rectLayer,
+  rectUnmergedLayer,
+  sortRects,
+  type ILayout,
+  type ILayoutRect,
+} from '~/model/layout';
 import type { Point2D } from '~/utils/geometry';
 import { layerTypes } from './layerTypes';
 
@@ -78,7 +84,7 @@ export function toMagic(layout: ILayout, tech = defaultTech) {
   ];
   const labels: Array<{ layerName: string; rect: ILayoutRect }> = [];
   for (const layer of layerTypes) {
-    const rects = layout.rects.filter((r) => r.layer === layer.name);
+    const rects = layout.rects.filter((r) => rectUnmergedLayer(layout, r)?.name === layer.name);
     if (rects.length > 0) {
       result.push(`<< ${layer.magicName} >>`);
       for (const rect of rects) {
