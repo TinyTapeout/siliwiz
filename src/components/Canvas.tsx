@@ -36,6 +36,7 @@ const keyboardShortcuts = {
 export default function Canvas(props: { size: number }) {
   const [svgRef, setSVGRef] = createSignal<SVGSVGElement | null>(null);
   const [newRect, setNewRect] = createSignal<INewRect | null>(null);
+  const [popMenu, setPopMenu] = createSignal(false);
 
   // Context menu
   const [contextMenu, setContextMenu] = createSignal<{
@@ -52,6 +53,11 @@ export default function Canvas(props: { size: number }) {
     return index != null ? layout.rects[index] : null;
   };
 
+  const selectedRectLayer = () => {
+    const rect = selectedRect();
+    return rect != null ? rectLayer(rect) : null;
+  };
+
   const handleDelete = () => {
     setLayout('rects', (rects) => rects.filter((r, index) => index !== selectedRectIndex()));
     setSelectedRectIndex(null);
@@ -60,7 +66,7 @@ export default function Canvas(props: { size: number }) {
   const handleSetLabel = () => {
     const selection = selectedRect();
     const selectionIndex = selectedRectIndex();
-    if (selection == null || selectionIndex == null) {
+    if (selection == null || selectionIndex == null || !selectedRectLayer()?.hasLabels) {
       return;
     }
     const label = prompt('Enter new label (or an empty string to delete label)', selection.label);
@@ -159,6 +165,8 @@ export default function Canvas(props: { size: number }) {
         return;
       }
 
+      setPopMenu(false); // Ensures the context menu won't pop after drawing a rect
+
       setLayout('rects', (rects) =>
         sortRects([
           ...rects,
@@ -203,7 +211,7 @@ export default function Canvas(props: { size: number }) {
             {keyboardShortcuts.Delete}
           </Typography>
         </MenuItem>
-        <MenuItem onClick={handleSetLabel}>
+        <MenuItem onClick={handleSetLabel} disabled={!selectedRectLayer()?.hasLabels}>
           <ListItemIcon>
             <Edit fontSize="small" />
           </ListItemIcon>
@@ -269,6 +277,9 @@ export default function Canvas(props: { size: number }) {
               <Show when={!hidden()}>
                 <g
                   onClick={(event) => {
+                    if (!popMenu()) {
+                      return;
+                    }
                     setSelectedRectIndex(index);
                     event.preventDefault();
                     setContextMenu(
@@ -281,6 +292,7 @@ export default function Canvas(props: { size: number }) {
                     );
                   }}
                   onMouseDown={(e) => {
+                    setPopMenu(true);
                     if (e.detail > 1) {
                       // Prevent text selection on double click
                       e.preventDefault();

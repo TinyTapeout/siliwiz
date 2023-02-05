@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { CssBaseline, ThemeProvider } from '@suid/material';
+import { Box, CssBaseline, ThemeProvider } from '@suid/material';
 import { createSignal, Show } from 'solid-js';
 import { ErrorBoundary, Scripts } from 'solid-start';
 import LayoutView from '~/components/LayoutView';
@@ -17,23 +17,25 @@ export default function Siliwiz() {
       <ErrorBoundary>
         <CssBaseline enableColorScheme />
         <Header />
-        <LayoutView />
-        <hr style={{ margin: '1em 0' }} />
-        <label>
-          <input
-            type="checkbox"
-            onClick={(e) => setShowSpice((e.target as HTMLInputElement).checked)}
-          />
-          Show SPICE
-        </label>
-        <br />
-        <Show when={showSpice()}>
-          <SpiceDebugView />
-        </Show>
+        <Box sx={{ px: 2 }}>
+          <LayoutView />
+          <hr style={{ margin: '1em 0' }} />
+          <label>
+            <input
+              type="checkbox"
+              onClick={(e) => setShowSpice((e.target as HTMLInputElement).checked)}
+            />
+            Show SPICE
+          </label>
+          <br />
+          <Show when={showSpice()}>
+            <SpiceDebugView />
+          </Show>
+          <hr />
+          <Footer />
+        </Box>
       </ErrorBoundary>
       <Scripts />
-      <hr />
-      <Footer />
     </ThemeProvider>
   );
 }

@@ -1,4 +1,4 @@
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@suid/material';
+import { AppBar, Box, Button, IconButton, Toolbar } from '@suid/material';
 import { repo } from '~/config/consts';
 import { GitHubIcon } from './GitHubIcon';
 
@@ -6,9 +6,8 @@ export function Header() {
   return (
     <AppBar position="static" sx={{ marginBottom: 2 }}>
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          SiliWiz
-        </Typography>
+        <img src="/images/header-logo.png" alt="SiliWiz logo" width="166" height="32" />
+        <Box flexGrow={1} />
         <Button color="inherit" href="https://lessons.siliwiz.com/">
           Lessons
         </Button>
