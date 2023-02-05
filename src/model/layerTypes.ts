@@ -135,7 +135,7 @@ export const layerTypes: ILayerInfo[] = [
         description: 'used to connect between n well and metal1',
       },
       {
-        dependsOn: ['P SUB'],
+        dependsOn: ['pmos'],
         magicName: 'psubstratepcontact',
         crossY: 70,
         crossHeight: 30,
