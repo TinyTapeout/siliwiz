@@ -45,11 +45,10 @@ export function rectUnmergedLayer(layout: ILayout, rect: ILayoutRect) {
   }
 
   for (const candidateLayer of candidateLayers) {
-    if (
-      candidateLayer.contactDepends != null &&
-      intersectingLayers.has(candidateLayer.contactDepends)
-    ) {
-      return candidateLayer;
+    for (const contactDependency of candidateLayer.contactDepends ?? []) {
+      if (intersectingLayers.has(contactDependency)) {
+        return candidateLayer;
+      }
     }
   }
 

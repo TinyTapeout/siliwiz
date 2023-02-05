@@ -18,8 +18,8 @@ export interface ILayerInfo {
   /** Whether this is the default layer for the given merged contact layer */
   contactDefault?: boolean;
 
-  /** What other layer this contact layer depends on */
-  contactDepends?: string;
+  /** What other layer this contact layer depends on (for multiple layers, we'll look for a single match) */
+  contactDepends?: string[];
 
   /** Whether this layer supports labels (e.g. a metal layer) */
   hasLabels?: boolean;
@@ -91,7 +91,7 @@ export const layerTypes: ILayerInfo[] = [
     crossHeight: 30,
     description: 'connects between n-well and metal',
     contactName: 'met1 contact',
-    contactDepends: 'nwell',
+    contactDepends: ['nwell'],
     intersectLayers: ['metal1', 'nwell'],
   },
   {
@@ -102,7 +102,7 @@ export const layerTypes: ILayerInfo[] = [
     crossHeight: 30,
     description: 'connects between p-substrate and metal',
     contactName: 'met1 contact',
-    contactDepends: 'P SUB',
+    contactDepends: ['P SUB'],
     intersectLayers: ['metal1', 'P SUB'],
   },
   {
@@ -113,7 +113,7 @@ export const layerTypes: ILayerInfo[] = [
     crossHeight: 30,
     description: 'connects between p-diffusion and metal',
     contactName: 'met1 contact',
-    contactDepends: 'pdiffusion',
+    contactDepends: ['pdiffusion'],
     intersectLayers: ['metal1', 'pdiffusion'],
   },
   {
@@ -124,7 +124,7 @@ export const layerTypes: ILayerInfo[] = [
     crossHeight: 30,
     description: 'connects between n-diffusion and metal',
     contactName: 'met1 contact',
-    contactDepends: 'ndiffusion',
+    contactDepends: ['ndiffusion'],
     intersectLayers: ['metal1', 'ndiffusion'],
   },
   {
@@ -152,7 +152,7 @@ export const layerTypes: ILayerInfo[] = [
     description: 'connects between polysilicon and metal',
     contactName: 'met1 contact',
     contactDefault: true,
-    contactDepends: 'polysilicon',
+    contactDepends: ['polysilicon', 'polyres'],
     intersectLayers: ['metal1', 'polysilicon'],
   },
   {
@@ -181,7 +181,7 @@ export const layerTypes: ILayerInfo[] = [
     description: 'connects between metal1 and metal2',
     contactName: 'met2 contact',
     contactDefault: true,
-    contactDepends: 'metal1',
+    contactDepends: ['metal1'],
     intersectLayers: ['metal2', 'metal1'],
   },
   {
@@ -192,7 +192,7 @@ export const layerTypes: ILayerInfo[] = [
     crossHeight: 15,
     description: 'connects between mimcap and metal2',
     contactName: 'met2 contact',
-    contactDepends: 'mimcap',
+    contactDepends: ['mimcap'],
     intersectLayers: ['metal2', 'mimcap'],
   },
   {
