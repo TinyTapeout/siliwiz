@@ -2,7 +2,7 @@
 
 import { Popover, Typography } from '@suid/material';
 import { createSignal, For, Show } from 'solid-js';
-import { layout, rectLayer, rectUnmergedLayer } from '~/model/layout';
+import { layout, rectLayer, rectViaLayer } from '~/model/layout';
 import { viewerState } from '~/model/viewerState';
 
 export default function CrossSection() {
@@ -77,8 +77,8 @@ export default function CrossSection() {
         <For each={crossRects()}>
           {(rect) => {
             const layer = rectLayer(rect);
-            const paintLayer = rectUnmergedLayer(layout, rect);
-            if (!paintLayer || !layer) {
+            const viaLayer = rectViaLayer(layout, rect);
+            if (!viaLayer || !layer) {
               return;
             }
 
@@ -91,18 +91,18 @@ export default function CrossSection() {
                   aria-haspopup="true"
                   onMouseEnter={(e) => {
                     handlePopoverOpen(e);
-                    setCurrentLayerName(paintLayer.name);
+                    setCurrentLayerName(layer.name);
                   }}
                   onMouseLeave={handlePopoverClose}
                   x={rect.x}
-                  y={paintLayer.crossY - 10}
-                  height={paintLayer.crossHeight}
+                  y={viaLayer.crossY - 10}
+                  height={viaLayer.crossHeight}
                   width={rect.width}
-                  fill={paintLayer.color}
+                  fill={layer.color}
                   mask={
-                    paintLayer.hatched
+                    layer.hatched
                       ? 'url(#hatch-mask)'
-                      : paintLayer.masked
+                      : layer.masked
                       ? 'url(#poly-mask)'
                       : undefined
                   }

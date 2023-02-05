@@ -30,24 +30,30 @@ export function rectLayer(rect: Pick<ILayoutRect, 'layer'>) {
   return layerTypes.find((l) => l.name === rect.layer);
 }
 
-export function rectUnmergedLayer(layout: ILayout, rect: ILayoutRect) {
+/**
+ * Returns the via variation matching the given rect, or the base layer if no via variation matches.
+ */
+export function rectViaLayer(layout: ILayout, rect: ILayoutRect) {
   const baseLayer = rectLayer(rect);
-  if (baseLayer?.contactName == null) {
+  if (baseLayer?.viaVariations == null) {
     return baseLayer;
   }
 
-  const candidateLayers = layerTypes.filter((l) => l.contactName === baseLayer.name).reverse();
-  const intersectingLayers = new Set<string>();
+  const intersectingLayerNames = new Set<string>();
   for (const otherRect of layout.rects) {
     if (rectsOverlap(rect, otherRect) && otherRect.layer) {
-      intersectingLayers.add(otherRect.layer);
+      const layer = rectLayer(otherRect);
+      if (layer) {
+        intersectingLayerNames.add(layer.magicName);
+      }
     }
   }
 
-  for (const candidateLayer of candidateLayers) {
-    for (const contactDependency of candidateLayer.contactDepends ?? []) {
-      if (intersectingLayers.has(contactDependency)) {
-        return candidateLayer;
+  const variations = Array.from(baseLayer.viaVariations).reverse();
+  for (const variation of variations) {
+    for (const viaDependency of variation.dependsOn ?? []) {
+      if (intersectingLayerNames.has(viaDependency)) {
+        return variation;
       }
     }
   }

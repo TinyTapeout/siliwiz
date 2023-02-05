@@ -9,7 +9,6 @@ import {
   layout,
   layoutUndo,
   rectLayer,
-  rectUnmergedLayer,
   selectedRectIndex,
   setLayout,
   setSelectedRectIndex,
@@ -269,8 +268,7 @@ export default function Canvas(props: { size: number }) {
         <For each={layout.rects}>
           {(rect, index) => {
             const layer = rectLayer(rect);
-            const paintLayer = rectUnmergedLayer(layout, rect);
-            if (layer == null || paintLayer == null) {
+            if (layer == null) {
               return;
             }
 
@@ -306,9 +304,9 @@ export default function Canvas(props: { size: number }) {
                     y={rect.y}
                     height={rect.height}
                     width={rect.width}
-                    fill={paintLayer.color}
+                    fill={layer.color}
                     class={styles.rect}
-                    mask={paintLayer.hatched ? 'url(#hatch-mask)' : undefined}
+                    mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
                   />
                 </g>
               </Show>
