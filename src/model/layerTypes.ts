@@ -128,14 +128,14 @@ export const layerTypes: ILayerInfo[] = [
     crossHeight: 15,
     viaVariations: [
       {
-        dependsOn: ['nwell'],
+        dependsOn: ['nwell', 'nsubstratendiff'],
         magicName: 'nsubstratencontact',
         crossY: 70,
         crossHeight: 30,
         description: 'used to connect between n well and metal1',
       },
       {
-        dependsOn: ['pmos'],
+        dependsOn: ['pmos', 'psubstratepdfiff'],
         magicName: 'psubstratepcontact',
         crossY: 70,
         crossHeight: 30,
