@@ -36,7 +36,7 @@ export function rectUnmergedLayer(layout: ILayout, rect: ILayoutRect) {
     return baseLayer;
   }
 
-  const candidateLayers = layerTypes.filter((l) => l.contactName === baseLayer.name);
+  const candidateLayers = layerTypes.filter((l) => l.contactName === baseLayer.name).reverse();
   const intersectingLayers = new Set<string>();
   for (const otherRect of layout.rects) {
     if (rectsOverlap(rect, otherRect) && otherRect.layer) {
@@ -45,13 +45,10 @@ export function rectUnmergedLayer(layout: ILayout, rect: ILayoutRect) {
   }
 
   for (const candidateLayer of candidateLayers) {
-    let match = true;
-    for (const intersectingLayer of candidateLayer.intersectLayers ?? []) {
-      if (!intersectingLayers.has(intersectingLayer)) {
-        match = false;
-      }
-    }
-    if (match) {
+    if (
+      candidateLayer.contactDepends != null &&
+      intersectingLayers.has(candidateLayer.contactDepends)
+    ) {
       return candidateLayer;
     }
   }
