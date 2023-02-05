@@ -96,6 +96,7 @@ export default function CrossSection() {
                   onMouseLeave={handlePopoverClose}
                   x={rect.x}
                   y={viaLayer.crossY - 10}
+                  data-magic-name={viaLayer.magicName}
                   height={viaLayer.crossHeight}
                   width={rect.width}
                   fill={layer.color}
