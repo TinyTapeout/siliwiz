@@ -36,6 +36,9 @@ export interface ILayerInfo {
   /** The color of the layer in the Canvas and Cross Section views */
   color: string;
 
+  /** Layer opacity (0 = transparent, 1 = opaque) */
+  opacity?: number;
+
   /** Whether this layer is hatched in the Canvas and Cross Section views */
   hatched?: boolean;
 
@@ -195,6 +198,7 @@ export const layerTypes: ILayerInfo[] = [
     name: 'metal1',
     magicName: 'metal1',
     color: 'rgb(125, 166, 250)',
+    opacity: 0.5,
     crossY: 55,
     crossHeight: 15,
     description: 'first metal layer used for wiring up the circuit',

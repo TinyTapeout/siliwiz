@@ -316,6 +316,7 @@ export default function Canvas(props: { size: number }) {
                     height={rect.height}
                     width={rect.width}
                     fill={layer.color}
+                    opacity={layer.opacity}
                     class={styles.rect}
                     mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
                   />
@@ -371,6 +372,7 @@ export default function Canvas(props: { size: number }) {
                 height={domRect.height}
                 width={domRect.width}
                 fill={layer.color}
+                opacity={layer.opacity ?? 1}
                 mask={layer.hatched ? 'url(#hatch-mask)' : undefined}
               />
             );
