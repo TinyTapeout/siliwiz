@@ -12,6 +12,8 @@ import CrossSection from './CrossSection';
 import CrossSectionSlider from './CrossSectionSlider';
 import Presets from './Presets';
 import SimulationParams from './SimulationParams';
+import beautify from 'json-beautify';
+import { round2dp } from '~/utils/math';
 
 export default function Editor() {
   const loadDesign = async () => {
@@ -31,15 +33,27 @@ export default function Editor() {
   };
 
   const saveDesign = () => {
+    const rects = layout.rects.map((r) => ({
+      ...r,
+      x: round2dp(r.x),
+      y: round2dp(r.y),
+      width: round2dp(r.width),
+      height: round2dp(r.height),
+    }));
     downloadFile(
       'siliwiz-design.json',
-      JSON.stringify({
-        version: 1,
-        app: 'siliwiz',
-        timestamp: Math.floor(new Date().getTime() / 1000),
-        rects: layout.rects,
-        graph: getSpiceParams(),
-      }),
+      beautify(
+        {
+          version: 1,
+          app: 'siliwiz',
+          timestamp: Math.floor(new Date().getTime() / 1000),
+          rects,
+          graph: getSpiceParams(),
+        },
+        null as any,
+        2,
+        100,
+      ) + '\n',
     );
   };
 

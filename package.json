@@ -42,6 +42,7 @@
     "@suid/icons-material": "^0.5.5",
     "@suid/material": "^0.9.1",
     "@types/plotly.js-basic-dist": "^1.54.1",
+    "json-beautify": "^1.1.1",
     "plotly.js-basic-dist": "^2.15.1",
     "solid-js": "^1.6.9",
     "solid-record": "^0.2.1",
