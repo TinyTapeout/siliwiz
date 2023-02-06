@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { type ILayout, type ILayoutRect, rectLayer, sortRects } from '~/model/layout';
+import { rectViaLayer, sortRects, type ILayout, type ILayoutRect } from '~/model/layout';
 import type { Point2D } from '~/utils/geometry';
-import { layerTypes } from './layerTypes';
 
 export const defaultTech = 'siliwiz';
 
@@ -52,18 +51,18 @@ export function fromMagic(source: string, translate: Point2D = { x: 0, y: 0 }, s
       }
     }
   }
-  for (const rect of rects) {
-    const layer = rectLayer(rect);
-    for (const intersectLayer of layer?.intersectLayers ?? []) {
-      rects.push({
-        x: rect.x,
-        y: rect.y,
-        width: rect.width,
-        height: rect.height,
-        layer: intersectLayer,
-      });
-    }
-  }
+  // for (const rect of rects) {
+  //   const layer = rectLayer(rect);
+  //   for (const intersectLayer of layer?.intersectLayers ?? []) {
+  //     rects.push({
+  //       x: rect.x,
+  //       y: rect.y,
+  //       width: rect.width,
+  //       height: rect.height,
+  //       layer: intersectLayer,
+  //     });
+  //   }
+  // }
 
   const result: ILayout = { rects: sortRects(rects) };
   return result;
@@ -77,15 +76,22 @@ export function toMagic(layout: ILayout, tech = defaultTech) {
     `timestamp ${Math.floor(new Date().getTime() / 1000)}`,
   ];
   const labels: Array<{ layerName: string; rect: ILayoutRect }> = [];
-  for (const layer of layerTypes) {
-    const rects = layout.rects.filter((r) => r.layer === layer.name);
-    if (rects.length > 0) {
-      result.push(`<< ${layer.magicName} >>`);
-      for (const rect of rects) {
-        result.push(`rect ${magicRect(rect)}`);
-        if (rect.label != null) {
-          labels.push({ layerName: layer.magicName, rect });
-        }
+  const layerRects = new Map<string, ILayoutRect[]>();
+  for (const rect of layout.rects) {
+    const layer = rectViaLayer(layout, rect);
+    if (layer == null) {
+      continue;
+    }
+    const rects = layerRects.get(layer.magicName) ?? [];
+    rects.push(rect);
+    layerRects.set(layer.magicName, rects);
+  }
+  for (const [layerName, rects] of layerRects.entries()) {
+    result.push(`<< ${layerName} >>`);
+    for (const rect of rects) {
+      result.push(`rect ${magicRect(rect)}`);
+      if (rect.label != null) {
+        labels.push({ layerName, rect });
       }
     }
   }

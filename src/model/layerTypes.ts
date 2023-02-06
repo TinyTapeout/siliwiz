@@ -1,60 +1,90 @@
 // SPDX-License-Identifier: Apache-2.0
 
-export interface ILayerInfo {
-  name: string;
+export interface IViaLayerVariation {
+  /**
+   * What other layer this via layer variation depends on (for multiple layers, we'll look for a single match).
+   * Use the "magicName" of the target layer(s) here.
+   */
+  dependsOn: string[];
+
+  /** The name of the layer in "magic" VLSI */
   magicName: string;
-  color: string;
-  hatched?: boolean;
+
+  /** The y-position of the layer variation in the Cross Section view */
   crossY: number;
+
+  /** The height of the layer variation in the Cross Section view */
   crossHeight: number;
+  description?: string;
+}
+
+export interface ILayerInfo {
+  /* The name of the layer, as displayed to the user */
+  name: string;
+
+  /** The name of the layer in "magic" VLSI */
+  magicName: string;
+
+  /** The color of the layer in the Canvas and Cross Section views */
+  color: string;
+
+  /** Whether this layer is hatched in the Canvas and Cross Section views */
+  hatched?: boolean;
+
+  /** The y-position of the layer in the Cross Section view */
+  crossY: number;
+
+  /** The height of the layer in the Cross Section view */
+  crossHeight: number;
+
   description?: string;
 
   /** Whether this layer is masked by polysilicon */
   masked?: boolean;
 
+  /** For via layers, the may have several variations when extracting / drawing in x-section */
+  viaVariations?: IViaLayerVariation[];
+
   /** Whether this layer supports labels (e.g. a metal layer) */
   hasLabels?: boolean;
-
-  /** List of layers that always intersect with this layer */
-  intersectLayers?: string[];
 }
 
 export const layerTypes: ILayerInfo[] = [
   {
-    name: 'P SUB',
+    name: 'p substrate',
     magicName: 'pmos',
     color: '#cccc00',
     hatched: true,
     crossY: 100,
     crossHeight: 30,
-    description: 'p-doped silicon that is the base layer everything else is built on',
+    description: 'p doped silicon used to make base layer',
   },
   {
-    name: 'nwell',
+    name: 'n well',
     magicName: 'nwell',
     color: 'gray',
     crossY: 100,
     crossHeight: 25,
     hatched: true,
-    description: 'used to isolate p-diffusion from the p-substrate',
+    description: 'n doped used to isolate p diffusion from the p substrate',
   },
   {
-    name: 'ndiffusion',
+    name: 'n diffusion',
     magicName: 'ndiffusion',
     color: '#8080ff',
     crossY: 100,
     crossHeight: 15,
     masked: true,
-    description: 'n-diffusion layer used to make n mosfets',
+    description: 'n diffusion layer used to make n mosfets',
   },
   {
-    name: 'pdiffusion',
+    name: 'p diffusion',
     magicName: 'pdiffusion',
     color: '#4040ff',
     crossY: 100,
     crossHeight: 15,
     masked: true,
-    description: 'p-diffusion layer used to make p mosfets',
+    description: 'p diffusion layer used to make p mosfets',
   },
   {
     name: 'p tap',
@@ -63,7 +93,7 @@ export const layerTypes: ILayerInfo[] = [
     crossY: 100,
     crossHeight: 15,
     hatched: true,
-    description: 'used to connect p diffusion to power supply',
+    description: 'lightly doped p diffusion used to connect the p substrate to vss',
   },
   {
     name: 'n tap',
@@ -72,50 +102,14 @@ export const layerTypes: ILayerInfo[] = [
     crossY: 100,
     crossHeight: 15,
     hatched: true,
-    description: 'used to connect n diffusion to power supply',
-  },
-  {
-    name: 'pdcontact',
-    magicName: 'pdcontact',
-    color: '#ffff80',
-    crossY: 70,
-    crossHeight: 30,
-    description: 'connects between p-diffusion and metal',
-    intersectLayers: ['metal1', 'pdiffusion'],
-  },
-  {
-    name: 'ndcontact',
-    magicName: 'ndcontact',
-    color: '#ff80ff',
-    crossY: 70,
-    crossHeight: 30,
-    description: 'connects between n-diffusion and metal',
-    intersectLayers: ['metal1', 'ndiffusion'],
-  },
-  {
-    name: 'nsubstratencontact',
-    magicName: 'nsubstratencontact',
-    color: 'purple',
-    crossY: 70,
-    crossHeight: 30,
-    description: 'connects between n-well and metal',
-    intersectLayers: ['metal1', 'nwell'],
-  },
-  {
-    name: 'psubstratepcontact',
-    magicName: 'psubstratepcontact',
-    color: 'orange',
-    crossY: 70,
-    crossHeight: 30,
-    description: 'connects between p-substrate and metal',
-    intersectLayers: ['metal1', 'P SUB'],
+    description: 'lightly doped n diffusion used to connect n well to vdd',
   },
   {
     name: 'polysilicon',
     magicName: 'polysilicon',
     color: 'rgb(220, 95, 95)',
     crossY: 85,
-    description: 'polycrystalline silicon, used as the gate for mosfets',
+    description: 'polycrystalline silicon, used as the gate for MOSFETs',
     crossHeight: 10,
   },
   {
@@ -127,13 +121,57 @@ export const layerTypes: ILayerInfo[] = [
     description: 'polycrystalline silicon virtual layer, used to draw resistors',
   },
   {
-    name: 'polycontact',
-    magicName: 'polycontact',
+    name: 'metal1 via',
     color: '#80ff80',
+    magicName: 'polycontact', // fallback value, if no variation below matches
     crossY: 70,
     crossHeight: 15,
-    description: 'connects between polysilicon and metal',
-    intersectLayers: ['metal1', 'polysilicon'],
+    viaVariations: [
+      {
+        dependsOn: ['pmos'],
+        magicName: 'psubstratepcontact',
+        crossY: 70,
+        crossHeight: 30,
+        description: 'used to connect between p substrate and metal1',
+      },
+      {
+        dependsOn: ['nwell', 'nsubstratendiff'],
+        magicName: 'nsubstratencontact',
+        crossY: 70,
+        crossHeight: 30,
+        description: 'used to connect between n well and metal1',
+      },
+      {
+        // Note: this entry is separate from the 'pmos' entry since 'psubstratepdfiff' comes on top of 'nwell',
+        // and the algorithm goes through the list in order, so we need to check for 'nwell' first.
+        dependsOn: ['psubstratepdfiff'],
+        magicName: 'psubstratepcontact',
+        crossY: 70,
+        crossHeight: 30,
+        description: 'used to connect between p substrate and metal1',
+      },
+      {
+        dependsOn: ['pdiffusion'],
+        magicName: 'pdcontact',
+        crossY: 70,
+        crossHeight: 30,
+        description: 'used to connect between p diffusion and metal1',
+      },
+      {
+        dependsOn: ['ndiffusion'],
+        magicName: 'ndcontact',
+        crossY: 70,
+        crossHeight: 30,
+        description: 'used to connect between n diffusion and metal1',
+      },
+      {
+        dependsOn: ['polysilicon', 'polyres'],
+        magicName: 'polycontact',
+        crossY: 70,
+        crossHeight: 15,
+        description: 'connects between polysilicon and metal1',
+      },
+    ],
   },
   {
     name: 'metal1',
@@ -141,11 +179,11 @@ export const layerTypes: ILayerInfo[] = [
     color: 'rgb(125, 166, 250)',
     crossY: 55,
     crossHeight: 15,
-    description: 'metal layer used for wiring up the circuit',
+    description: 'first metal layer used for wiring up the circuit',
     hasLabels: true,
   },
   {
-    name: 'mimcap',
+    name: 'mim capacitor',
     magicName: 'mimcap',
     color: 'rgb(100, 100, 100)',
     crossY: 45, // should be just above met1
@@ -153,22 +191,28 @@ export const layerTypes: ILayerInfo[] = [
     description: 'thin layer of metal used to form metal-insulator-metal capacitors',
   },
   {
-    name: 'mimcap contact',
-    magicName: 'mimcapcontact',
-    color: '#80ff80',
-    crossY: 30,
-    crossHeight: 15,
-    description: 'connects between mimcap and metal2',
-    intersectLayers: ['metal2', 'mimcap'],
-  },
-  {
-    name: 'm2 contact',
-    magicName: 'm2contact',
+    name: 'metal2 via',
+    magicName: 'm2contact', // fallback value, if no variation below matches
     color: '#80ff80',
     crossY: 30,
     crossHeight: 25,
-    description: 'connects between metal1 and metal2',
-    intersectLayers: ['metal2', 'metal1'],
+    description: 'used to connect between metal1 and metal2 layers',
+    viaVariations: [
+      {
+        dependsOn: ['metal1'],
+        magicName: 'm2contact',
+        crossY: 30,
+        crossHeight: 25,
+        description: 'connects between metal1 and metal2',
+      },
+      {
+        dependsOn: ['mimcap'],
+        magicName: 'mimcapcontact',
+        crossY: 30,
+        crossHeight: 15,
+        description: 'connects between mim capacitor and metal2',
+      },
+    ],
   },
   {
     name: 'metal2',
@@ -176,7 +220,7 @@ export const layerTypes: ILayerInfo[] = [
     color: 'rgb(125, 200, 250)',
     crossY: 10,
     crossHeight: 20, // bit thicker than met1
-    description: 'metal layer 2, used to connect to the mimcap layer',
+    description: 'second metal layer used for wiring up the circuit',
     hasLabels: true,
   },
 ];

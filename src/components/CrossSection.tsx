@@ -2,7 +2,7 @@
 
 import { Popover, Typography } from '@suid/material';
 import { createSignal, For, Show } from 'solid-js';
-import { layout, rectLayer } from '~/model/layout';
+import { layout, rectLayer, rectViaLayer } from '~/model/layout';
 import { viewerState } from '~/model/viewerState';
 
 export default function CrossSection() {
@@ -77,7 +77,8 @@ export default function CrossSection() {
         <For each={crossRects()}>
           {(rect) => {
             const layer = rectLayer(rect);
-            if (!layer) {
+            const viaLayer = rectViaLayer(layout, rect);
+            if (!viaLayer || !layer) {
               return;
             }
 
@@ -94,8 +95,9 @@ export default function CrossSection() {
                   }}
                   onMouseLeave={handlePopoverClose}
                   x={rect.x}
-                  y={layer.crossY - 10}
-                  height={layer.crossHeight}
+                  y={viaLayer.crossY - 10}
+                  data-magic-name={viaLayer.magicName}
+                  height={viaLayer.crossHeight}
                   width={rect.width}
                   fill={layer.color}
                   mask={

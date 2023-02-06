@@ -7,10 +7,14 @@ import { setViewerState, viewerState } from '~/model/viewerState';
 import styles from './Palette.module.css';
 import { Visibility, VisibilityOff } from '@suid/icons-material';
 
+function paletteLayers() {
+  return layerTypes.filter((l) => l.contactName == null || l.contactDefault);
+}
+
 export default function Palette() {
   return (
     <div class={styles.palette}>
-      <For each={layerTypes}>
+      <For each={paletteLayers()}>
         {(layer) => (
           <div
             classList={{
