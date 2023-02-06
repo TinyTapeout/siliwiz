@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { Box, Button, Paper } from '@suid/material';
+import { Box, Button, ButtonGroup, Paper } from '@suid/material';
 import { createEffect, createSignal, lazy, Show, Suspense } from 'solid-js';
 import type { IDRCItem } from '~/model/drc';
 import { layout } from '~/model/layout';
@@ -37,18 +37,20 @@ export default function LayoutView() {
         <Editor />
       </Paper>
       <Paper sx={{ padding: 1 }}>
-        <Button
-          onClick={() => setActiveTab('xsection')}
-          variant={activeTab() === 'xsection' ? 'contained' : 'outlined'}
-        >
-          Cross Section
-        </Button>
-        <Button
-          onClick={() => setActiveTab('graph')}
-          variant={activeTab() === 'graph' ? 'contained' : 'outlined'}
-        >
-          Graph
-        </Button>
+        <ButtonGroup>
+          <Button
+            onClick={() => setActiveTab('xsection')}
+            variant={activeTab() === 'xsection' ? 'contained' : 'outlined'}
+          >
+            Cross Section
+          </Button>
+          <Button
+            onClick={() => setActiveTab('graph')}
+            variant={activeTab() === 'graph' ? 'contained' : 'outlined'}
+          >
+            Graph
+          </Button>
+        </ButtonGroup>
         <Show when={activeTab() === 'graph'}>
           <Suspense fallback={<div>Loading graph...</div>}>
             <Graph />
