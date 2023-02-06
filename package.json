@@ -39,8 +39,8 @@
   "dependencies": {
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.7.0",
-    "@suid/icons-material": "^0.5.5",
-    "@suid/material": "^0.9.1",
+    "@suid/icons-material": "^0.5.8",
+    "@suid/material": "^0.10.1",
     "@types/plotly.js-basic-dist": "^1.54.1",
     "json-beautify": "^1.1.1",
     "plotly.js-basic-dist": "^2.15.1",

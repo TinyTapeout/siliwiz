@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
+import { Redo, Undo } from '@suid/icons-material';
+import { Button, IconButton } from '@suid/material';
 import beautify from 'json-beautify';
 import { layout, layoutUndo, loadPreset, setLayout, setSelectedRectIndex } from '~/model/layout';
 import { getSpiceParams } from '~/model/spiceFile';
@@ -66,22 +68,30 @@ export default function Editor() {
   return (
     <div>
       <div style={{ margin: '16px 0 8px' }}>
-        <button onClick={() => layoutUndo.undo()} disabled={!layoutUndo.isUndoable()}>
-          Undo
-        </button>
+        <IconButton
+          onClick={() => layoutUndo.undo()}
+          disabled={!layoutUndo.isUndoable()}
+          title="Undo"
+        >
+          <Undo />
+        </IconButton>
         &nbsp;
-        <button onClick={() => layoutUndo.redo()} disabled={!layoutUndo.isRedoable()}>
-          Redo
-        </button>
+        <IconButton
+          onClick={() => layoutUndo.redo()}
+          disabled={!layoutUndo.isRedoable()}
+          title="Redo"
+        >
+          <Redo />
+        </IconButton>
         &nbsp;
-        <button onClick={loadDesign}>Load</button>
+        <Button onClick={loadDesign}>Load</Button>
         &nbsp;
-        <button onClick={saveDesign}>Save</button>
+        <Button onClick={saveDesign}>Save</Button>
         &nbsp;
-        <button onClick={clear}>Clear</button>
+        <Button onClick={clear}>Clear</Button>
         &nbsp;
-        <button onClick={exportSTL}>STL</button>
-        &nbsp;
+        <Button onClick={exportSTL}>STL</Button>
+        <br />
         <Presets />
       </div>
       <div style={{ display: 'flex' }}>
