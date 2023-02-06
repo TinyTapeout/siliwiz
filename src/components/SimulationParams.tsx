@@ -12,6 +12,7 @@ import {
   setMinInVoltage,
   setPulseDelay,
   setRiseTime,
+  setSignalNames,
   signalNames,
   spiceFile,
 } from '~/model/spiceFile';
@@ -23,6 +24,13 @@ export default function SimulationParams() {
   });
   return (
     <div>
+      Plot signals (space separated):
+      <br />
+      <input
+        value={signalNames()}
+        onChange={(e) => setSignalNames((e.target as HTMLInputElement).value)}
+      />
+      <br />
       <input
         type="checkbox"
         checked={dcSweep()}
