@@ -1,19 +1,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { lazy, Suspense } from 'solid-js';
+import beautify from 'json-beautify';
 import { layout, layoutUndo, loadPreset, setLayout, setSelectedRectIndex } from '~/model/layout';
 import { getSpiceParams } from '~/model/spiceFile';
 import { exportSTL } from '~/model/stl';
 import { downloadFile } from '~/utils/download-file';
 import { openFiles } from '~/utils/files';
 import { tryJsonParse } from '~/utils/json';
+import { round2dp } from '~/utils/math';
 import Canvas from './Canvas';
-import CrossSection from './CrossSection';
 import CrossSectionSlider from './CrossSectionSlider';
 import Presets from './Presets';
-import SimulationParams from './SimulationParams';
-import beautify from 'json-beautify';
-import { round2dp } from '~/utils/math';
 
 export default function Editor() {
   const loadDesign = async () => {
@@ -66,10 +63,8 @@ export default function Editor() {
 
   const canvasSize = () => 2;
 
-  const Graph = lazy(() => import('./Graph'));
-
   return (
-    <>
+    <div>
       <div style={{ margin: '16px 0 8px' }}>
         <button onClick={() => layoutUndo.undo()} disabled={!layoutUndo.isUndoable()}>
           Undo
@@ -92,16 +87,7 @@ export default function Editor() {
       <div style={{ display: 'flex' }}>
         <Canvas size={canvasSize() * 200} />
         <CrossSectionSlider />
-        <div>
-          <Suspense fallback={<div>Loading graph...</div>}>
-            <Graph />
-          </Suspense>
-          <div style={{ 'padding-left': '32px' }}>
-            <SimulationParams />
-          </div>
-        </div>
       </div>
-      <CrossSection />
-    </>
+    </div>
   );
 }

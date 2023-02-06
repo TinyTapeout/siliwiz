@@ -1,16 +1,22 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { createEffect, createSignal, Show } from 'solid-js';
+import { Box, Button } from '@suid/material';
+import { createEffect, createSignal, lazy, Show, Suspense } from 'solid-js';
 import type { IDRCItem } from '~/model/drc';
 import { layout } from '~/model/layout';
 import { runMagic } from '~/model/runMagic';
+import CrossSection from './CrossSection';
 import DRCList from './DRCList';
 import Editor from './Editor';
-import Palette from './Palette';
+import Layers from './Layers';
+import SimulationParams from './SimulationParams';
+
+type ITabName = 'xsection' | 'graph';
 
 export default function LayoutView() {
   const [drc, setDRC] = createSignal<IDRCItem[] | undefined>();
   const [updating, setUpdating] = createSignal(false);
+  const [activeTab, setActiveTab] = createSignal<ITabName>('graph');
 
   const update = async () => {
     setDRC(undefined);
@@ -22,14 +28,41 @@ export default function LayoutView() {
 
   createEffect(update);
 
+  const Graph = lazy(() => import('./Graph'));
+
   return (
-    <>
-      <Palette />
+    <Box sx={{ display: 'flex' }}>
+      <Layers />
       <Editor />
-      <Show when={updating()}>
-        <div style={{ 'margin-top': '16px' }}>⚙️ DRC Updating...</div>
-      </Show>
-      <DRCList drc={drc()} />
-    </>
+      <div>
+        <Button
+          onClick={() => setActiveTab('xsection')}
+          variant={activeTab() === 'xsection' ? 'contained' : 'outlined'}
+        >
+          Cross Section
+        </Button>
+        <Button
+          onClick={() => setActiveTab('graph')}
+          variant={activeTab() === 'graph' ? 'contained' : 'outlined'}
+        >
+          Graph
+        </Button>
+        <Show when={activeTab() === 'graph'}>
+          <Suspense fallback={<div>Loading graph...</div>}>
+            <Graph />
+          </Suspense>
+          <div style={{ 'padding-left': '32px' }}>
+            <SimulationParams />
+          </div>
+        </Show>
+        <Show when={activeTab() === 'xsection'}>
+          <CrossSection />
+          <Show when={updating()}>
+            <div style={{ 'margin-top': '16px' }}>⚙️ DRC Updating...</div>
+          </Show>
+          <DRCList drc={drc()} />
+        </Show>
+      </div>
+    </Box>
   );
 }
