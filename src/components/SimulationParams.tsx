@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { createEffect, Show } from 'solid-js';
+import { Add } from '@suid/icons-material';
+import { Checkbox, Chip, FormControlLabel, IconButton, Stack } from '@suid/material';
+import { createEffect, For, Show } from 'solid-js';
 import {
   dcSweep,
   maxInVoltage,
   minInVoltage,
   pulseDelay,
+  removeSignalName,
   riseTime,
   setDCSweep,
   setMaxInVoltage,
@@ -22,21 +25,34 @@ export default function SimulationParams() {
   createEffect(() => {
     void simulate(spiceFile(), signalNames());
   });
+
+  const addSignal = () => {
+    const signal = prompt('Signal name (you can add multiple signals separated by spaces)');
+    if (signal != null && signal.trim().length > 0) {
+      setSignalNames(signalNames().trim() + ' ' + signal.trim());
+    }
+  };
+
   return (
     <div>
-      Plot signals (space separated):
+      Plot signals:
       <br />
-      <input
-        value={signalNames()}
-        onChange={(e) => setSignalNames((e.target as HTMLInputElement).value)}
+      <Stack direction="row" spacing={1}>
+        <For
+          each={signalNames()
+            .split(' ')
+            .filter((i) => i.length > 0)}
+        >
+          {(name) => <Chip label={name} onDelete={() => removeSignalName(name)} />}
+        </For>
+        <IconButton onClick={addSignal} size="small" color="primary">
+          <Add />
+        </IconButton>
+      </Stack>
+      <FormControlLabel
+        control={<Checkbox checked={dcSweep()} onChange={(e, checked) => setDCSweep(checked)} />}
+        label="DC Sweep"
       />
-      <br />
-      <input
-        type="checkbox"
-        checked={dcSweep()}
-        onChange={(e) => setDCSweep((e.target as HTMLInputElement).checked)}
-      />{' '}
-      DC Sweep
       <br /> Input voltage: <br />
       Min:{' '}
       <input
