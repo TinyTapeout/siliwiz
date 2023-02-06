@@ -1,20 +1,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
+import { Visibility, VisibilityOff } from '@suid/icons-material';
 import { Checkbox } from '@suid/material';
 import { For } from 'solid-js';
 import { layerTypes } from '~/model/layerTypes';
 import { setViewerState, viewerState } from '~/model/viewerState';
 import styles from './Palette.module.css';
-import { Visibility, VisibilityOff } from '@suid/icons-material';
-
-function paletteLayers() {
-  return layerTypes.filter((l) => l.contactName == null || l.contactDefault);
-}
 
 export default function Palette() {
   return (
     <div class={styles.palette}>
-      <For each={paletteLayers()}>
+      <For each={layerTypes}>
         {(layer) => (
           <div
             classList={{
