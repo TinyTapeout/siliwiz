@@ -104,27 +104,13 @@
     { "x": 157.75, "y": 236.5, "width": 6.75, "height": 6.75, "layer": "metal1" },
     { "x": 279.25, "y": 236.5, "width": 6.75, "height": 6.75, "layer": "metal1" },
     { "x": 293, "y": 93.43, "height": 15, "width": 44, "layer": "metal1", "label": "in" },
-    { "x": 327, "y": 100.43, "height": 0, "width": 0, "layer": "metal1" },
-    { "x": 327, "y": 100.43, "height": 0, "width": 0, "layer": "metal1" },
     { "x": 128, "y": 346.43, "height": 17, "width": 51, "layer": "metal1", "label": "vdd" },
-    { "x": 154, "y": 347.43, "height": 0, "width": 0, "layer": "metal1" },
-    { "x": 154, "y": 347.43, "height": 0, "width": 0, "layer": "metal1" },
     { "x": 203, "y": 329.43, "height": 35, "width": 14, "layer": "metal1" },
     { "x": 177, "y": 347.43, "height": 16, "width": 33, "layer": "metal1" },
     { "x": 146, "y": 19.43, "height": 13, "width": 76, "layer": "metal1", "label": "vss" },
     { "x": 207, "y": 17.43, "height": 36, "width": 16, "layer": "metal1" },
-    { "x": 180, "y": 26.43, "height": 0, "width": 0, "layer": "metal1" },
-    { "x": 180, "y": 26.43, "height": 0, "width": 0, "layer": "metal1" },
-    { "x": 192, "y": 28.43, "height": 0, "width": 0, "layer": "metal1" },
-    { "x": 233, "y": 25.43, "height": 0, "width": 0, "layer": "metal1" },
-    { "x": 196, "y": 26.43, "height": 0, "width": 0, "layer": "metal1" },
-    { "x": 122, "y": 96.43, "height": 0, "width": 0, "layer": "metal1" },
     { "x": 90, "y": 88.43, "height": 11, "width": 90, "layer": "metal1", "label": "out" },
     { "x": 90, "y": 87.43, "height": 216, "width": 10, "layer": "metal1" },
-    { "x": 90, "y": 294.43, "height": 9, "width": 89, "layer": "metal1" },
-    { "x": 106, "y": 94.43, "height": 0, "width": 0, "layer": "metal1" },
-    { "x": 106, "y": 94.43, "height": 0, "width": 0, "layer": "metal1" },
-    { "x": 106, "y": 94.43, "height": 0, "width": 0, "layer": "metal1" },
-    { "x": 106, "y": 94.43, "height": 0, "width": 0, "layer": "metal1" }
+    { "x": 90, "y": 294.43, "height": 9, "width": 89, "layer": "metal1" }
   ]
 }

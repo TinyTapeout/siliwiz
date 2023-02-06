@@ -33,13 +33,15 @@ export default function Editor() {
   };
 
   const saveDesign = () => {
-    const rects = layout.rects.map((r) => ({
-      ...r,
-      x: round2dp(r.x),
-      y: round2dp(r.y),
-      width: round2dp(r.width),
-      height: round2dp(r.height),
-    }));
+    const rects = layout.rects
+      .filter((rect) => rect.width > 0 && rect.height > 0)
+      .map((rect) => ({
+        ...rect,
+        x: round2dp(rect.x),
+        y: round2dp(rect.y),
+        width: round2dp(rect.width),
+        height: round2dp(rect.height),
+      }));
     downloadFile(
       'siliwiz-design.json',
       beautify(
