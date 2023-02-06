@@ -128,6 +128,13 @@ export const layerTypes: ILayerInfo[] = [
     crossHeight: 15,
     viaVariations: [
       {
+        dependsOn: ['pmos'],
+        magicName: 'psubstratepcontact',
+        crossY: 70,
+        crossHeight: 30,
+        description: 'used to connect between p substrate and metal1',
+      },
+      {
         dependsOn: ['nwell', 'nsubstratendiff'],
         magicName: 'nsubstratencontact',
         crossY: 70,
@@ -135,7 +142,9 @@ export const layerTypes: ILayerInfo[] = [
         description: 'used to connect between n well and metal1',
       },
       {
-        dependsOn: ['pmos', 'psubstratepdfiff'],
+        // Note: this entry is separate from the 'pmos' entry since 'psubstratepdfiff' comes on top of 'nwell',
+        // and the algorithm goes through the list in order, so we need to check for 'nwell' first.
+        dependsOn: ['psubstratepdfiff'],
         magicName: 'psubstratepcontact',
         crossY: 70,
         crossHeight: 30,
