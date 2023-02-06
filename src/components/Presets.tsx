@@ -9,7 +9,7 @@ export default function Presets() {
   const [value, setValue] = createSignal('');
   const pages = import.meta.glob('~/../presets/*.json', { eager: true });
   return (
-    <FormControl sx={{ minWidth: 120 }}>
+    <FormControl sx={{ minWidth: 120 }} size="small">
       <InputLabel id="preset-select-label">Preset</InputLabel>
       <Select
         labelId="preset-select-label"

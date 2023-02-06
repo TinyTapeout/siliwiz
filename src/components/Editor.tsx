@@ -67,7 +67,9 @@ export default function Editor() {
 
   return (
     <div>
-      <div style={{ margin: '16px 0 8px' }}>
+      <div>
+        <Presets />
+        <br />
         <IconButton
           onClick={() => layoutUndo.undo()}
           disabled={!layoutUndo.isUndoable()}
@@ -91,10 +93,8 @@ export default function Editor() {
         <Button onClick={clear}>Clear</Button>
         &nbsp;
         <Button onClick={exportSTL}>STL</Button>
-        <br />
-        <Presets />
       </div>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', 'margin-top': '12px' }}>
         <Canvas size={canvasSize() * 200} />
         <CrossSectionSlider />
       </div>
