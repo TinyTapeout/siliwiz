@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { Box, Button } from '@suid/material';
+import { Box, Button, Paper } from '@suid/material';
 import { createEffect, createSignal, lazy, Show, Suspense } from 'solid-js';
 import type { IDRCItem } from '~/model/drc';
 import { layout } from '~/model/layout';
@@ -33,8 +33,10 @@ export default function LayoutView() {
   return (
     <Box sx={{ display: 'flex' }}>
       <Layers />
-      <Editor />
-      <div>
+      <Paper sx={{ padding: 1, marginRight: 1 }}>
+        <Editor />
+      </Paper>
+      <Paper sx={{ padding: 1 }}>
         <Button
           onClick={() => setActiveTab('xsection')}
           variant={activeTab() === 'xsection' ? 'contained' : 'outlined'}
@@ -62,7 +64,7 @@ export default function LayoutView() {
           </Show>
           <DRCList drc={drc()} />
         </Show>
-      </div>
+      </Paper>
     </Box>
   );
 }
