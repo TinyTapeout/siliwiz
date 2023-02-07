@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { Box, Button, ButtonGroup, Paper } from '@suid/material';
+import { Check, Error } from '@suid/icons-material';
+import { Box, Button, ButtonGroup, Paper, Typography } from '@suid/material';
 import { createEffect, createSignal, lazy, Show, Suspense } from 'solid-js';
 import type { IDRCItem } from '~/model/drc';
 import { layout } from '~/model/layout';
@@ -29,6 +30,10 @@ export default function MainView() {
   createEffect(update);
 
   const Graph = lazy(() => import('./Graph'));
+  const hasDRCErrors = () => {
+    const drcList = drc();
+    return drcList && drcList.length > 0;
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -40,6 +45,8 @@ export default function MainView() {
         <ButtonGroup>
           <Button
             onClick={() => setActiveTab('xsection')}
+            startIcon={hasDRCErrors() ? <Error /> : <Check />}
+            color={hasDRCErrors() ? 'error' : 'primary'}
             variant={activeTab() === 'xsection' ? 'contained' : 'outlined'}
           >
             Cross Section
@@ -61,8 +68,9 @@ export default function MainView() {
         </Show>
         <Show when={activeTab() === 'xsection'}>
           <CrossSection />
+          <Box sx={{ marginTop: 2 }} />
           <Show when={updating()}>
-            <div style={{ 'margin-top': '16px' }}>⚙️ DRC Updating...</div>
+            <Typography>⚙️ DRC Updating...</Typography>
           </Show>
           <DRCList drc={drc()} />
         </Show>
