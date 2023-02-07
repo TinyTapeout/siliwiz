@@ -1,16 +1,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Add } from '@suid/icons-material';
-import { Checkbox, Chip, FormControlLabel, IconButton, Stack } from '@suid/material';
-import { createEffect, For, Show } from 'solid-js';
+import { Chip, IconButton, Stack } from '@suid/material';
+import { createEffect, For } from 'solid-js';
 import {
-  dcSweep,
   maxInVoltage,
   minInVoltage,
   pulseDelay,
   removeSignalName,
   riseTime,
-  setDCSweep,
   setMaxInVoltage,
   setMinInVoltage,
   setPulseDelay,
@@ -49,10 +47,6 @@ export default function SimulationParams() {
           <Add />
         </IconButton>
       </Stack>
-      <FormControlLabel
-        control={<Checkbox checked={dcSweep()} onChange={(e, checked) => setDCSweep(checked)} />}
-        label="DC Sweep"
-      />
       <br /> Input voltage: <br />
       Min:{' '}
       <input
@@ -74,30 +68,28 @@ export default function SimulationParams() {
         onInput={(e) => setMaxInVoltage((e.target as HTMLInputElement).valueAsNumber)}
       />
       {maxInVoltage()}V<br />
-      <Show when={!dcSweep()}>
-        Pulse delay:{' '}
-        <input
-          type="range"
-          min="0"
-          max="50"
-          step="0.1"
-          value={pulseDelay()}
-          onInput={(e) => setPulseDelay((e.target as HTMLInputElement).valueAsNumber)}
-        />
-        {pulseDelay()} us
-        <br />
-        Rise time:{' '}
-        <input
-          type="range"
-          min="0"
-          max="50"
-          step="0.1"
-          value={riseTime()}
-          onInput={(e) => setRiseTime((e.target as HTMLInputElement).valueAsNumber)}
-        />
-        {riseTime()} us
-        <br />
-      </Show>
+      Pulse delay:{' '}
+      <input
+        type="range"
+        min="0"
+        max="50"
+        step="0.1"
+        value={pulseDelay()}
+        onInput={(e) => setPulseDelay((e.target as HTMLInputElement).valueAsNumber)}
+      />
+      {pulseDelay()} us
+      <br />
+      Rise time:{' '}
+      <input
+        type="range"
+        min="0"
+        max="50"
+        step="0.1"
+        value={riseTime()}
+        onInput={(e) => setRiseTime((e.target as HTMLInputElement).valueAsNumber)}
+      />
+      {riseTime()} us
+      <br />
     </div>
   );
 }
