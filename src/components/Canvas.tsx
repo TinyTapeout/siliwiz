@@ -14,7 +14,7 @@ import {
   setSelectedRectIndex,
   sortRects,
 } from '~/model/layout';
-import { viewerState } from '~/model/viewerState';
+import { isLayerVisible, viewerState } from '~/model/viewerState';
 import { domRectFromPoints, type Point2D } from '~/utils/geometry';
 import { ctrlCmdPressed } from '~/utils/keyboard';
 import styles from './Canvas.module.css';
@@ -272,9 +272,8 @@ export default function Canvas(props: { size: number }) {
               return;
             }
 
-            const hidden = () => viewerState.hiddenLayers.includes(layer.name);
             return (
-              <Show when={!hidden()}>
+              <Show when={isLayerVisible(layer.name)}>
                 <g
                   onClick={(event) => {
                     if (!popMenu()) {
@@ -315,19 +314,21 @@ export default function Canvas(props: { size: number }) {
         </For>
 
         <For each={layout.rects}>
-          {(rect, index) => (
-            <Show when={rect.label}>
-              <text
-                style={{ 'user-select': 'none', 'pointer-events': 'none' }}
-                x={rect.x + rect.width / 2}
-                y={rect.y}
-                text-anchor="middle"
-                alignment-baseline="before-edge"
-              >
-                {rect.label}
-              </text>
-            </Show>
-          )}
+          {(rect) => {
+            return (
+              <Show when={rect.label != null && isLayerVisible(rect.layer)}>
+                <text
+                  style={{ 'user-select': 'none', 'pointer-events': 'none' }}
+                  x={rect.x + rect.width / 2}
+                  y={rect.y}
+                  text-anchor="middle"
+                  alignment-baseline="before-edge"
+                >
+                  {rect.label}
+                </text>
+              </Show>
+            );
+          }}
         </For>
 
         <Show when={selectedRect()} keyed>

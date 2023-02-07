@@ -18,3 +18,5 @@ export const [viewerState, setViewerState] = createStore<IViewerState>({
     return this.crossSectionOffset;
   },
 });
+
+export const isLayerVisible = (layer: string) => !viewerState.hiddenLayers.includes(layer);

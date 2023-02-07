@@ -3,7 +3,7 @@
 import { Popover, Typography } from '@suid/material';
 import { createSignal, For, Show } from 'solid-js';
 import { layout, rectLayer, rectViaLayer } from '~/model/layout';
-import { viewerState } from '~/model/viewerState';
+import { isLayerVisible, viewerState } from '~/model/viewerState';
 
 export default function CrossSection() {
   const crossRects = () =>
@@ -82,10 +82,8 @@ export default function CrossSection() {
               return;
             }
 
-            const hidden = () => viewerState.hiddenLayers.includes(layer.name);
-
             return (
-              <Show when={!hidden()}>
+              <Show when={isLayerVisible(layer.name)}>
                 <rect
                   aria-owns={open() ? 'mouse-over-popover' : undefined}
                   aria-haspopup="true"

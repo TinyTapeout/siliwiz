@@ -4,7 +4,7 @@ import { Visibility, VisibilityOff } from '@suid/icons-material';
 import { Checkbox, Paper, Typography } from '@suid/material';
 import { For } from 'solid-js';
 import { LayerCategory, layerTypes } from '~/model/layerTypes';
-import { setViewerState, viewerState } from '~/model/viewerState';
+import { isLayerVisible, setViewerState, viewerState } from '~/model/viewerState';
 import styles from './Layers.module.css';
 
 export default function Layers() {
@@ -31,13 +31,12 @@ export default function Layers() {
                     setViewerState('activeLayer', layer.name);
                   }}
                 >
-                  {viewerState.hiddenLayers.includes(layer.name)}
                   <Checkbox
                     sx={{ p: 0.5 }}
                     color="default"
                     icon={<VisibilityOff />}
                     checkedIcon={<Visibility />}
-                    checked={!viewerState.hiddenLayers.includes(layer.name)}
+                    checked={isLayerVisible(layer.name)}
                     onChange={(e, checked) => {
                       e.stopPropagation();
                       setViewerState('hiddenLayers', (hiddenLayers) => {
