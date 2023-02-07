@@ -3,7 +3,7 @@
 export enum LayerCategory {
   Active = 'active',
   Passive = 'passive',
-  Contact = 'contact',
+  Via = 'via',
 }
 
 export interface IViaLayerVariation {
@@ -137,7 +137,7 @@ export const layerTypes: ILayerInfo[] = [
     description: 'polycrystalline silicon virtual layer, used to draw resistors',
   },
   {
-    category: LayerCategory.Contact,
+    category: LayerCategory.Via,
     name: 'metal1 via',
     color: '#80ff80',
     magicName: 'polycontact', // fallback value, if no variation below matches
@@ -210,7 +210,7 @@ export const layerTypes: ILayerInfo[] = [
     description: 'thin layer of metal used to form metal-insulator-metal capacitors',
   },
   {
-    category: LayerCategory.Contact,
+    category: LayerCategory.Via,
     name: 'metal2 via',
     magicName: 'm2contact', // fallback value, if no variation below matches
     color: '#80ff80',
