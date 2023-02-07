@@ -11,12 +11,12 @@ import Editor from './Editor';
 import Layers from './Layers';
 import SimulationParams from './SimulationParams';
 
-type ITabName = 'xsection' | 'graph';
+type ITabName = 'xsection' | 'simulation';
 
 export default function LayoutView() {
   const [drc, setDRC] = createSignal<IDRCItem[] | undefined>();
   const [updating, setUpdating] = createSignal(false);
-  const [activeTab, setActiveTab] = createSignal<ITabName>('graph');
+  const [activeTab, setActiveTab] = createSignal<ITabName>('simulation');
 
   const update = async () => {
     setDRC(undefined);
@@ -45,13 +45,13 @@ export default function LayoutView() {
             Cross Section
           </Button>
           <Button
-            onClick={() => setActiveTab('graph')}
-            variant={activeTab() === 'graph' ? 'contained' : 'outlined'}
+            onClick={() => setActiveTab('simulation')}
+            variant={activeTab() === 'simulation' ? 'contained' : 'outlined'}
           >
-            Graph
+            Simulation
           </Button>
         </ButtonGroup>
-        <Show when={activeTab() === 'graph'}>
+        <Show when={activeTab() === 'simulation'}>
           <Suspense fallback={<div>Loading graph...</div>}>
             <Graph />
           </Suspense>
