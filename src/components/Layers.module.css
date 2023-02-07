@@ -1,10 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 
-.palette {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 auto;
-  border: solid #aaa 1px;
+.layersPanel {
+  margin-right: 12px;
   padding: 12px 12px;
   border-radius: 12px;
 }

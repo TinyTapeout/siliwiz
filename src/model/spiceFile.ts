@@ -21,6 +21,15 @@ export const [enableCustomSpice, setEnableCustomSpice] = createSignal<boolean>(f
 export const [customSpice, setCustomSpice] = createSignal<string>('');
 export const [signalNames, setSignalNames] = createSignal('in out');
 
+export function removeSignalName(name: string) {
+  setSignalNames(
+    signalNames()
+      .split(' ')
+      .filter((n) => n !== name)
+      .join(' '),
+  );
+}
+
 export function getSpiceParams(): ISpiceParams {
   return {
     dcSweep: dcSweep(),

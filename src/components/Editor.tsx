@@ -1,19 +1,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { lazy, Suspense } from 'solid-js';
+import { Redo, Undo } from '@suid/icons-material';
+import { Button, IconButton } from '@suid/material';
+import beautify from 'json-beautify';
 import { layout, layoutUndo, loadPreset, setLayout, setSelectedRectIndex } from '~/model/layout';
 import { getSpiceParams } from '~/model/spiceFile';
 import { exportSTL } from '~/model/stl';
 import { downloadFile } from '~/utils/download-file';
 import { openFiles } from '~/utils/files';
 import { tryJsonParse } from '~/utils/json';
+import { round2dp } from '~/utils/math';
 import Canvas from './Canvas';
-import CrossSection from './CrossSection';
 import CrossSectionSlider from './CrossSectionSlider';
 import Presets from './Presets';
-import SimulationParams from './SimulationParams';
-import beautify from 'json-beautify';
-import { round2dp } from '~/utils/math';
 
 export default function Editor() {
   const loadDesign = async () => {
@@ -66,42 +65,39 @@ export default function Editor() {
 
   const canvasSize = () => 2;
 
-  const Graph = lazy(() => import('./Graph'));
-
   return (
-    <>
-      <div style={{ margin: '16px 0 8px' }}>
-        <button onClick={() => layoutUndo.undo()} disabled={!layoutUndo.isUndoable()}>
-          Undo
-        </button>
-        &nbsp;
-        <button onClick={() => layoutUndo.redo()} disabled={!layoutUndo.isRedoable()}>
-          Redo
-        </button>
-        &nbsp;
-        <button onClick={loadDesign}>Load</button>
-        &nbsp;
-        <button onClick={saveDesign}>Save</button>
-        &nbsp;
-        <button onClick={clear}>Clear</button>
-        &nbsp;
-        <button onClick={exportSTL}>STL</button>
-        &nbsp;
+    <div>
+      <div>
         <Presets />
+        <br />
+        <IconButton
+          onClick={() => layoutUndo.undo()}
+          disabled={!layoutUndo.isUndoable()}
+          title="Undo"
+        >
+          <Undo />
+        </IconButton>
+        &nbsp;
+        <IconButton
+          onClick={() => layoutUndo.redo()}
+          disabled={!layoutUndo.isRedoable()}
+          title="Redo"
+        >
+          <Redo />
+        </IconButton>
+        &nbsp;
+        <Button onClick={loadDesign}>Load</Button>
+        &nbsp;
+        <Button onClick={saveDesign}>Save</Button>
+        &nbsp;
+        <Button onClick={clear}>Clear</Button>
+        &nbsp;
+        <Button onClick={exportSTL}>STL</Button>
       </div>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', 'margin-top': '12px' }}>
         <Canvas size={canvasSize() * 200} />
         <CrossSectionSlider />
-        <div>
-          <Suspense fallback={<div>Loading graph...</div>}>
-            <Graph />
-          </Suspense>
-          <div style={{ 'padding-left': '32px' }}>
-            <SimulationParams />
-          </div>
-        </div>
       </div>
-      <CrossSection />
-    </>
+    </div>
   );
 }

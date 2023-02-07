@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
+export enum LayerCategory {
+  Active = 'active',
+  Passive = 'passive',
+  Via = 'via',
+}
+
 export interface IViaLayerVariation {
   /**
    * What other layer this via layer variation depends on (for multiple layers, we'll look for a single match).
@@ -19,6 +25,8 @@ export interface IViaLayerVariation {
 }
 
 export interface ILayerInfo {
+  category: LayerCategory;
+
   /* The name of the layer, as displayed to the user */
   name: string;
 
@@ -51,6 +59,7 @@ export interface ILayerInfo {
 
 export const layerTypes: ILayerInfo[] = [
   {
+    category: LayerCategory.Active,
     name: 'p substrate',
     magicName: 'pmos',
     color: '#cccc00',
@@ -60,6 +69,7 @@ export const layerTypes: ILayerInfo[] = [
     description: 'p doped silicon used to make base layer',
   },
   {
+    category: LayerCategory.Active,
     name: 'n well',
     magicName: 'nwell',
     color: 'gray',
@@ -69,6 +79,7 @@ export const layerTypes: ILayerInfo[] = [
     description: 'n doped used to isolate p diffusion from the p substrate',
   },
   {
+    category: LayerCategory.Active,
     name: 'n diffusion',
     magicName: 'ndiffusion',
     color: '#8080ff',
@@ -78,6 +89,7 @@ export const layerTypes: ILayerInfo[] = [
     description: 'n diffusion layer used to make n mosfets',
   },
   {
+    category: LayerCategory.Active,
     name: 'p diffusion',
     magicName: 'pdiffusion',
     color: '#4040ff',
@@ -87,6 +99,7 @@ export const layerTypes: ILayerInfo[] = [
     description: 'p diffusion layer used to make p mosfets',
   },
   {
+    category: LayerCategory.Active,
     name: 'p tap',
     magicName: 'psubstratepdfiff',
     color: '#4040ff',
@@ -96,6 +109,7 @@ export const layerTypes: ILayerInfo[] = [
     description: 'lightly doped p diffusion used to connect the p substrate to vss',
   },
   {
+    category: LayerCategory.Active,
     name: 'n tap',
     magicName: 'nsubstratendiff',
     color: '#8080ff',
@@ -105,6 +119,7 @@ export const layerTypes: ILayerInfo[] = [
     description: 'lightly doped n diffusion used to connect n well to vdd',
   },
   {
+    category: LayerCategory.Passive,
     name: 'polysilicon',
     magicName: 'polysilicon',
     color: 'rgb(220, 95, 95)',
@@ -113,6 +128,7 @@ export const layerTypes: ILayerInfo[] = [
     crossHeight: 10,
   },
   {
+    category: LayerCategory.Passive,
     name: 'polyres',
     magicName: 'polyres',
     color: 'gold',
@@ -121,6 +137,7 @@ export const layerTypes: ILayerInfo[] = [
     description: 'polycrystalline silicon virtual layer, used to draw resistors',
   },
   {
+    category: LayerCategory.Via,
     name: 'metal1 via',
     color: '#80ff80',
     magicName: 'polycontact', // fallback value, if no variation below matches
@@ -174,6 +191,7 @@ export const layerTypes: ILayerInfo[] = [
     ],
   },
   {
+    category: LayerCategory.Passive,
     name: 'metal1',
     magicName: 'metal1',
     color: 'rgb(125, 166, 250)',
@@ -183,6 +201,7 @@ export const layerTypes: ILayerInfo[] = [
     hasLabels: true,
   },
   {
+    category: LayerCategory.Passive,
     name: 'mim capacitor',
     magicName: 'mimcap',
     color: 'rgb(100, 100, 100)',
@@ -191,6 +210,7 @@ export const layerTypes: ILayerInfo[] = [
     description: 'thin layer of metal used to form metal-insulator-metal capacitors',
   },
   {
+    category: LayerCategory.Via,
     name: 'metal2 via',
     magicName: 'm2contact', // fallback value, if no variation below matches
     color: '#80ff80',
@@ -215,6 +235,7 @@ export const layerTypes: ILayerInfo[] = [
     ],
   },
   {
+    category: LayerCategory.Passive,
     name: 'metal2',
     magicName: 'metal2',
     color: 'rgb(125, 200, 250)',
