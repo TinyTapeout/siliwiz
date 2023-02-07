@@ -1,27 +1,28 @@
 {
   "version": 1,
   "app": "siliwiz",
-  "timestamp": 1674769890,
+  "timestamp": 1675781056,
   "rects": [
-    { "x": 21, "y": 45.5, "height": 255, "width": 331, "layer": "p substrate" },
-    { "x": 8, "y": 11.79, "height": 74, "width": 372, "layer": "p substrate" },
-    { "x": 104, "y": 72.5, "height": 133, "width": 142, "layer": "n well" },
-    { "x": 130, "y": 90.5, "height": 88, "width": 88, "layer": "p diffusion" },
-    { "x": 118, "y": 83.93, "height": 92, "width": 107, "layer": "p diffusion" },
-    { "x": 126, "y": 105.64, "height": 54, "width": 28, "layer": "metal1 via" },
-    { "x": 198, "y": 107.64, "height": 51, "width": 24, "layer": "metal1 via" },
-    { "x": 168, "y": 66.5, "height": 130, "width": 8, "layer": "polysilicon" },
-    { "x": 268, "y": 112.94, "height": 196, "width": 9, "layer": "polyres" },
-    { "x": 254, "y": 117.07, "height": 24, "width": 26, "layer": "metal1 via" },
-    { "x": 256, "y": 111.79, "height": 44, "width": 33, "layer": "metal1 via" },
-    { "x": 244, "y": 260.5, "height": 40, "width": 60, "layer": "metal1 via" },
-    { "x": 252, "y": 107.93, "height": 53, "width": 45, "layer": "metal1 via" },
-    { "x": 149, "y": 30.93, "height": 45, "width": 49, "layer": "metal1 via" },
-    { "x": 146, "y": 25.64, "height": 56, "width": 59, "layer": "metal1", "label": "in" },
-    { "x": 59, "y": 114.64, "height": 35, "width": 85, "layer": "metal1", "label": "vdd" },
-    { "x": 202, "y": 115.64, "height": 34, "width": 79, "layer": "metal1", "label": "out" },
-    { "x": 261, "y": 115.07, "height": 30, "width": 11, "layer": "metal1" },
-    { "x": 232, "y": 245.93, "height": 75, "width": 79, "layer": "metal1", "label": "vss" }
+    { "x": 13.41, "y": 6.17, "height": 350, "width": 368, "layer": "p substrate" },
+    { "x": 100.41, "y": 87.49, "height": 185, "width": 180, "layer": "n well" },
+    { "x": 144.41, "y": 132.49, "height": 86, "width": 94, "layer": "p diffusion" },
+    { "x": 320.41, "y": 310.17, "height": 43, "width": 52, "layer": "p tap" },
+    { "x": 104.41, "y": 231.49, "height": 37, "width": 32, "layer": "n tap" },
+    { "x": 180.41, "y": 97.17, "height": 167, "width": 22.22, "layer": "polysilicon" },
+    { "x": 289.41, "y": 155.49, "height": 166.67, "width": 7, "layer": "polyres" },
+    { "x": 319.41, "y": 306.17, "height": 43, "width": 49, "layer": "metal1 via" },
+    { "x": 143.41, "y": 159.49, "height": 36, "width": 25, "layer": "metal1 via" },
+    { "x": 218.41, "y": 158.49, "height": 39, "width": 25, "layer": "metal1 via" },
+    { "x": 167.41, "y": 85.49, "height": 32, "width": 51, "layer": "metal1 via" },
+    { "x": 276.41, "y": 159.49, "height": 33, "width": 30, "layer": "metal1 via" },
+    { "x": 261.41, "y": 307.49, "height": 34, "width": 47, "layer": "metal1 via" },
+    { "x": 104.41, "y": 230.49, "height": 36, "width": 30, "layer": "metal1 via" },
+    { "x": 319.41, "y": 306.17, "height": 44, "width": 50, "layer": "metal1", "label": "vss" },
+    { "x": 113.41, "y": 149.49, "height": 54, "width": 51, "layer": "metal1", "label": "vdd" },
+    { "x": 159.41, "y": 68.49, "height": 43, "width": 66, "layer": "metal1", "label": "in" },
+    { "x": 222.41, "y": 148.49, "height": 51, "width": 79, "layer": "metal1", "label": "out" },
+    { "x": 256.41, "y": 304.49, "height": 46, "width": 56, "layer": "metal1", "label": "vss" },
+    { "x": 100.41, "y": 229.49, "height": 38, "width": 35, "layer": "metal1", "label": "vdd" }
   ],
   "graph": {
     "dcSweep": false,
@@ -29,6 +30,6 @@
     "maxInVoltage": 5,
     "pulseDelay": 0,
     "riseTime": 50,
-    "signalNames": "in out i(vdd)*-1e3"
+    "signalNames": "in out i(vdd)*-1000"
   }
 }
