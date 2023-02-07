@@ -13,7 +13,7 @@ import SimulationParams from './SimulationParams';
 
 type ITabName = 'xsection' | 'simulation';
 
-export default function LayoutView() {
+export default function MainView() {
   const [drc, setDRC] = createSignal<IDRCItem[] | undefined>();
   const [updating, setUpdating] = createSignal(false);
   const [activeTab, setActiveTab] = createSignal<ITabName>('simulation');
