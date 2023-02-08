@@ -45,11 +45,11 @@ export default function MainView() {
         <ButtonGroup>
           <Button
             onClick={() => setActiveTab('xsection')}
-            startIcon={hasDRCErrors() ? <Error /> : <Check />}
+            endIcon={hasDRCErrors() ? <Error /> : <Check />}
             color={hasDRCErrors() ? 'error' : 'primary'}
             variant={activeTab() === 'xsection' ? 'contained' : 'outlined'}
           >
-            Cross Section
+            Cross Section &amp; DRC
           </Button>
           <Button
             onClick={() => setActiveTab('simulation')}
