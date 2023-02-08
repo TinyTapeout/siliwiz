@@ -12,13 +12,13 @@ export function LinkBox() {
         Resources
       </Typography>
       <Typography gutterBottom>
-        <Bullet /> Get your digital designs manufactured for an affordable price at{' '}
+        <Bullet /> Get your digital designs manufactured in silicon for an affordable price at{' '}
         <a href="https://tinytapeout.com" target="_blank">
           Tiny Tapeout
         </a>
       </Typography>
       <Typography>
-        <Bullet /> Learn advanced ASIC design with the{' '}
+        <Bullet /> Learn open source ASIC design with the{' '}
         <a href="https://zerotoasiccourse.com" target="_blank">
           Zero to ASIC course
         </a>
