@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Redo, Undo } from '@suid/icons-material';
-import { Button, IconButton } from '@suid/material';
+import { Button, IconButton, TextField } from '@suid/material';
 import beautify from 'json-beautify';
 import { layout, layoutUndo, loadPreset, setLayout, setSelectedRectIndex } from '~/model/layout';
 import { getSpiceParams } from '~/model/spiceFile';
@@ -13,12 +13,17 @@ import { round2dp } from '~/utils/math';
 import Canvas from './Canvas';
 import CrossSectionSlider from './CrossSectionSlider';
 import Presets from './Presets';
+import { createSignal } from 'solid-js'
 
 export default function Editor() {
+  const [projectName, setProjectName] = createSignal('my-siliwiz-project')
+
   const loadDesign = async () => {
     const files = await openFiles({ accept: ['application/json'] });
     const text = await files?.item(0)?.text();
-    if (text == null) {
+    const filename = files?.item(0)?.name;
+    
+    if (text == null || filename == null) {
       return;
     }
     const frozenLayout = tryJsonParse(text);
@@ -29,6 +34,7 @@ export default function Editor() {
       alert('Error: unsupported file version');
     }
     loadPreset(frozenLayout);
+    setProjectName(filename.toString().substring(0, filename.lastIndexOf('.')))
   };
 
   const saveDesign = () => {
@@ -42,7 +48,7 @@ export default function Editor() {
         height: round2dp(rect.height),
       }));
     downloadFile(
-      'siliwiz-design.json',
+      projectName().concat('.json'),
       beautify(
         {
           version: 1,
@@ -58,6 +64,10 @@ export default function Editor() {
     );
   };
 
+  const saveSTL = () => {
+    exportSTL(projectName())
+  }
+
   const clear = () => {
     setLayout('rects', []);
     setSelectedRectIndex(null);
@@ -69,6 +79,16 @@ export default function Editor() {
     <div>
       <div>
         <Presets />
+        &nbsp;
+        <TextField
+          id="project-name-label"
+          label="Project Name"
+          size="small"
+          value={projectName()}
+          onChange={(e) => {
+            setProjectName(e.target.value);
+          }}
+        />
         <br />
         <IconButton
           onClick={() => layoutUndo.undo()}
@@ -92,7 +112,7 @@ export default function Editor() {
         &nbsp;
         <Button onClick={clear}>Clear</Button>
         &nbsp;
-        <Button onClick={exportSTL}>STL</Button>
+        <Button onClick={saveSTL}>STL</Button>
       </div>
       <div style={{ display: 'flex', 'margin-top': '12px' }}>
         <Canvas size={canvasSize() * 200} />

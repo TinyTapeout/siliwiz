@@ -6,7 +6,7 @@ import { downloadFile } from '~/utils/download-file';
 import { layerTypes } from './layerTypes';
 import { layout } from './layout';
 
-export function exportSTL() {
+export function exportSTL(projectname: string) {
   const exporter = new STLExporter();
 
   const scene = new Group();
@@ -25,5 +25,5 @@ export function exportSTL() {
   }
 
   const result = exporter.parse(scene, { binary: true }) as unknown as ArrayBuffer;
-  downloadFile('siliwiz.stl', result);
+  downloadFile(projectname.concat('.stl'), result);
 }
