@@ -88,6 +88,8 @@ export default function Editor() {
           onChange={(e) => {
             setProjectName(e.target.value);
           }}
+          error={projectName() === ''}
+          helperText={projectName() === '' ? 'Cannot be empty!' : ''}
         />
         <br />
         <IconButton
@@ -108,11 +110,11 @@ export default function Editor() {
         &nbsp;
         <Button onClick={loadDesign}>Load</Button>
         &nbsp;
-        <Button onClick={saveDesign}>Save</Button>
+        <Button onClick={saveDesign} disabled={projectName() === ''}>Save</Button>
         &nbsp;
         <Button onClick={clear}>Clear</Button>
         &nbsp;
-        <Button onClick={saveSTL}>STL</Button>
+        <Button onClick={saveSTL} disabled={projectName() === ''}>STL</Button>
       </div>
       <div style={{ display: 'flex', 'margin-top': '12px' }}>
         <Canvas size={canvasSize() * 200} />
