@@ -13,16 +13,16 @@ import { round2dp } from '~/utils/math';
 import Canvas from './Canvas';
 import CrossSectionSlider from './CrossSectionSlider';
 import Presets from './Presets';
-import { createSignal } from 'solid-js'
+import { createSignal } from 'solid-js';
 
 export default function Editor() {
-  const [projectName, setProjectName] = createSignal('my-siliwiz-project')
+  const [projectName, setProjectName] = createSignal('my-siliwiz-project');
 
   const loadDesign = async () => {
     const files = await openFiles({ accept: ['application/json'] });
     const text = await files?.item(0)?.text();
     const filename = files?.item(0)?.name;
-    
+
     if (text == null || filename == null) {
       return;
     }
@@ -34,7 +34,7 @@ export default function Editor() {
       alert('Error: unsupported file version');
     }
     loadPreset(frozenLayout);
-    setProjectName(filename.toString().substring(0, filename.lastIndexOf('.')))
+    setProjectName(filename.toString().substring(0, filename.lastIndexOf('.')));
   };
 
   const saveDesign = () => {
@@ -65,8 +65,8 @@ export default function Editor() {
   };
 
   const saveSTL = () => {
-    exportSTL(projectName())
-  }
+    exportSTL(projectName());
+  };
 
   const clear = () => {
     setLayout('rects', []);
