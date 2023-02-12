@@ -21,12 +21,32 @@ export const [enableCustomSpice, setEnableCustomSpice] = createSignal<boolean>(f
 export const [customSpice, setCustomSpice] = createSignal<string>('');
 export const [signalNames, setSignalNames] = createSignal('in out');
 
+export const spiceIdentifierRegexp = /^[a-z][a-z0-9_]*$/i;
+export const spiceIdentifierReservedNames = [
+  'or',
+  'defined',
+  'sqr',
+  'sqrt',
+  'sin',
+  'cos',
+  'exp',
+  'ln',
+  'log',
+  'log10',
+  'arctan',
+  'abs',
+  'pwr',
+  'time',
+  'temper',
+  'hertz',
+];
+
 export function removeSignalName(name: string) {
   setSignalNames(
     signalNames()
-      .split(' ')
+      .split('')
       .filter((n) => n !== name)
-      .join(' '),
+      .join(''),
   );
 }
 
@@ -68,7 +88,7 @@ export function processMagicSpice(magicSpice: string) {
     return null;
   }
 
-  const signals = circuit[1].split(' ').slice(1);
+  const signals = circuit[1].split('').slice(1);
 
   return {
     signals,
@@ -98,7 +118,7 @@ export function spiceFile() {
 
   return `* SiliWiz Simulation (app rev ${__COMMIT_HASH__})
 
-*signals: ${signals?.join(' ')}
+*signals: ${signals?.join('')}
 
 Vdd vdd 0 5 ; power supply: 5V
 Vss vss 0 0 ; ground

@@ -14,6 +14,7 @@ import {
   setSelectedRectIndex,
   sortRects,
 } from '~/model/layout';
+import { spiceIdentifierRegexp, spiceIdentifierReservedNames } from '~/model/spiceFile';
 import { isLayerVisible, viewerState } from '~/model/viewerState';
 import { domRectFromPoints, type Point2D } from '~/utils/geometry';
 import { ctrlCmdPressed } from '~/utils/keyboard';
@@ -71,7 +72,18 @@ export default function Canvas(props: { size: number }) {
     }
     const label = prompt('Enter new label (or an empty string to delete label)', selection.label);
     if (label != null) {
-      setLayout('rects', selectionIndex, { ...selection, label });
+      const trimmedLabel = label.trim();
+      if (!spiceIdentifierRegexp.test(trimmedLabel)) {
+        alert(
+          'Label must begin with an alphabetic character and contain only alphanumeric characters and underscores',
+        );
+        return;
+      }
+      if (spiceIdentifierReservedNames.includes(trimmedLabel.toLowerCase())) {
+        alert(`${trimmedLabel} is a reserved word in ngspice. Please choose a different label.`);
+        return;
+      }
+      setLayout('rects', selectionIndex, { ...selection, label: trimmedLabel });
     }
   };
 
