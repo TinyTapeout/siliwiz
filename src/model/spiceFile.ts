@@ -44,9 +44,9 @@ export const spiceIdentifierReservedNames = [
 export function removeSignalName(name: string) {
   setSignalNames(
     signalNames()
-      .split('')
+      .split(' ')
       .filter((n) => n !== name)
-      .join(''),
+      .join(' '),
   );
 }
 
