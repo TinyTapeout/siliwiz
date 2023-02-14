@@ -77,7 +77,7 @@ export default function SimulationParams() {
         value={pulseDelay()}
         onInput={(e) => setPulseDelay((e.target as HTMLInputElement).valueAsNumber)}
       />
-      {pulseDelay()} us
+      {pulseDelay()}μs
       <br />
       Rise time:{' '}
       <input
@@ -88,7 +88,7 @@ export default function SimulationParams() {
         value={riseTime()}
         onInput={(e) => setRiseTime((e.target as HTMLInputElement).valueAsNumber)}
       />
-      {riseTime()} us
+      {riseTime()}µs
       <br />
     </div>
   );
