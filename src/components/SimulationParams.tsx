@@ -17,11 +17,22 @@ import {
   setRiseTime,
   setShowSpice,
   setSignalNames,
+  setTranTime,
   showSpice,
   signalNames,
   spiceFile,
+  tranTime,
 } from '~/model/spiceFile';
 import { simulate } from '~/sim/simulate';
+import { logSliderPosition, logSliderValue, type ILogSliderScale } from '~/utils/math';
+import { formatPicos, ps, us } from '~/utils/time';
+
+const tranTimeSlider: ILogSliderScale = {
+  minPos: 0,
+  maxPos: 100,
+  minValue: 1 * ps,
+  maxValue: 100 * us,
+};
 
 export default function SimulationParams() {
   createEffect(() => {
@@ -97,6 +108,19 @@ export default function SimulationParams() {
         onInput={(e) => setRiseTime((e.target as HTMLInputElement).valueAsNumber)}
       />
       {riseTime()}µs
+      <br />
+      Time scale:
+      <input
+        type="range"
+        min="0"
+        max="100"
+        step="0.1"
+        value={logSliderPosition(tranTime(), tranTimeSlider)}
+        onInput={(e) => {
+          setTranTime(logSliderValue((e.target as HTMLInputElement).valueAsNumber, tranTimeSlider));
+        }}
+      />
+      {formatPicos(tranTime())}s
       <Box mt={1}>
         <FormControlLabel
           control={

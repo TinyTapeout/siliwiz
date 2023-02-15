@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { createSignal } from 'solid-js';
+import { ns, us } from '~/utils/time';
+import { round2dp } from '../utils/math';
 
 export interface ISpiceParams {
   dcSweep: boolean;
@@ -9,6 +11,7 @@ export interface ISpiceParams {
   pulseDelay: number;
   riseTime: number;
   signalNames: string;
+  tranTime: number;
 }
 
 export const [spiceInput, setSpiceInput] = createSignal<string>('');
@@ -17,6 +20,7 @@ export const [minInVoltage, setMinInVoltage] = createSignal<number>(0);
 export const [maxInVoltage, setMaxInVoltage] = createSignal<number>(5);
 export const [pulseDelay, setPulseDelay] = createSignal<number>(0);
 export const [riseTime, setRiseTime] = createSignal<number>(50);
+export const [tranTime, setTranTime] = createSignal<number>(60 * us);
 export const [showSpice, setShowSpice] = createSignal(false);
 export const [enableCustomSpice, setEnableCustomSpice] = createSignal<boolean>(false);
 export const [customSpice, setCustomSpice] = createSignal<string>('');
@@ -59,6 +63,7 @@ export function getSpiceParams(): ISpiceParams {
     pulseDelay: pulseDelay(),
     riseTime: riseTime(),
     signalNames: signalNames(),
+    tranTime: tranTime(),
   };
 }
 
@@ -81,6 +86,22 @@ export function setSpiceParams(params: Partial<ISpiceParams>) {
   if (params.signalNames !== undefined) {
     setSignalNames(params.signalNames);
   }
+  if (params.tranTime !== undefined) {
+    setTranTime(params.tranTime);
+  }
+}
+
+export function picosToSpiceTime(picos: number) {
+  if (picos < 1) {
+    return `${round2dp(picos * 1000)}f`;
+  }
+  if (picos < 1 * ns) {
+    return `${Math.round(picos)}p`;
+  }
+  if (picos < 1 * us) {
+    return `${round2dp(picos / ns)}n`;
+  }
+  return `${round2dp(picos / us)}u`;
 }
 
 export function processMagicSpice(magicSpice: string) {
@@ -115,7 +136,7 @@ export function spiceFile() {
       ];
   const simulationCode = dcSweep()
     ? `.dc vdd ${minInVoltage()} ${maxInVoltage()} 0.1`
-    : `.tran 500n 60u`;
+    : `.tran ${picosToSpiceTime(tranTime() / 120)} ${picosToSpiceTime(tranTime())}`;
 
   return `* SiliWiz Simulation (app rev ${__COMMIT_HASH__})
 
