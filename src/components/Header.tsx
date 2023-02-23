@@ -10,7 +10,7 @@ export function Header() {
         <Box flexGrow={1} />
         <Button
           color="inherit"
-          href="https://docs.google.com/document/d/1H3jA7guvXT7toEvUObOQ1viQ6Qz_QSGDiJ5OBS2pDEI"
+          href="https://tinytapeout.com/siliwiz/"
         >
           Lessons
         </Button>
