@@ -89,7 +89,7 @@ export function processMagicSpice(magicSpice: string) {
     return null;
   }
 
-  const signals = circuit[1].split('').slice(1);
+  const signals = circuit[1].split(' ').slice(1);
 
   return {
     signals,
@@ -119,7 +119,7 @@ export function spiceFile() {
 
   return `* SiliWiz Simulation (app rev ${__COMMIT_HASH__})
 
-*signals: ${signals?.join('')}
+*signals: ${signals?.join(' ')}
 
 Vdd vdd 0 5 ; power supply: 5V
 Vss vss 0 0 ; ground
