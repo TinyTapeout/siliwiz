@@ -8,10 +8,7 @@ export function Header() {
       <Toolbar>
         <img src="/images/header-logo.png" alt="SiliWiz logo" width="166" height="32" />
         <Box flexGrow={1} />
-        <Button
-          color="inherit"
-          href="https://tinytapeout.com/siliwiz/"
-        >
+        <Button color="inherit" href="https://tinytapeout.com/siliwiz/">
           Lessons
         </Button>
         <IconButton
