@@ -17,6 +17,7 @@ export const [minInVoltage, setMinInVoltage] = createSignal<number>(0);
 export const [maxInVoltage, setMaxInVoltage] = createSignal<number>(5);
 export const [pulseDelay, setPulseDelay] = createSignal<number>(0);
 export const [riseTime, setRiseTime] = createSignal<number>(50);
+export const [showSpice, setShowSpice] = createSignal(false);
 export const [enableCustomSpice, setEnableCustomSpice] = createSignal<boolean>(false);
 export const [customSpice, setCustomSpice] = createSignal<string>('');
 export const [signalNames, setSignalNames] = createSignal('in out');

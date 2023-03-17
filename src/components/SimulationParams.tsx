@@ -1,19 +1,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Add } from '@suid/icons-material';
-import { Chip, IconButton, Stack } from '@suid/material';
+import { Box, Chip, FormControlLabel, IconButton, Stack, Switch } from '@suid/material';
 import { createEffect, For } from 'solid-js';
 import {
+  enableCustomSpice,
   maxInVoltage,
   minInVoltage,
   pulseDelay,
   removeSignalName,
   riseTime,
+  setEnableCustomSpice,
   setMaxInVoltage,
   setMinInVoltage,
   setPulseDelay,
   setRiseTime,
+  setShowSpice,
   setSignalNames,
+  showSpice,
   signalNames,
   spiceFile,
 } from '~/model/spiceFile';
@@ -54,6 +58,7 @@ export default function SimulationParams() {
         min="0"
         max="5"
         step="0.05"
+        disabled={enableCustomSpice()}
         value={minInVoltage()}
         onInput={(e) => setMinInVoltage((e.target as HTMLInputElement).valueAsNumber)}
       />
@@ -64,6 +69,7 @@ export default function SimulationParams() {
         min="0"
         max="5"
         step="0.05"
+        disabled={enableCustomSpice()}
         value={maxInVoltage()}
         onInput={(e) => setMaxInVoltage((e.target as HTMLInputElement).valueAsNumber)}
       />
@@ -74,6 +80,7 @@ export default function SimulationParams() {
         min="0"
         max="50"
         step="0.1"
+        disabled={enableCustomSpice()}
         value={pulseDelay()}
         onInput={(e) => setPulseDelay((e.target as HTMLInputElement).valueAsNumber)}
       />
@@ -85,11 +92,27 @@ export default function SimulationParams() {
         min="0"
         max="50"
         step="0.1"
+        disabled={enableCustomSpice()}
         value={riseTime()}
         onInput={(e) => setRiseTime((e.target as HTMLInputElement).valueAsNumber)}
       />
       {riseTime()}µs
-      <br />
+      <Box mt={1}>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={showSpice()}
+              onChange={(e, newValue) => {
+                setShowSpice(newValue);
+                if (!newValue) {
+                  setEnableCustomSpice(false);
+                }
+              }}
+            />
+          }
+          label="Show SPICE (advanced)"
+        />
+      </Box>
     </div>
   );
 }
