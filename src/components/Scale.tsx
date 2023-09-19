@@ -11,10 +11,10 @@ export default function Scale(props: { y: number }) {
         0µm
       </text>
       <text x={50} y={props.y - 12} text-anchor="middle" font-size="10">
-        {50 * lambdaToMicrons}µm
+        {`${50 * lambdaToMicrons}µm`}
       </text>
       <text x={100} y={props.y - 12} text-anchor="middle" font-size="10">
-        {100 * lambdaToMicrons}µm
+        {`${100 * lambdaToMicrons}µm`}
       </text>
     </g>
   );
