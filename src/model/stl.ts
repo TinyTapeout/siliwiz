@@ -19,7 +19,11 @@ export function exportSTL() {
 
     const geometry = new BoxGeometry(rect.width, rect.height, layer.crossHeight);
     const cube = new Mesh(geometry);
-    cube.position.set(rect.x + rect.width / 2, -(rect.y + rect.height / 2), -layer.crossY);
+    cube.position.set(
+      rect.x + rect.width / 2,
+      -(rect.y + rect.height / 2),
+      -layer.crossY - layer.crossHeight / 2,
+    );
     cube.updateMatrixWorld();
     scene.add(cube);
   }
