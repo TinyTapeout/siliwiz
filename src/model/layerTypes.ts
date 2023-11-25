@@ -244,4 +244,60 @@ export const layerTypes: ILayerInfo[] = [
     description: 'second metal layer used for wiring up the circuit',
     hasLabels: true,
   },
+  {
+    category: LayerCategory.Via,
+    name: 'metal3 via',
+    magicName: 'm3contact', // fallback value, if no variation below matches
+    color: '#80ff80',
+    crossY: 30,
+    crossHeight: 25,
+    description: 'used to connect between metal2 and metal3 layers',
+    viaVariations: [
+      {
+        dependsOn: ['metal2'],
+        magicName: 'm3contact',
+        crossY: 30,
+        crossHeight: 25,
+        description: 'connects between metal2 and metal3',
+      },
+    ],
+  },
+  {
+    category: LayerCategory.Passive,
+    name: 'metal3',
+    magicName: 'metal3',
+    color: 'rgb(125, 240, 250)',
+    crossY: 10,
+    crossHeight: 20, // bit thicker than met2
+    description: 'second metal layer used for wiring up the circuit',
+    hasLabels: true,
+  },
+  {
+    category: LayerCategory.Via,
+    name: 'metal4 via',
+    magicName: 'm4contact', // fallback value, if no variation below matches
+    color: '#80ff80',
+    crossY: 30,
+    crossHeight: 25,
+    description: 'used to connect between metal3 and metal4 layers',
+    viaVariations: [
+      {
+        dependsOn: ['metal3'],
+        magicName: 'm4contact',
+        crossY: 30,
+        crossHeight: 25,
+        description: 'connects between metal3 and metal4',
+      },
+    ],
+  },
+  {
+    category: LayerCategory.Passive,
+    name: 'metal4',
+    magicName: 'metal4',
+    color: 'rgb(180, 255, 255)',
+    crossY: 10,
+    crossHeight: 20, // bit thicker than met2
+    description: 'second metal layer used for wiring up the circuit',
+    hasLabels: true,
+  },
 ];

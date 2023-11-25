@@ -3,7 +3,7 @@
 import { rectViaLayer, sortRects, type ILayout, type ILayoutRect } from '~/model/layout';
 import type { Point2D } from '~/utils/geometry';
 
-export const defaultTech = 'siliwiz';
+export const defaultTech = 'sky130A';
 
 interface ITransform {
   scaleX: number;
@@ -89,7 +89,7 @@ export interface IMagicOptions {
 }
 
 export function toMagic(layout: ILayout, { tech = defaultTech, mirrorY = false }: IMagicOptions) {
-  const scale = 1;
+  const scale = 20; // for sky130A
   const result = [
     `magic`,
     `tech ${tech}`,

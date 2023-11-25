@@ -3,11 +3,11 @@
 import { createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { record } from 'solid-record';
-import inverter from '~/../presets/inverter.json';
+import ttpins from '~/../presets/ttpins.json';
 import { layerTypes } from './layerTypes';
 import { type ISpiceParams, setSpiceParams } from './spiceFile';
 
-export const lambdaToMicrons = 0.09;
+export const lambdaToMicrons = 0.1;
 
 export interface ILayoutRect {
   x: number;
@@ -76,7 +76,7 @@ export const [selectedRectIndex, setSelectedRectIndex] = createSignal<number | n
 export const [layout, setLayout, layoutUndo] = record(
   // eslint-disable-next-line solid/reactivity
   createStore<ILayout>({
-    rects: inverter.rects,
+    rects: ttpins.rects,
   }),
 );
 

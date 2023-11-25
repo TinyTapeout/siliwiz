@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "app": "siliwiz",
+  "timestamp": 1700946642,
+  "rects": [
+    { "x": 100, "y": 0, "height": 10, "width": 6, "layer": "metal4", "label": "ua0" },
+    { "x": 311.6, "y": 0, "height": 10, "width": 6, "layer": "metal4", "label": "ua1" },
+    { "x": 30.41, "y": 1, "height": 400, "width": 20, "layer": "metal4", "label": "VGND" },
+    { "x": 353.41, "y": 1, "height": 400, "width": 20, "layer": "metal4", "label": "VPWR" }
+  ],
+  "graph": {
+    "dcSweep": false,
+    "minInVoltage": 0,
+    "maxInVoltage": 5,
+    "pulseDelay": 0,
+    "riseTime": 50,
+    "signalNames": "in out",
+    "tranTime": 60000000
+  }
+}
