@@ -37,16 +37,16 @@
     "vite": "^4.1.4"
   },
   "dependencies": {
-    "@solidjs/meta": "^0.28.6",
+    "@solidjs/meta": "^0.29.1",
     "@solidjs/router": "^0.8.3",
     "@suid/icons-material": "^0.6.9",
     "@suid/material": "^0.14.2",
     "@types/plotly.js-basic-dist": "^1.54.1",
     "json-beautify": "^1.1.1",
     "plotly.js-basic-dist": "^2.15.1",
-    "solid-js": "^1.7.12",
+    "solid-js": "^1.8.6",
     "solid-record": "^0.2.1",
-    "solid-start": "^0.3.5",
+    "solid-start": "^0.3.10",
     "three": "^0.149.0",
     "undici": "^5.24.0"
   },
