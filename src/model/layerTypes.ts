@@ -101,7 +101,7 @@ export const layerTypes: ILayerInfo[] = [
   {
     category: LayerCategory.Active,
     name: 'p tap',
-    magicName: 'psubstratepdfiff',
+    magicName: 'psubstratepdiff',
     color: '#4040ff',
     crossY: 100,
     crossHeight: 15,
