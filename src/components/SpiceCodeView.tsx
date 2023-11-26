@@ -22,7 +22,7 @@ export default function SpiceCodeView() {
 
       <Stack direction="row" spacing={1} sx={{ marginBottom: 1 }}>
         <Button
-          onClick={() => downloadFile('siliwiz.mag', toMagic(layout))}
+          onClick={() => downloadFile('siliwiz.mag', toMagic(layout, { mirrorY: true }))}
           startIcon={<AutoFixHigh />}
         >
           Download MAGIC

@@ -15,7 +15,7 @@ interface IMagicResponse {
 
 export async function runMagic(layout: ILayout) {
   const start = new Date().getTime();
-  const magicInput = toMagic(layout, defaultTech);
+  const magicInput = toMagic(layout, { tech: defaultTech });
   const res = await fetch(new URL('/magic', serverUrl), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
