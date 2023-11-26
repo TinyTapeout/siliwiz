@@ -140,7 +140,7 @@ export const layerTypes: ILayerInfo[] = [
     category: LayerCategory.Via,
     name: 'licon',
     color: '#80ff80',
-    magicName: 'polycontact', // fallback value, if no variation below matches
+    magicName: 'polycont', // fallback value, if no variation below matches
     crossY: 70,
     crossHeight: 15,
     viaVariations: [
@@ -183,7 +183,7 @@ export const layerTypes: ILayerInfo[] = [
       },
       {
         dependsOn: ['polysilicon', 'polyres'],
-        magicName: 'polycontact',
+        magicName: 'polycont',
         crossY: 70,
         crossHeight: 15,
         description: 'connects between polysilicon and l1',
@@ -228,17 +228,8 @@ export const layerTypes: ILayerInfo[] = [
     hasLabels: true,
   },
   {
-    category: LayerCategory.Passive,
-    name: 'mim capacitor',
-    magicName: 'mimcap',
-    color: 'rgb(100, 100, 100)',
-    crossY: 45, // should be just above met1
-    crossHeight: 5,
-    description: 'thin layer of metal used to form metal-insulator-metal capacitors',
-  },
-  {
     category: LayerCategory.Via,
-    name: 'metal2 via',
+    name: 'metal1 via',
     magicName: 'via', // fallback value, if no variation below matches
     color: '#80ff80',
     crossY: 30,
@@ -266,7 +257,7 @@ export const layerTypes: ILayerInfo[] = [
   },
   {
     category: LayerCategory.Via,
-    name: 'metal3 via',
+    name: 'metal2 via',
     magicName: 'via2', // fallback value, if no variation below matches
     color: '#80ff80',
     crossY: 30,
@@ -293,8 +284,17 @@ export const layerTypes: ILayerInfo[] = [
     hasLabels: true,
   },
   {
+    category: LayerCategory.Passive,
+    name: 'mim capacitor',
+    magicName: 'mimcap',
+    color: 'rgb(100, 100, 100)',
+    crossY: 45, // should be just above met3
+    crossHeight: 5,
+    description: 'thin layer of metal used to form metal-insulator-metal capacitors',
+  },
+  {
     category: LayerCategory.Via,
-    name: 'metal4 via',
+    name: 'metal3 via',
     magicName: 'via3', // fallback value, if no variation below matches
     color: '#80ff80',
     crossY: 30,
