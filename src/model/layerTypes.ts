@@ -138,7 +138,7 @@ export const layerTypes: ILayerInfo[] = [
   },
   {
     category: LayerCategory.Via,
-    name: 'licon via',
+    name: 'licon',
     color: '#80ff80',
     magicName: 'polycontact', // fallback value, if no variation below matches
     crossY: 70,
@@ -149,14 +149,14 @@ export const layerTypes: ILayerInfo[] = [
         magicName: 'psubstratepcontact',
         crossY: 70,
         crossHeight: 30,
-        description: 'used to connect between p substrate and licon',
+        description: 'used to connect between p substrate and li1',
       },
       {
         dependsOn: ['nwell', 'nsubstratendiff'],
         magicName: 'nsubstratencontact',
         crossY: 70,
         crossHeight: 30,
-        description: 'used to connect between n well and licon',
+        description: 'used to connect between n well and li1',
       },
       {
         // Note: this entry is separate from the 'pmos' entry since 'psubstratepdfiff' comes on top of 'nwell',
@@ -165,35 +165,35 @@ export const layerTypes: ILayerInfo[] = [
         magicName: 'psubstratepcontact',
         crossY: 70,
         crossHeight: 30,
-        description: 'used to connect between p substrate and licon',
+        description: 'used to connect between p substrate and li1',
       },
       {
         dependsOn: ['pdiffusion'],
         magicName: 'pdcontact',
         crossY: 70,
         crossHeight: 30,
-        description: 'used to connect between p diffusion and licon',
+        description: 'used to connect between p diffusion and li1',
       },
       {
         dependsOn: ['ndiffusion'],
         magicName: 'ndcontact',
         crossY: 70,
         crossHeight: 30,
-        description: 'used to connect between n diffusion and licon',
+        description: 'used to connect between n diffusion and li1',
       },
       {
         dependsOn: ['polysilicon', 'polyres'],
         magicName: 'polycontact',
         crossY: 70,
         crossHeight: 15,
-        description: 'connects between polysilicon and licon',
+        description: 'connects between polysilicon and l1',
       },
     ],
   },
   {
     category: LayerCategory.Passive,
-    name: 'licon',
-    magicName: 'licon',
+    name: 'li1',
+    magicName: 'locali',
     color: 'orange',
     crossY: 55,
     crossHeight: 15,
@@ -201,19 +201,19 @@ export const layerTypes: ILayerInfo[] = [
   },
   {
     category: LayerCategory.Via,
-    name: 'metal1 via',
+    name: 'li1 via',
     color: '#80ff80',
-    magicName: 'mcon', // fallback value, if no variation below matches
+    magicName: 'viali', // fallback value, if no variation below matches
     crossY: 70,
     crossHeight: 15,
-    description: 'used to connect between licon and metal1 layers',
+    description: 'used to connect between li1 and metal1 layers',
     viaVariations: [
       {
-        dependsOn: ['licon'],
-        magicName: 'mcon',
+        dependsOn: ['li1'],
+        magicName: 'viali',
         crossY: 70,
         crossHeight: 30,
-        description: 'used to connect between licon and metal2 layers',
+        description: 'used to connect between li1 and metal2 layers',
       },
     ],
   },
@@ -239,7 +239,7 @@ export const layerTypes: ILayerInfo[] = [
   {
     category: LayerCategory.Via,
     name: 'metal2 via',
-    magicName: 'm2contact', // fallback value, if no variation below matches
+    magicName: 'via', // fallback value, if no variation below matches
     color: '#80ff80',
     crossY: 30,
     crossHeight: 25,
@@ -247,17 +247,10 @@ export const layerTypes: ILayerInfo[] = [
     viaVariations: [
       {
         dependsOn: ['metal1'],
-        magicName: 'm2contact',
+        magicName: 'via',
         crossY: 30,
         crossHeight: 25,
         description: 'connects between metal1 and metal2',
-      },
-      {
-        dependsOn: ['mimcap'],
-        magicName: 'mimcapcontact',
-        crossY: 30,
-        crossHeight: 15,
-        description: 'connects between mim capacitor and metal2',
       },
     ],
   },
@@ -274,7 +267,7 @@ export const layerTypes: ILayerInfo[] = [
   {
     category: LayerCategory.Via,
     name: 'metal3 via',
-    magicName: 'm3contact', // fallback value, if no variation below matches
+    magicName: 'via2', // fallback value, if no variation below matches
     color: '#80ff80',
     crossY: 30,
     crossHeight: 25,
@@ -282,7 +275,7 @@ export const layerTypes: ILayerInfo[] = [
     viaVariations: [
       {
         dependsOn: ['metal2'],
-        magicName: 'm3contact',
+        magicName: 'via2',
         crossY: 30,
         crossHeight: 25,
         description: 'connects between metal2 and metal3',
@@ -302,7 +295,7 @@ export const layerTypes: ILayerInfo[] = [
   {
     category: LayerCategory.Via,
     name: 'metal4 via',
-    magicName: 'm4contact', // fallback value, if no variation below matches
+    magicName: 'via3', // fallback value, if no variation below matches
     color: '#80ff80',
     crossY: 30,
     crossHeight: 25,
@@ -310,7 +303,7 @@ export const layerTypes: ILayerInfo[] = [
     viaVariations: [
       {
         dependsOn: ['metal3'],
-        magicName: 'm4contact',
+        magicName: 'via3',
         crossY: 30,
         crossHeight: 25,
         description: 'connects between metal3 and metal4',
