@@ -2,12 +2,12 @@
   "name": "siliwiz",
   "license": "Apache-2.0",
   "scripts": {
-    "dev": "solid-start dev",
+    "dev": "vinxi dev",
     "lint": "eslint --ext .ts,.tsx .",
-    "build": "solid-start build",
+    "build": "vinxi build --preset static",
     "build:element": "rollup --config rollup.config.mjs",
     "format:check": "prettier --check **/*.{ts,js,css,tsx} !dist/** !node_modules/** !.solid/** !**/spice.js",
-    "start": "solid-start start",
+    "start": "vinxi start",
     "postinstall": "patch-package",
     "prepare": "husky install"
   },
@@ -32,23 +32,20 @@
     "lint-staged": "^13.1.0",
     "patch-package": "^6.4.7",
     "prettier": "^2.8.3",
-    "solid-start-node": "^0.3.5",
     "typescript": "^4.9.5",
     "vite": "^4.1.4"
   },
   "dependencies": {
-    "@solidjs/meta": "^0.29.1",
-    "@solidjs/router": "^0.8.3",
+    "@solidjs/start": "^0.4.10",
     "@suid/icons-material": "^0.6.9",
     "@suid/material": "^0.14.2",
     "@types/plotly.js-basic-dist": "^1.54.1",
     "json-beautify": "^1.1.1",
     "plotly.js-basic-dist": "^2.15.1",
-    "solid-js": "^1.8.6",
+    "solid-js": "^1.8.12",
     "solid-record": "^0.2.1",
-    "solid-start": "^0.3.10",
     "three": "^0.149.0",
-    "undici": "^5.24.0"
+    "vinxi": "^0.1.4"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [

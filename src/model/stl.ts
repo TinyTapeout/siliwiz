@@ -1,7 +1,7 @@
-import { STLExporter } from 'three/examples/jsm/exporters/STLExporter';
-import { BoxGeometry } from 'three/src/geometries/BoxGeometry';
-import { Group } from 'three/src/objects/Group';
-import { Mesh } from 'three/src/objects/Mesh';
+import { STLExporter } from 'three/examples/jsm/exporters/STLExporter.js';
+import { BoxGeometry } from 'three/src/geometries/BoxGeometry.js';
+import { Group } from 'three/src/objects/Group.js';
+import { Mesh } from 'three/src/objects/Mesh.js';
 import { downloadFile } from '~/utils/download-file';
 import { layerTypes } from './layerTypes';
 import { layout } from './layout';
