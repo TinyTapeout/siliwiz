@@ -5,7 +5,6 @@
     "dev": "vinxi dev",
     "lint": "eslint --ext .ts,.tsx .",
     "build": "vinxi build --preset static",
-    "build:element": "rollup --config rollup.config.mjs",
     "format:check": "prettier --check **/*.{ts,js,css,tsx} !dist/** !node_modules/** !.solid/** !**/spice.js",
     "start": "vinxi start",
     "postinstall": "patch-package",
