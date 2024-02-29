@@ -173,7 +173,7 @@ export default function Canvas(props: { size: number }) {
 
       const domRect = domRectFromPoints(rect.start, rect.end);
       if (domRect.width < 3 || domRect.height < 3) {
-        // Don't create a rect that's too small, see https://github.com/wokwi/siliwiz/issues/10
+        // Don't create a rect that's too small, see https://github.com/TinyTapeout/siliwiz/issues/10
         return;
       }
 

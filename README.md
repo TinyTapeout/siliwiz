@@ -1,8 +1,8 @@
 # SiliWiz
 
-[![Build and Lint](https://github.com/wokwi/siliwiz/actions/workflows/ci.yml/badge.svg)](https://github.com/wokwi/siliwiz/actions/workflows/ci.yml)
+[![Build and Lint](https://github.com/TinyTapeout/siliwiz/actions/workflows/ci.yml/badge.svg)](https://github.com/TinyTapeout/siliwiz/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/wokwi/siliwiz)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/TinyTapeout/siliwiz)
 
 SiliWiz is a free educational tool to help you learn the basics of how semiconductors work and manufactured at a fundamental level.
 
@@ -10,7 +10,7 @@ For more information, see the [SiliWiz Lessons website](https://tinytapeout.com/
 
 ## Cloud Development
 
-You can hack on the project by opening it on [Gitpod](https://gitpod.io/#https://github.com/wokwi/siliwiz). This opens a full development environment in your browser, including a code editor, terminal, and a preview pane where you can see your changes in action.
+You can hack on the project by opening it on [Gitpod](https://gitpod.io/#https://github.com/TinyTapeout/siliwiz). This opens a full development environment in your browser, including a code editor, terminal, and a preview pane where you can see your changes in action.
 
 ## Local Development
 
