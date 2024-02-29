@@ -17,7 +17,7 @@
     "@rollup/plugin-babel": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-replace": "^5.0.0",
-    "@suid/vite-plugin": "^0.1.4",
+    "@suid/vite-plugin": "^0.1.5",
     "@types/node": "^18.11.18",
     "@types/three": "^0.149.0",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
@@ -32,20 +32,19 @@
     "lint-staged": "^13.1.0",
     "patch-package": "^6.4.7",
     "prettier": "^2.8.3",
-    "typescript": "^4.9.5",
-    "vite": "^4.1.4"
+    "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@solidjs/start": "^0.4.10",
+    "@solidjs/start": "^0.6.0",
     "@suid/icons-material": "^0.6.9",
     "@suid/material": "^0.14.2",
     "@types/plotly.js-basic-dist": "^1.54.1",
     "json-beautify": "^1.1.1",
     "plotly.js-basic-dist": "^2.15.1",
-    "solid-js": "^1.8.12",
+    "solid-js": "^1.8.15",
     "solid-record": "^0.2.1",
     "three": "^0.149.0",
-    "vinxi": "^0.1.4"
+    "vinxi": "^0.3.6"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [

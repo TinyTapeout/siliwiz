@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { createHandler } from '@solidjs/start/entry';
-import { StartServer } from '@solidjs/start/server';
+import { StartServer, createHandler } from '@solidjs/start/server';
 import { AnalyticsScript } from './components/AnalyticsScript';
 
 export default createHandler(() => (
