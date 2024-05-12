@@ -34,13 +34,13 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@solidjs/start": "^0.6.0",
+    "@solidjs/start": "^1.0.0-rc.1",
     "@suid/icons-material": "^0.6.9",
     "@suid/material": "^0.14.2",
     "@types/plotly.js-basic-dist": "^1.54.1",
     "json-beautify": "^1.1.1",
     "plotly.js-basic-dist": "^2.15.1",
-    "solid-js": "^1.8.15",
+    "solid-js": "^1.8.17",
     "solid-record": "^0.2.1",
     "three": "^0.149.0",
     "vinxi": "^0.3.6"
