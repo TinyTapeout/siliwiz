@@ -377,17 +377,19 @@ export default function Canvas(props: { size: number }) {
           }}
         </Show>
 
-        {activeDRCItem()?.coords.map((rect) => (
-          <rect
-            x={rect.x0}
-            y={rect.y0}
-            width={rect.x1 - rect.x0}
-            height={rect.y1 - rect.y0}
-            fill="red"
-            fill-opacity="0.5"
-            stroke="red"
-          />
-        ))}
+        <For each={activeDRCItem()?.coords}>
+          {(rect) => (
+            <rect
+              x={rect.x0}
+              y={rect.y0}
+              width={rect.x1 - rect.x0}
+              height={rect.y1 - rect.y0}
+              fill="red"
+              fill-opacity="0.5"
+              stroke="red"
+            />
+          )}
+        </For>
         <line
           x1={0}
           y1={viewerState.crossSectionY}
