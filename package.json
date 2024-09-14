@@ -20,13 +20,13 @@
     "@types/node": "^18.11.18",
     "@types/three": "^0.149.0",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
-    "eslint": "^8.33.0",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-config-standard-with-typescript": "^33.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-solid": "^0.9.4",
+    "eslint-plugin-solid": "^0.14.3",
     "husky": "^8.0.0",
     "lint-staged": "^13.1.0",
     "patch-package": "^6.4.7",
@@ -34,16 +34,16 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@solidjs/start": "^1.0.0-rc.1",
+    "@solidjs/start": "^1.0.6",
     "@suid/icons-material": "^0.6.9",
     "@suid/material": "^0.14.2",
     "@types/plotly.js-basic-dist": "^1.54.1",
     "json-beautify": "^1.1.1",
     "plotly.js-basic-dist": "^2.15.1",
-    "solid-js": "^1.8.17",
+    "solid-js": "^1.8.22",
     "solid-record": "^0.2.1",
     "three": "^0.149.0",
-    "vinxi": "^0.3.6"
+    "vinxi": "^0.4.3"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
