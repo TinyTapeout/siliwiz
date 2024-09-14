@@ -16,6 +16,17 @@ export default createHandler(() => (
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
             rel="stylesheet"
           />
+
+          <title>SiliWiz - Learn Semiconductor Basics</title>
+          <meta
+            name="description"
+            content="Free educational tool to help you learn the basics of how semiconductors work and manufactured at a fundamental level"
+          />
+          <meta property="og:image" content="https://app.siliwiz.com/images/social-preview.png" />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta name="twitter:card" content="summary_large_image" />
+
           {assets}
           <AnalyticsScript />
         </head>
