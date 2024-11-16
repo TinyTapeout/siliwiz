@@ -56,7 +56,7 @@ export default function CrossSection() {
       >
         <defs>
           <pattern
-            id="hatch-pattern"
+            id="hatch-pattern-xs"
             patternUnits="userSpaceOnUse"
             width="20"
             height="20"
@@ -64,8 +64,8 @@ export default function CrossSection() {
           >
             <line x1="0" y1="0" x2="0" y2="20" stroke="white" stroke-width="20" />
           </pattern>
-          <mask id="hatch-mask" x="0" y="0" width="1" height="1">
-            <rect x="0" y="0" width="1000" height="1000" fill="url(#hatch-pattern)" />
+          <mask id="hatch-mask-xs" x="0" y="0" width="1" height="1">
+            <rect x="0" y="0" width="1000" height="1000" fill="url(#hatch-pattern-xs)" />
           </mask>
           <mask id="poly-mask">
             <rect x="0" y="0" width="1000" height="1000" fill="white" />
@@ -100,7 +100,7 @@ export default function CrossSection() {
                   fill={layer.color}
                   mask={
                     layer.hatched
-                      ? 'url(#hatch-mask)'
+                      ? 'url(#hatch-mask-xs)'
                       : layer.masked
                       ? 'url(#poly-mask)'
                       : undefined
