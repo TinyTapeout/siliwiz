@@ -27,6 +27,12 @@ You can hack on the project by opening it on [Gitpod](https://gitpod.io/#https:/
 
 Enjoy!
 
+### PDK Files
+
+SiliWiz uses the following technology file for Magic: [siliwiz.tech](https://app.siliwiz.com/assets/siliwiz.tech). It has been adapted from the [sample_6m tech](http://opencircuitdesign.com/magic/archive/sample6m.tech) file, adding a MiM cap device between the metal1 and metal2 layers.
+
+The simulation is powered by a trimmed down version of ngspice, built from the [ngspice-minimal branch](https://sourceforge.net/p/ngspice/ngspice/ci/minimal-ngspice/tree/). This version includes only the Current & voltage sources, BJT, MOS1, Ind, Cap and Res models (see [the relevant commit](https://sourceforge.net/p/ngspice/ngspice/ci/b028c77824bbac58db5cfa387620c682188f916e/) for models included).
+
 ## License
 
 SiliWiz is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for more details.
