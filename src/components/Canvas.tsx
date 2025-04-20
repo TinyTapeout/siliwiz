@@ -73,6 +73,10 @@ export default function Canvas(props: { size: number }) {
     const label = prompt('Enter new label (or an empty string to delete label)', selection.label);
     if (label != null) {
       const trimmedLabel = label.trim();
+      if (trimmedLabel === '') {
+        setLayout('rects', selectionIndex, { ...selection, label: undefined });
+        return;
+      }
       if (!spiceIdentifierRegexp.test(trimmedLabel)) {
         alert(
           'Label must begin with an alphabetic character and contain only alphanumeric characters and underscores',
