@@ -3144,10 +3144,10 @@ var Module = (() => {
             type = FS.isChrdev(child.mode)
               ? 2
               : FS.isDir(child.mode)
-              ? 4
-              : FS.isLink(child.mode)
-              ? 10
-              : 8;
+                ? 4
+                : FS.isLink(child.mode)
+                  ? 10
+                  : 8;
           }
           (tempI64 = [
             id >>> 0,

@@ -102,8 +102,8 @@ export default function CrossSection() {
                     layer.hatched
                       ? 'url(#hatch-mask-xs)'
                       : layer.masked
-                      ? 'url(#poly-mask)'
-                      : undefined
+                        ? 'url(#poly-mask)'
+                        : undefined
                   }
                 />
               </Show>
