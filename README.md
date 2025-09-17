@@ -23,7 +23,7 @@ You can hack on the project by opening it on [Gitpod](https://gitpod.io/#https:/
 1. Clone the repository
 2. Run `npm install` to install dependencies
 3. Run `npm run dev` to start the development server
-4. Open [http://localhost:5173](http://localhost:5173) in your browser
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 Enjoy!
 
