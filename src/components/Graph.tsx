@@ -17,7 +17,15 @@ export default function Graph() {
         t: 50,
         pad: 4,
       },
+      xaxis: {
+        title: {
+          text: 'seconds',
+        },
+      },
       yaxis: {
+        title: {
+          text: 'volts',
+        },
         range: [-0.25, 5.25],
       },
     };
