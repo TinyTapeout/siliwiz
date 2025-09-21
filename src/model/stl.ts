@@ -3,8 +3,7 @@ import { BoxGeometry } from 'three/src/geometries/BoxGeometry.js';
 import { Group } from 'three/src/objects/Group.js';
 import { Mesh } from 'three/src/objects/Mesh.js';
 import { downloadFile } from '~/utils/download-file';
-import { layerTypes } from './layerTypes';
-import { layout } from './layout';
+import { layout, rectLayer, rectViaLayer } from './layout';
 
 export function exportSTL() {
   const exporter = new STLExporter();
@@ -12,17 +11,18 @@ export function exportSTL() {
   const scene = new Group();
 
   for (const rect of layout.rects) {
-    const layer = layerTypes.find((l) => l.name === rect.layer);
-    if (layer == null) {
+    const layer = rectLayer(rect);
+    const viaLayer = rectViaLayer(layout, rect);
+    if (!viaLayer || !layer) {
       continue;
     }
 
-    const geometry = new BoxGeometry(rect.width, rect.height, layer.crossHeight);
+    const geometry = new BoxGeometry(rect.width, rect.height, viaLayer.crossHeight);
     const cube = new Mesh(geometry);
     cube.position.set(
       rect.x + rect.width / 2,
       -(rect.y + rect.height / 2),
-      -layer.crossY - layer.crossHeight / 2,
+      -viaLayer.crossY - viaLayer.crossHeight / 2,
     );
     cube.updateMatrixWorld();
     scene.add(cube);
