@@ -2,7 +2,7 @@
 
 import { Box, CssBaseline, Stack, ThemeProvider } from '@suid/material';
 import { Show } from 'solid-js';
-import MainView from '~/components/MainView';
+import MainView from './MainView';
 import { theme } from '~/config/theme';
 import { showSpice } from '~/model/spiceFile';
 import { Footer } from './Footer';
