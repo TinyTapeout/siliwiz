@@ -4,7 +4,6 @@
   "timestamp": 1749049770,
   "rects": [
     { "x": 8, "y": 2.94, "height": 383, "width": 384, "layer": "p substrate", "label": "" },
-    { "x": 96, "y": 14.94, "height": 149, "width": 209, "layer": "n well" },
     { "x": 95.41, "y": 9.8, "height": 156, "width": 254, "layer": "n well" },
     { "x": 132, "y": 255.94, "height": 46, "width": 138, "layer": "n diffusion" },
     { "x": 132, "y": 70.94, "height": 62, "width": 138, "layer": "p diffusion" },
