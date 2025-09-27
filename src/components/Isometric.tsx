@@ -9,7 +9,11 @@ export default function Isometric() {
   const rects = () => layout.rects;
 
   return (
-    <Canvas defaultCamera={{ position: [0, 0, 900] }} shadows>
+    <Canvas
+      defaultCamera={{ position: [0, 0, 900] }}
+      shadows
+      style={{ width: '400px', height: '600px' }}
+    >
       <Entity
         from={THREE.Group}
         position={[-275, 100, 0]}
