@@ -10,9 +10,10 @@ import CrossSection from './CrossSection';
 import DRCList from './DRCList';
 import Editor from './Editor';
 import Layers from './Layers';
+import Isometric from './Isometric';
 import SimulationParams from './SimulationParams';
 
-type ITabName = 'xsection' | 'simulation';
+type ITabName = 'xsection' | 'simulation' | '3d';
 
 export default function MainView() {
   const [drc, setDRC] = createSignal<IDRCItem[] | undefined>();
@@ -44,6 +45,12 @@ export default function MainView() {
       <Paper sx={{ padding: 1 }}>
         <ButtonGroup>
           <Button
+            onClick={() => setActiveTab('3d')}
+            variant={activeTab() === '3d' ? 'contained' : 'outlined'}
+          >
+            3D
+          </Button>
+          <Button
             onClick={() => setActiveTab('xsection')}
             endIcon={hasDRCErrors() ? <Error /> : <Check />}
             color={hasDRCErrors() ? 'error' : 'primary'}
@@ -73,6 +80,9 @@ export default function MainView() {
             <Typography>⚙️ DRC Updating...</Typography>
           </Show>
           <DRCList drc={drc()} />
+        </Show>
+        <Show when={activeTab() === '3d'}>
+          <Isometric />
         </Show>
       </Paper>
     </Box>

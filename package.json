@@ -42,6 +42,7 @@
     "plotly.js-basic-dist": "^2.15.1",
     "solid-js": "^1.9.9",
     "solid-record": "^0.2.1",
+    "solid-three": "^0.3.0-next.11",
     "three": "^0.149.0",
     "vinxi": "^0.5.8",
     "vite": "^6.1.1"
