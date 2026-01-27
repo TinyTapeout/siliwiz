@@ -2,12 +2,12 @@
 
 import { Box, CssBaseline, Stack, ThemeProvider } from '@suid/material';
 import { Show } from 'solid-js';
-import MainView from './MainView';
 import { theme } from '~/config/theme';
 import { showSpice } from '~/model/spiceFile';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { LinkBox } from './LinkBox';
+import MainView from './MainView';
 import SpiceCodeView from './SpiceCodeView';
 
 export default function Siliwiz() {
