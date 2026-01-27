@@ -31,6 +31,7 @@
     "lint-staged": "^15.5.1",
     "patch-package": "^6.4.7",
     "prettier": "^3.5.3",
+    "prettier-plugin-organize-imports": "^4.3.0",
     "typescript": "^5.8.3"
   },
   "dependencies": {
