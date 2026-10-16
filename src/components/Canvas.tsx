@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { Delete, Edit, SwapHoriz, SwapVert } from '@suid/icons-material';
+import { Delete, Edit, OpenWith, SwapHoriz, SwapVert } from '@suid/icons-material';
 import { ListItemIcon, ListItemText, Menu, MenuItem, Typography } from '@suid/material';
-import { createSignal, For, Show } from 'solid-js';
+import { createEffect, createMemo, createSignal, For, onCleanup, Show } from 'solid-js';
 import { activeDRCItem } from '~/model/drc';
 import {
+  type ILayoutRect,
   lambdaToMicrons,
   layout,
   layoutUndo,
@@ -27,17 +28,35 @@ interface INewRect {
   end: Point2D;
 }
 
+interface IMovingRect {
+  index: number;
+  /** Offset of the cursor from the rect's top-left corner */
+  grab: Point2D;
+  /** Previewed top-left corner, committed to the layout on drop */
+  pos: Point2D;
+}
+
 const keyboardShortcuts = {
   Delete: 'D',
+  Move: 'M',
   EditWidth: 'F',
   EditLength: 'R',
   SetLabel: 'S',
 };
 
+const arrowKeyOffsets: Record<string, Point2D> = {
+  ArrowLeft: { x: -1, y: 0 },
+  ArrowRight: { x: 1, y: 0 },
+  ArrowUp: { x: 0, y: -1 },
+  ArrowDown: { x: 0, y: 1 },
+};
+
 export default function Canvas(props: { size: number }) {
   const [svgRef, setSVGRef] = createSignal<SVGSVGElement | null>(null);
   const [newRect, setNewRect] = createSignal<INewRect | null>(null);
+  const [moving, setMoving] = createSignal<IMovingRect | null>(null);
   const [popMenu, setPopMenu] = createSignal(false);
+  let lastPointer: Point2D | null = null;
 
   // Context menu
   const [contextMenu, setContextMenu] = createSignal<{
@@ -117,9 +136,68 @@ export default function Canvas(props: { size: number }) {
     }
   };
 
+  const clampPos = (rect: ILayoutRect, { x, y }: Point2D) => ({
+    x: Math.min(Math.max(x, 0), props.size - rect.width),
+    y: Math.min(Math.max(y, 0), props.size - rect.height),
+  });
+
+  const displayPos = (rect: ILayoutRect, index: number): Point2D => {
+    const move = moving();
+    return move?.index === index ? move.pos : { x: rect.x, y: rect.y };
+  };
+
+  const handleStartMove = (cursor?: Point2D) => {
+    const selection = selectedRect();
+    const selectionIndex = selectedRectIndex();
+    if (selection == null || selectionIndex == null) {
+      return;
+    }
+    const point = cursor ??
+      lastPointer ?? {
+        x: selection.x + selection.width / 2,
+        y: selection.y + selection.height / 2,
+      };
+    setMoving({
+      index: selectionIndex,
+      grab: { x: point.x - selection.x, y: point.y - selection.y },
+      pos: { x: selection.x, y: selection.y },
+    });
+  };
+
+  const handleNudge = (offset: Point2D, step: number) => {
+    const selection = selectedRect();
+    const selectionIndex = selectedRectIndex();
+    if (selection == null || selectionIndex == null) {
+      return;
+    }
+    const pos = clampPos(selection, {
+      x: selection.x + offset.x * step,
+      y: selection.y + offset.y * step,
+    });
+    if (pos.x !== selection.x || pos.y !== selection.y) {
+      setLayout('rects', selectionIndex, pos);
+    }
+  };
+
   const handleKeyDown = (e: KeyboardEvent) => {
     const cmdCtrl = ctrlCmdPressed(e);
     const upperKey = e.key.toUpperCase();
+    if (moving() != null) {
+      // Ignore other shortcuts while a rect is being moved
+      if (e.key === 'Escape') {
+        setMoving(null);
+      }
+      return true;
+    }
+    if (e.key in arrowKeyOffsets && selectedRect() != null) {
+      e.preventDefault(); // Don't scroll the page
+      handleNudge(arrowKeyOffsets[e.key], e.shiftKey ? 10 : 1);
+      return true;
+    }
+    if (upperKey === keyboardShortcuts.Move && !cmdCtrl) {
+      handleStartMove();
+      return true;
+    }
     if (e.key === 'Delete' || upperKey === keyboardShortcuts.Delete) {
       handleDelete();
       return true;
@@ -157,7 +235,39 @@ export default function Canvas(props: { size: number }) {
     return { x: transformedPoint.x, y: transformedPoint.y };
   };
 
+  const commitMove = () => {
+    const move = moving();
+    if (move == null) {
+      return;
+    }
+    const rect = layout.rects[move.index];
+    if (rect.x !== move.pos.x || rect.y !== move.pos.y) {
+      setLayout('rects', move.index, move.pos);
+    }
+    setMoving(null);
+  };
+
+  // Drop the rect when clicking outside the canvas, too
+  const isMoving = createMemo(() => moving() != null);
+  createEffect(() => {
+    if (!isMoving()) {
+      return;
+    }
+    const handleWindowMouseDown = (e: MouseEvent) => {
+      if (!(e.target instanceof Node && svgRef()?.contains(e.target))) {
+        commitMove();
+      }
+    };
+    window.addEventListener('mousedown', handleWindowMouseDown);
+    onCleanup(() => window.removeEventListener('mousedown', handleWindowMouseDown));
+  });
+
   const handleMouseDown = (e: MouseEvent) => {
+    if (moving() != null) {
+      commitMove();
+      setPopMenu(false); // Ensures the context menu won't pop after dropping the rect
+      return;
+    }
     const layer = viewerState.activeLayer;
     const point = translatePoint({ x: e.clientX, y: e.clientY });
     if (layer != null) {
@@ -167,6 +277,16 @@ export default function Canvas(props: { size: number }) {
 
   const handleMouseMove = (e: MouseEvent) => {
     const point = translatePoint({ x: e.clientX, y: e.clientY });
+    lastPointer = point;
+    const move = moving();
+    if (move != null) {
+      const rect = layout.rects[move.index];
+      setMoving({
+        ...move,
+        pos: clampPos(rect, { x: point.x - move.grab.x, y: point.y - move.grab.y }),
+      });
+      return;
+    }
     setNewRect((rect) => (rect != null ? { ...rect, end: point } : null));
   };
 
@@ -206,7 +326,8 @@ export default function Canvas(props: { size: number }) {
         onClick={handleClose}
         // eslint-disable-next-line solid/reactivity
         onKeyDown={(e) => {
-          if (handleKeyDown(e)) {
+          // Arrow keys navigate the menu rather than nudging the rect
+          if (!(e.key in arrowKeyOffsets) && handleKeyDown(e)) {
             e.preventDefault();
             svgRef()?.focus({ preventScroll: true });
             setContextMenu(null);
@@ -225,6 +346,22 @@ export default function Canvas(props: { size: number }) {
           <ListItemText>Delete</ListItemText>
           <Typography variant="body2" color="text.secondary">
             {keyboardShortcuts.Delete}
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            const menuPos = contextMenu();
+            handleStartMove(
+              menuPos != null ? translatePoint({ x: menuPos.left - 2, y: menuPos.top }) : undefined,
+            );
+          }}
+        >
+          <ListItemIcon>
+            <OpenWith fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Move</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            {keyboardShortcuts.Move}
           </Typography>
         </MenuItem>
         <MenuItem onClick={handleSetLabel} disabled={!selectedRectLayer()?.hasLabels}>
@@ -262,6 +399,7 @@ export default function Canvas(props: { size: number }) {
         width={props.size}
         height={props.size}
         ref={setSVGRef}
+        style={{ cursor: moving() != null ? 'move' : undefined }}
         onKeyDown={handleKeyDown}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
@@ -315,8 +453,8 @@ export default function Canvas(props: { size: number }) {
                   }}
                 >
                   <rect
-                    x={rect.x}
-                    y={rect.y}
+                    x={displayPos(rect, index()).x}
+                    y={displayPos(rect, index()).y}
                     height={rect.height}
                     width={rect.width}
                     fill={layer.color}
@@ -330,13 +468,13 @@ export default function Canvas(props: { size: number }) {
         </For>
 
         <For each={layout.rects}>
-          {(rect) => {
+          {(rect, index) => {
             return (
               <Show when={rect.label != null && isLayerVisible(rect.layer)}>
                 <text
                   style={{ 'user-select': 'none', 'pointer-events': 'none' }}
-                  x={rect.x + rect.width / 2}
-                  y={rect.y}
+                  x={displayPos(rect, index()).x + rect.width / 2}
+                  y={displayPos(rect, index()).y}
                   text-anchor="middle"
                   alignment-baseline="before-edge"
                 >
@@ -350,8 +488,8 @@ export default function Canvas(props: { size: number }) {
         <Show when={selectedRect()} keyed>
           {(rect) => (
             <rect
-              x={rect.x}
-              y={rect.y}
+              x={displayPos(rect, selectedRectIndex() ?? -1).x}
+              y={displayPos(rect, selectedRectIndex() ?? -1).y}
               height={rect.height}
               width={rect.width}
               fill="none"
